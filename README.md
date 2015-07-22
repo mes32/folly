@@ -1,2 +1,2 @@
 # folly
-A roguelike game
+A simple roguelike dungeon crawl with a text-based interface.
