@@ -27,10 +27,17 @@ CFLAGS=-Wall -g
 CFLAGS=-Wall -g -ansi -std=c89 -std=c99 -O3
 LDFLAGS=-lncurses
 
+OBJECT_FILES= \
+    bin/game.o \
+    bin/ncwindow.o \
+
 all: start_game
 
-start_game: src/main.c Makefile
-	$(CC) $(CFLAGS) $(LDFLAGS) -o start_game src/main.c
+bin/%.o: src/%.c src/%.h Makefile
+	$(CC) $(CFLAGS) -c -o $@ $<
+
+start_game: src/main.c $(OBJECT_FILES) Makefile
+	$(CC) $(CFLAGS) $(LDFLAGS) -o start_game src/main.c $(OBJECT_FILES)
 
 clean:
 	rm -f Folly bin/*
