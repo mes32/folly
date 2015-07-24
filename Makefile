@@ -24,15 +24,16 @@
 
 CC=gcc
 CFLAGS=-Wall -g
+CFLAGS=-Wall -g -ansi -std=c89 -std=c99 -O3
 LDFLAGS=-lncurses
 
-all: Folly.exe
+all: start_game
 
-Folly.exe: src/main.c
-	$(CC) $(LDFLAGS) -o Folly.exe src/main.c
+start_game: src/main.c Makefile
+	$(CC) $(CFLAGS) $(LDFLAGS) -o start_game src/main.c
 
 clean:
-	rm -f Folly.exe bin/*
+	rm -f Folly bin/*
 
 #bin/key_usage2: src/key_usage2.c
 #	gcc -lncurses -o bin/key_usage2 src/key_usage2.c
