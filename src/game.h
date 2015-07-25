@@ -19,9 +19,9 @@ struct gameState {
 };
 
 void initColors();
-void displayHelpScreen(WINDOW *menu_win);
-void displayDeathScreen(WINDOW *menu_win);
+void displayHelpScreen(WINDOW *window);
+void displayDeathScreen(WINDOW *window);
 void updateGameState(int input, gameState *game);
-void displayGameScreen(WINDOW *menu_win, gameState *game);
+void displayGameScreen(WINDOW *window, gameState *game);
 
 #endif // GAME_H_

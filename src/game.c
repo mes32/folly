@@ -12,14 +12,14 @@ void initColors() {
 	init_pair(3, COLOR_RED, COLOR_BLACK);   // 3 - red on black
 }
 
-void displayHelpScreen(WINDOW *menu_win) {
+void displayHelpScreen(WINDOW *window) {
 
     clear();
 	mvprintw(0, 0, "Use arrow keys to go up and down, Press enter to select a choice");
 	refresh();
 }
 
-void displayDeathScreen(WINDOW *menu_win) {
+void displayDeathScreen(WINDOW *window) {
     /*printf("You have died.\n");
     printf("\n");
     printf("\n");*/
@@ -85,7 +85,7 @@ void updateGameState(int input, gameState *game) {
         }
 }
 
-void displayGameScreen(WINDOW *menu_win, gameState *game) {
+void displayGameScreen(WINDOW *window, gameState *game) {
 
     clear();
 
@@ -129,7 +129,7 @@ void displayGameScreen(WINDOW *menu_win, gameState *game) {
     attroff(A_BOLD);
     attroff(COLOR_PAIR(1));
 
-    wmove(menu_win, game->maximumPosition.y, game->maximumPosition.x);
+    wmove(window, game->maximumPosition.y, game->maximumPosition.x);
 
     usleep(DELAY);
     refresh();
