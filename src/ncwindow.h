@@ -1,9 +1,8 @@
 #ifndef NCWINDOW_H_
 #define NCWINDOW_H_
 
-#define WIDTH 100
-#define HEIGHT 100
-#define DELAY 30000
+static const int WIDTH;
+static const int HEIGHT;
 
 WINDOW* startNCWindow();
 void endNCWindow();

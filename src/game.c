@@ -5,6 +5,8 @@
 #include "game.h"
 #include "ncwindow.h"
 
+static const int DELAY = 30000;
+
 void initColors() {
 	start_color();
 	init_pair(1, COLOR_WHITE, COLOR_BLACK); // 1 - white on black

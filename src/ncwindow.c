@@ -4,6 +4,9 @@
 
 #include "ncwindow.h"
 
+static const int WIDTH = 100;
+static const int HEIGHT = 100;
+
 WINDOW* startNCWindow() {
 
 	initscr();

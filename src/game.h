@@ -1,9 +1,7 @@
 #ifndef GAME_H_
 #define GAME_H_
 
-#define WIDTH 100
-#define HEIGHT 100
-#define DELAY 30000
+static const int DELAY;
 
 typedef struct coordinates coordinates;
 struct coordinates {
