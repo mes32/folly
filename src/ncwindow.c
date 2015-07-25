@@ -11,12 +11,12 @@ WINDOW* startNCWindow() {
     curs_set(FALSE);
 	cbreak();	// Line buffering disabled. Pass on everything
 		
-	WINDOW *menu_win;
-	menu_win = newwin(HEIGHT, WIDTH, HEIGHT, WIDTH);
-	keypad(menu_win, TRUE);
+	WINDOW *window;
+	window = newwin(HEIGHT, WIDTH, HEIGHT, WIDTH);
+	keypad(window, TRUE);
 	clear();
 
-    return menu_win;
+    return window;
 }
 
 void endNCWindow() {
