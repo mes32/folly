@@ -1,25 +1,46 @@
+/**
+ *  game.c - folly
+ *
+ *  This module defines gameplay in folly at the highest level of abstraction.
+ *
+ */
+
 #include <stdio.h>
 #include <unistd.h>
 #include <ncurses.h>
 #include "game.h"
 #include "ncwindow.h"
 
-static const int DELAY = 30000;
 
+// Display delay in microseconds for the ncurses window
+static const int DISPLAY_DELAY = 30000;
+
+// Ncurses window used to display the game
 static WINDOW* window;
+
+// The current state of all game related objects and data
 static GameState gameState;
 
+
+// Static function prototypes
 static void initColors();
 static void displayHelpScreen();
 static void displayGameScreen();
 static void initGameState();
 static void updateGameState(int input);
 
+
+/**
+ *  Initializes the game state and saves the ncurses display window
+ */
 void initGame(WINDOW* ncursesWindow) {
     window = ncursesWindow;
     initGameState();
 }
 
+/**
+ *  Runs the main game loop
+ */
 void runGame() {
     initColors();
 
@@ -33,6 +54,9 @@ void runGame() {
 	}
 }
 
+/**
+ *  Initializes color pairs for use with the ncurses display window
+ */
 static void initColors() {
 	start_color();
 	init_pair(1, COLOR_WHITE, COLOR_BLACK); // 1 - white on black
@@ -40,12 +64,18 @@ static void initColors() {
 	init_pair(3, COLOR_RED, COLOR_BLACK);   // 3 - red on black
 }
 
+/**
+ *  Displays the game instructions (help screen)
+ */
 static void displayHelpScreen() {
     clear();
 	mvprintw(0, 0, "Use arrow keys to move around");
 	refresh();
 }
 
+/**
+ *  Displays the current game state (main game screen)
+ */
 static void displayGameScreen() {
     clear();
 
@@ -91,10 +121,13 @@ static void displayGameScreen() {
 
     wmove(window, gameState.maximumPosition.y, gameState.maximumPosition.x);
 
-    usleep(DELAY);
+    usleep(DISPLAY_DELAY);
     refresh();
 }
 
+/**
+ *  Initializes the game in the starting state
+ */
 static void initGameState() {
     Coordinates playerPosition = {1, 1};
     Coordinates maximumPosition = {12, 12};
@@ -104,64 +137,67 @@ static void initGameState() {
     gameState.maximumPosition = maximumPosition;
 }
 
+/**
+ *  Increments the game state by one time step based on the player's input 
+ */
 static void updateGameState(int input) {
-		switch(input) {
-            case 'k':
-            case KEY_UP:
-                gameState.moveDir = 0;
-                gameState.playerPosition.y -= 1;
-				break;
-            case 'j':
-			case KEY_DOWN:
-                gameState.moveDir = 4;
-                gameState.playerPosition.y += 1;
-				break;
-            case 'h':
-			case KEY_LEFT:
-                gameState.moveDir = 6;
-                gameState.playerPosition.x -= 1;
-				break;
-            case 'l':
-			case KEY_RIGHT:
-                gameState.moveDir = 2;
-                gameState.playerPosition.x += 1;
-				break;
-            case 'y':
-                gameState.moveDir = 7;
-                gameState.playerPosition.y -= 1;
-                gameState.playerPosition.x -= 1;
-				break;
-            case 'u':
-                gameState.moveDir = 1;
-                gameState.playerPosition.y -= 1;
-                gameState.playerPosition.x += 1;
-				break;
-            case 'b':
-                gameState.moveDir = 5;
-                gameState.playerPosition.y += 1;
-                gameState.playerPosition.x -= 1;
-				break;
-            case 'n':
-                gameState.moveDir = 3;
-                gameState.playerPosition.y += 1;
-                gameState.playerPosition.x += 1;
-				break;
-			default:
-                gameState.moveDir = 8;
-				break;
-		}
+    switch(input) {
+        case 'k':
+        case KEY_UP:
+            gameState.moveDir = 0;
+            gameState.playerPosition.y -= 1;
+            break;
+        case 'j':
+        case KEY_DOWN:
+            gameState.moveDir = 4;
+            gameState.playerPosition.y += 1;
+            break;
+        case 'h':
+        case KEY_LEFT:
+            gameState.moveDir = 6;
+            gameState.playerPosition.x -= 1;
+            break;
+        case 'l':
+        case KEY_RIGHT:
+            gameState.moveDir = 2;
+            gameState.playerPosition.x += 1;
+            break;
+        case 'y':
+            gameState.moveDir = 7;
+            gameState.playerPosition.y -= 1;
+            gameState.playerPosition.x -= 1;
+            break;
+        case 'u':
+            gameState.moveDir = 1;
+            gameState.playerPosition.y -= 1;
+            gameState.playerPosition.x += 1;
+            break;
+        case 'b':
+            gameState.moveDir = 5;
+            gameState.playerPosition.y += 1;
+            gameState.playerPosition.x -= 1;
+            break;
+        case 'n':
+            gameState.moveDir = 3;
+            gameState.playerPosition.y += 1;
+            gameState.playerPosition.x += 1;
+            break;
+        default:
+            gameState.moveDir = 8;
+            break;
+    }
 
-        if (gameState.playerPosition.x > gameState.maximumPosition.x) {
-            gameState.playerPosition.x = gameState.maximumPosition.x;
-        } else if (gameState.playerPosition.x < 0) {
-            gameState.playerPosition.x = 0;
-        }
+    if (gameState.playerPosition.x > gameState.maximumPosition.x) {
+        gameState.playerPosition.x = gameState.maximumPosition.x;
+    } else if (gameState.playerPosition.x < 0) {
+        gameState.playerPosition.x = 0;
+    }
 
-        if (gameState.playerPosition.y > gameState.maximumPosition.y) {
-            gameState.playerPosition.y = gameState.maximumPosition.y;
-        } else if (gameState.playerPosition.y < 0) {
-            gameState.playerPosition.y = 0;
-        }
+    if (gameState.playerPosition.y > gameState.maximumPosition.y) {
+        gameState.playerPosition.y = gameState.maximumPosition.y;
+    } else if (gameState.playerPosition.y < 0) {
+        gameState.playerPosition.y = 0;
+    }
 }
 
 
