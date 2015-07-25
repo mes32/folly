@@ -39,7 +39,7 @@ void initGame(WINDOW* ncursesWindow) {
 }
 
 /**
- *  Runs the main game loop
+ *  Runs the main game loop (increments game state time-steps)
  */
 void runGame() {
     initColors();

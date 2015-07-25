@@ -19,7 +19,7 @@ struct Coordinates {
 };
 
 /**
- *  Configuration of all game objects at one time step
+ *  Configuration of all game objects at one time-step
  */
 typedef struct GameState GameState;
 struct GameState {
@@ -28,7 +28,14 @@ struct GameState {
     Coordinates maximumPosition;
 };
 
+/**
+ *  Initializes the game state and saves the ncurses display window
+ */
 void initGame(WINDOW* window);
+
+/**
+ *  Runs the main game loop (increments game state time-steps)
+ */
 void runGame();
 
 #endif // GAME_H_
