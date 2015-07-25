@@ -25,6 +25,57 @@ void displayDeathScreen(WINDOW *window) {
     printf("\n");*/
 }
 
+void displayGameScreen(WINDOW *window, gameState *game) {
+
+    clear();
+
+    	attron(COLOR_PAIR(3));
+	switch(game->moveDir) {
+        case 0:
+            mvprintw(0, 0, "UP");
+            break;
+        case 4:
+            mvprintw(0, 0, "DOWN");
+            break;
+        case 6:
+            mvprintw(0, 0, "LEFT");
+            break;
+        case 2:
+            mvprintw(0, 0, "RIGHT");
+            break;
+        case 7:
+        	    mvprintw(0, 0, "UP LEFT");
+            break;
+        case 1:
+            mvprintw(0, 0, "UP RIGHT");
+            break;
+        case 5:
+            mvprintw(0, 0, "DOWN LEFT");
+            break;
+        case 3:
+            mvprintw(0, 0, "DOWN RIGHT");
+            break;
+        case 8:
+            mvprintw(0, 0, "OTHER");
+            break;
+        default:
+            mvprintw(0, 0, "UNKNOWN");
+    }
+    attroff(COLOR_PAIR(3));
+
+    attron(COLOR_PAIR(1));
+    attron(A_BOLD);
+    mvprintw(game->playerPosition.y, game->playerPosition.x, "@");
+    attroff(A_BOLD);
+    attroff(COLOR_PAIR(1));
+
+    wmove(window, game->maximumPosition.y, game->maximumPosition.x);
+
+    usleep(DELAY);
+    refresh();
+}
+
+
 void updateGameState(int input, gameState *game) {
 		switch(input) {
             case 'k':
@@ -85,54 +136,24 @@ void updateGameState(int input, gameState *game) {
         }
 }
 
-void displayGameScreen(WINDOW *window, gameState *game) {
+void runGame(WINDOW* window) {
+    initColors();
 
-    clear();
+    displayHelpScreen(window);
 
-    	attron(COLOR_PAIR(3));
-	switch(game->moveDir) {
-        case 0:
-            mvprintw(0, 0, "UP");
-            break;
-        case 4:
-            mvprintw(0, 0, "DOWN");
-            break;
-        case 6:
-            mvprintw(0, 0, "LEFT");
-            break;
-        case 2:
-            mvprintw(0, 0, "RIGHT");
-            break;
-        case 7:
-        	    mvprintw(0, 0, "UP LEFT");
-            break;
-        case 1:
-            mvprintw(0, 0, "UP RIGHT");
-            break;
-        case 5:
-            mvprintw(0, 0, "DOWN LEFT");
-            break;
-        case 3:
-            mvprintw(0, 0, "DOWN RIGHT");
-            break;
-        case 8:
-            mvprintw(0, 0, "OTHER");
-            break;
-        default:
-            mvprintw(0, 0, "UNKNOWN");
-    }
-    attroff(COLOR_PAIR(3));
+	int c;
+    coordinates playerPosition = {10, 10};
+    coordinates maximumPosition = {12, 12};
+    gameState game = {.moveDir = 0, .playerPosition = playerPosition, .maximumPosition = maximumPosition};
 
-    attron(COLOR_PAIR(1));
-    attron(A_BOLD);
-    mvprintw(game->playerPosition.y, game->playerPosition.x, "@");
-    attroff(A_BOLD);
-    attroff(COLOR_PAIR(1));
+	while(1) {
+        c = wgetch(window);
+        updateGameState(c, &game);
+        displayGameScreen(window, &game);
+	}
 
-    wmove(window, game->maximumPosition.y, game->maximumPosition.x);
+    displayDeathScreen(window);
 
-    usleep(DELAY);
-    refresh();
 }
 
 

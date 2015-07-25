@@ -13,24 +13,9 @@ int main() {
     showTitleScreen(VERSION);
 
 	WINDOW *window = startNCWindow();
-    initColors();
-
-    displayHelpScreen(window);
-
-	int c;
-    coordinates playerPosition = {10, 10};
-    coordinates maximumPosition = {12, 12};
-    gameState game = {.moveDir = 0, .playerPosition = playerPosition, .maximumPosition = maximumPosition};
-
-	while(1) {
-        c = wgetch(window);
-        updateGameState(c, &game);
-        displayGameScreen(window, &game);
-	}
-
-    displayDeathScreen(window);
-
+    runGame(window);
     endNCWindow();
+
 	return 0;
 }
 
