@@ -1,38 +1,56 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <ncurses.h>
-
 #include "game.h"
 #include "ncwindow.h"
 
 static const int DELAY = 30000;
 
-void initColors() {
+static WINDOW* window;
+static GameState gameState;
+
+static void initColors();
+static void displayHelpScreen();
+static void displayGameScreen();
+static void initGameState();
+static void updateGameState(int input);
+
+void initGame(WINDOW* ncursesWindow) {
+    window = ncursesWindow;
+    initGameState();
+}
+
+void runGame() {
+    initColors();
+
+    displayHelpScreen();
+
+    int c;
+	while(1) {
+        c = wgetch(window);
+        updateGameState(c);
+        displayGameScreen();
+	}
+}
+
+static void initColors() {
 	start_color();
 	init_pair(1, COLOR_WHITE, COLOR_BLACK); // 1 - white on black
 	init_pair(2, COLOR_BLUE, COLOR_BLACK);  // 2 - blue on black
 	init_pair(3, COLOR_RED, COLOR_BLACK);   // 3 - red on black
 }
 
-void displayHelpScreen(WINDOW *window) {
-
+static void displayHelpScreen() {
     clear();
-	mvprintw(0, 0, "Use arrow keys to go up and down, Press enter to select a choice");
+	mvprintw(0, 0, "Use arrow keys to move around");
 	refresh();
 }
 
-void displayDeathScreen(WINDOW *window) {
-    /*printf("You have died.\n");
-    printf("\n");
-    printf("\n");*/
-}
-
-void displayGameScreen(WINDOW *window, gameState *game) {
-
+static void displayGameScreen() {
     clear();
 
     	attron(COLOR_PAIR(3));
-	switch(game->moveDir) {
+	switch(gameState.moveDir) {
         case 0:
             mvprintw(0, 0, "UP");
             break;
@@ -67,95 +85,83 @@ void displayGameScreen(WINDOW *window, gameState *game) {
 
     attron(COLOR_PAIR(1));
     attron(A_BOLD);
-    mvprintw(game->playerPosition.y, game->playerPosition.x, "@");
+    mvprintw(gameState.playerPosition.y, gameState.playerPosition.x, "@");
     attroff(A_BOLD);
     attroff(COLOR_PAIR(1));
 
-    wmove(window, game->maximumPosition.y, game->maximumPosition.x);
+    wmove(window, gameState.maximumPosition.y, gameState.maximumPosition.x);
 
     usleep(DELAY);
     refresh();
 }
 
+static void initGameState() {
+    Coordinates playerPosition = {1, 1};
+    Coordinates maximumPosition = {12, 12};
 
-void updateGameState(int input, gameState *game) {
+    gameState.moveDir = 0;
+    gameState.playerPosition = playerPosition;
+    gameState.maximumPosition = maximumPosition;
+}
+
+static void updateGameState(int input) {
 		switch(input) {
             case 'k':
             case KEY_UP:
-                game->moveDir = 0;
-                game->playerPosition.y -= 1;
+                gameState.moveDir = 0;
+                gameState.playerPosition.y -= 1;
 				break;
             case 'j':
 			case KEY_DOWN:
-                game->moveDir = 4;
-                game->playerPosition.y += 1;
+                gameState.moveDir = 4;
+                gameState.playerPosition.y += 1;
 				break;
             case 'h':
 			case KEY_LEFT:
-                game->moveDir = 6;
-                game->playerPosition.x -= 1;
+                gameState.moveDir = 6;
+                gameState.playerPosition.x -= 1;
 				break;
             case 'l':
 			case KEY_RIGHT:
-                game->moveDir = 2;
-                game->playerPosition.x += 1;
+                gameState.moveDir = 2;
+                gameState.playerPosition.x += 1;
 				break;
             case 'y':
-                game->moveDir = 7;
-                game->playerPosition.y -= 1;
-                game->playerPosition.x -= 1;
+                gameState.moveDir = 7;
+                gameState.playerPosition.y -= 1;
+                gameState.playerPosition.x -= 1;
 				break;
             case 'u':
-                game->moveDir = 1;
-                game->playerPosition.y -= 1;
-                game->playerPosition.x += 1;
+                gameState.moveDir = 1;
+                gameState.playerPosition.y -= 1;
+                gameState.playerPosition.x += 1;
 				break;
             case 'b':
-                game->moveDir = 5;
-                game->playerPosition.y += 1;
-                game->playerPosition.x -= 1;
+                gameState.moveDir = 5;
+                gameState.playerPosition.y += 1;
+                gameState.playerPosition.x -= 1;
 				break;
             case 'n':
-                game->moveDir = 3;
-                game->playerPosition.y += 1;
-                game->playerPosition.x += 1;
+                gameState.moveDir = 3;
+                gameState.playerPosition.y += 1;
+                gameState.playerPosition.x += 1;
 				break;
 			default:
-                game->moveDir = 8;
+                gameState.moveDir = 8;
 				break;
 		}
 
-        if (game->playerPosition.x > game->maximumPosition.x) {
-            game->playerPosition.x = game->maximumPosition.x;
-        } else if (game->playerPosition.x < 0) {
-            game->playerPosition.x = 0;
+        if (gameState.playerPosition.x > gameState.maximumPosition.x) {
+            gameState.playerPosition.x = gameState.maximumPosition.x;
+        } else if (gameState.playerPosition.x < 0) {
+            gameState.playerPosition.x = 0;
         }
 
-        if (game->playerPosition.y > game->maximumPosition.y) {
-            game->playerPosition.y = game->maximumPosition.y;
-        } else if (game->playerPosition.y < 0) {
-            game->playerPosition.y = 0;
+        if (gameState.playerPosition.y > gameState.maximumPosition.y) {
+            gameState.playerPosition.y = gameState.maximumPosition.y;
+        } else if (gameState.playerPosition.y < 0) {
+            gameState.playerPosition.y = 0;
         }
-}
-
-void runGame(WINDOW* window) {
-    initColors();
-
-    displayHelpScreen(window);
-
-	int c;
-    coordinates playerPosition = {10, 10};
-    coordinates maximumPosition = {12, 12};
-    gameState game = {.moveDir = 0, .playerPosition = playerPosition, .maximumPosition = maximumPosition};
-
-	while(1) {
-        c = wgetch(window);
-        updateGameState(c, &game);
-        displayGameScreen(window, &game);
-	}
-
-    displayDeathScreen(window);
-
 }
 
 

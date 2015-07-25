@@ -3,26 +3,20 @@
 
 static const int DELAY;
 
-typedef struct coordinates coordinates;
-struct coordinates {
+typedef struct Coordinates Coordinates;
+struct Coordinates {
     int x;
     int y;
 };
 
-typedef struct gameState gameState;
-struct gameState {
+typedef struct GameState GameState;
+struct GameState {
     int moveDir;
-    coordinates playerPosition;
-    coordinates maximumPosition;
+    Coordinates playerPosition;
+    Coordinates maximumPosition;
 };
 
-void initColors();
-void displayHelpScreen(WINDOW *window);
-void displayDeathScreen(WINDOW *window);
-void displayGameScreen(WINDOW *window, gameState *game);
-
-void updateGameState(int input, gameState *game);
-
-void runGame(WINDOW* window);
+void initGame(WINDOW* window);
+void runGame();
 
 #endif // GAME_H_

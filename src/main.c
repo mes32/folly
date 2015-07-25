@@ -13,7 +13,8 @@ int main() {
     showTitleScreen(VERSION);
 
 	WINDOW *window = startNCWindow();
-    runGame(window);
+    initGame(window);
+    runGame();
     endNCWindow();
 
 	return 0;
