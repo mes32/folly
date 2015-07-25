@@ -12,23 +12,25 @@ int main() {
     char* VERSION = "0.1";
     showTitleScreen(VERSION);
 
-	WINDOW *menu_win = openGameWindow();
+	WINDOW *window = startNCWindow();
+    initColors();
 
-    showHelpScreen(menu_win);
+    displayHelpScreen(window);
 
 	int c;
     coordinates playerPosition = {10, 10};
     coordinates maximumPosition = {12, 12};
-    gameState game = {.menu_win = menu_win, .moveDir = 0, .playerPosition = playerPosition, .maximumPosition = maximumPosition};
+    gameState game = {.moveDir = 0, .playerPosition = playerPosition, .maximumPosition = maximumPosition};
 
 	while(1) {
-        c = wgetch(menu_win);
+        c = wgetch(window);
         updateGameState(c, &game);
-        refreshGameWindow(&game);
+        displayGameScreen(window, &game);
 	}
 
-    showGameOverScreen(menu_win);
-    closeGameWindow();
+    displayDeathScreen(window);
+
+    endNCWindow();
 	return 0;
 }
 

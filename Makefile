@@ -1,12 +1,3 @@
-#/src    - source files (test files are within a package 'test' here, or 'test' subpackage of what is being tested)
-#/lib    - required libraries
-#/doc    - text documentation and development notes
-#/build  - where we build (each separate build item within a subfolder here)
-#/conf   - configurations (each config, production, test, developer, etc gets a folder in here, and when building Jars and Wars the correct set is copied across)
-#/extras - other stuff
-#/extras/resources - resources that should be included within generated Jars, e.g., icons
-
-
 #
 # Makefile
 #
@@ -21,6 +12,14 @@
 #    res\       -- other resources maps or savefiles
 #    Makefile   -- makefile script
 #    README.md  -- descriptive document
+
+#/src    - source files (test files are within a package 'test' here, or 'test' subpackage of what is being tested)
+#/lib    - required libraries
+#/doc    - text documentation and development notes
+#/build  - where we build (each separate build item within a subfolder here)
+#/conf   - configurations (each config, production, test, developer, etc gets a folder in here, and when building Jars and Wars the correct set is copied across)
+#/extras - other stuff
+#/extras/resources - resources that should be included within generated Jars, e.g., icons
 
 CC=gcc
 CFLAGS=-Wall -g
@@ -40,8 +39,5 @@ start_game: src/main.c $(OBJECT_FILES) Makefile
 	$(CC) $(CFLAGS) $(LDFLAGS) -o start_game src/main.c $(OBJECT_FILES)
 
 clean:
-	rm -f Folly bin/*
-
-#bin/key_usage2: src/key_usage2.c
-#	gcc -lncurses -o bin/key_usage2 src/key_usage2.c
+	rm -f start_game $(OBJECT_FILES)
 
