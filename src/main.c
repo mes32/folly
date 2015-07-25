@@ -1,17 +1,27 @@
+/**
+ *  main.c - folly
+ *
+ *  This is the main module for the folly project. 
+ *
+ */
+
 #include <stdio.h>
 #include <unistd.h>
 #include <ncurses.h>
-
 #include "game.h"
 #include "ncwindow.h"
 
-void showTitleScreen(char* version);
+
+void printTitleAndWait(char* version);
+
 
 int main() {
 
+    // Print the title screen
     char* VERSION = "0.1";
-    showTitleScreen(VERSION);
+    printTitleAndWait(VERSION);
 
+    // Initialize and run the game inside an ncurses window
 	WINDOW *window = startNCWindow();
     initGame(window);
     runGame();
@@ -20,7 +30,11 @@ int main() {
 	return 0;
 }
 
-void showTitleScreen(char* version) {
+/**
+ *  Prints the version number and 'FOLLY' in ASCII-art
+ *  Then it waits for keyboard input
+ */
+void printTitleAndWait(char* version) {
     printf("\n");
     printf("Starting Folly v%s\n", version);
     printf("\n");
