@@ -44,3 +44,37 @@ void endNCWindow() {
 	refresh();
 	endwin();
 }
+
+/**
+ *  Prints a character c at location (x, y) using a given ncurses color pair
+ */
+void printChar(char c, int x, int y, int colorPair) {
+
+    char buffer[2];
+    buffer[0] = c;
+    buffer[1] = '\0';
+
+    	attron(COLOR_PAIR(colorPair));
+    mvprintw(y, x, buffer);
+    attroff(COLOR_PAIR(colorPair));
+}
+
+/**
+ *  Prints a bold character c at location (x, y) using a given ncurses color pair
+ */
+void printCharBold(char c, int x, int y, int colorPair) {
+    attron(A_BOLD);
+    printChar(c, x, y, colorPair);
+    attroff(A_BOLD);
+}
+
+/**
+ *  Prints an integer c at location (x, y) using a given ncurses color pair
+ */
+void printInt(int c, int x, int y, int colorPair) {
+    c %= 10;
+    c += 48;
+    char castToChar = (char) c;
+
+    printChar(castToChar, x, y, colorPair);
+}

@@ -20,4 +20,19 @@ WINDOW* startNCWindow();
  */
 void endNCWindow();
 
+/**
+ *  Prints a character c at location (x, y) using a given ncurses color pair
+ */
+void printChar(char c, int x, int y, int colorPair);
+
+/**
+ *  Prints a bold character c at location (x, y) using a given ncurses color pair
+ */
+void printCharBold(char c, int x, int y, int colorPair);
+
+/**
+ *  Prints an integer c at location (x, y) using a given ncurses color pair
+ */
+void printInt(int c, int x, int y, int colorPair);
+
 #endif // NCWINDOW_H_

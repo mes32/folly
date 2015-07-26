@@ -27,7 +27,7 @@ Map* initMap() {
             if (x == 0 || y == 0 || x == X_DIM-1 || y == Y_DIM-1) {
                 map.tiles[x][y] = '#';
             } else {
-                map.tiles[x][y] = '.';
+                map.tiles[x][y] = '#';
             }
         }
     }
@@ -40,20 +40,12 @@ Map* initMap() {
  */
 void displayMap(WINDOW* window, Map* map) {
 
-    char buffer[2];
-    buffer[0] = ' ';
-    buffer[1] = '\0';
-
     for (int x=0; x < X_DIM; x++) {
         for (int y=0; y < Y_DIM; y++) {
-            //buffer[0] = map->tiles[x][y];
-            //printf("(%d, %d) = %c\n", x, y, map->tiles[x][y]);
+            char c = map->tiles[x][y];
+            c = '#';
 
-            buffer[0] = 'x';
-
-    	        attron(COLOR_PAIR(1));
-            mvprintw(y, x, buffer);
-            attroff(COLOR_PAIR(1));
+            printChar(c, x, y, 1);
         }
     }
 }
