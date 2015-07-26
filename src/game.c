@@ -15,21 +15,19 @@
 /**
  *  Grid coordinates of objects in the game space
  */
-typedef struct Coordinates Coordinates;
-struct Coordinates {
+typedef struct _Coordinates {
     int x;
     int y;
-};
+} Coordinates;
 
 /**
  *  Configuration of all game objects at one time-step
  */
-typedef struct GameState GameState;
-struct GameState {
+typedef struct _GameState {
     int moveDir;
     Coordinates playerPosition;
     Coordinates maximumPosition;
-};
+} GameState;
 
 
 // Display delay in microseconds for the ncurses window
