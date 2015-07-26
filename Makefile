@@ -13,6 +13,7 @@ LDFLAGS=-lncurses
 OBJECT_FILES= \
     bin/game.o \
     bin/ncwindow.o \
+    bin/map.o \
 
 all: start_game
 

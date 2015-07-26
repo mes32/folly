@@ -10,6 +10,7 @@
 #include <ncurses.h>
 #include "game.h"
 #include "ncwindow.h"
+#include "map.h"
 
 
 /**
@@ -24,6 +25,8 @@ typedef struct _Coordinates {
  *  Configuration of all game objects at one time-step
  */
 typedef struct _GameState {
+    Map* map;
+
     int moveDir;
     Coordinates playerPosition;
     Coordinates maximumPosition;
@@ -53,6 +56,7 @@ static void updateGameState(int input);
  */
 void initGame(WINDOW* ncursesWindow) {
     window = ncursesWindow;
+    initColors();
     initGameState();
 }
 
@@ -96,6 +100,8 @@ static void displayHelpScreen() {
  */
 static void displayGameScreen() {
     clear();
+
+    displayMap(window, gameState.map);
 
     	attron(COLOR_PAIR(3));
 	switch(gameState.moveDir) {
@@ -147,6 +153,9 @@ static void displayGameScreen() {
  *  Initializes the game in the starting state
  */
 static void initGameState() {
+
+    gameState.map = initMap();
+
     Coordinates playerPosition = {1, 1};
     Coordinates maximumPosition = {12, 12};
 
