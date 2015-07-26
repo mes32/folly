@@ -12,6 +12,26 @@
 #include "ncwindow.h"
 
 
+/**
+ *  Grid coordinates of objects in the game space
+ */
+typedef struct Coordinates Coordinates;
+struct Coordinates {
+    int x;
+    int y;
+};
+
+/**
+ *  Configuration of all game objects at one time-step
+ */
+typedef struct GameState GameState;
+struct GameState {
+    int moveDir;
+    Coordinates playerPosition;
+    Coordinates maximumPosition;
+};
+
+
 // Display delay in microseconds for the ncurses window
 static const int DISPLAY_DELAY = 30000;
 
@@ -31,7 +51,7 @@ static void updateGameState(int input);
 
 
 /**
- *  Initializes the game state and saves the ncurses display window
+ *  Initializes the game state and retains a pointer to the ncurses display window
  */
 void initGame(WINDOW* ncursesWindow) {
     window = ncursesWindow;
