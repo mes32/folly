@@ -14,6 +14,7 @@ OBJECT_FILES= \
     bin/game.o \
     bin/ncwindow.o \
     bin/map.o \
+    bin/maptile.o \
 
 all: start_game
 
