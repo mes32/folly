@@ -12,16 +12,23 @@
  *  A gameplay map composed of a two dimensional grid of map tiles
  */
 typedef struct _Map {
-    char tiles[20][10];
+    int xDim;
+    int yDim;
+    char** tiles;
 } Map;
 
 /**
  *  Initializes the game map
  */
-Map* initMap();
+Map initMap(int xDim, int yDim);
 
 /**
- *  Displays the map in a ncurses window
+ *  Frees dynamically allocated memory used for map tiles
+ */
+void deleteMap(Map* map);
+
+/**
+ *  Displays the map in an ncurses window
  */
 void displayMap(WINDOW* window, Map* map);
 

@@ -25,7 +25,7 @@ typedef struct _Coordinates {
  *  Configuration of all game objects at one time-step
  */
 typedef struct _GameState {
-    Map* map;
+    Map map;
 
     int moveDir;
     Coordinates playerPosition;
@@ -64,7 +64,7 @@ void initGame(WINDOW* ncursesWindow) {
  *  Runs the main game loop (increments game state time-steps)
  */
 void runGame() {
-    initColors();
+    //initColors();
 
     displayHelpScreen();
 
@@ -101,9 +101,9 @@ static void displayHelpScreen() {
 static void displayGameScreen() {
     clear();
 
-    displayMap(window, gameState.map);
+    displayMap(window, &gameState.map);
 
-    	attron(COLOR_PAIR(3));
+    	/*attron(COLOR_PAIR(3));
 	switch(gameState.moveDir) {
         case 0:
             mvprintw(0, 0, "UP");
@@ -135,7 +135,7 @@ static void displayGameScreen() {
         default:
             mvprintw(0, 0, "UNKNOWN");
     }
-    attroff(COLOR_PAIR(3));
+    attroff(COLOR_PAIR(3));*/
 
     attron(COLOR_PAIR(1));
     attron(A_BOLD);
@@ -154,10 +154,10 @@ static void displayGameScreen() {
  */
 static void initGameState() {
 
-    gameState.map = initMap();
+    gameState.map = initMap(20, 10);
 
     Coordinates playerPosition = {1, 1};
-    Coordinates maximumPosition = {12, 12};
+    Coordinates maximumPosition = {19, 9};
 
     gameState.moveDir = 0;
     gameState.playerPosition = playerPosition;
