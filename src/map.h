@@ -14,7 +14,7 @@
 typedef struct _Map {
     int xDim;
     int yDim;
-    char** tiles;
+    MapTile** tiles;
 } Map;
 
 /**

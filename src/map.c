@@ -9,6 +9,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ncurses.h>
+#include "maptile.h"
 #include "map.h"
 #include "ncwindow.h"
 
@@ -21,14 +22,14 @@ Map initMap(int xDim, int yDim) {
     map.xDim = xDim;
     map.yDim = yDim;
 
-    map.tiles = (char**)malloc(sizeof(char*) * xDim);
+    map.tiles = (MapTile**)malloc(sizeof(MapTile*) * xDim);
     if (! map.tiles) {
         perror("Error allocating memory. See initMap() in map.c");
         abort();
     }
 
     for (int i=0; i < xDim; i++) {
-        map.tiles[i] = (char*)malloc(sizeof(char) * yDim);
+        map.tiles[i] = (MapTile*)malloc(sizeof(MapTile) * yDim);
         if (! map.tiles[i]) {
             perror("Error allocating memory. See initMap() in map.c");
             abort();
@@ -38,9 +39,11 @@ Map initMap(int xDim, int yDim) {
     for (int x=0; x < xDim; x++) {
         for (int y=0; y < yDim; y++) {
             if (x == 0 || y == 0 || x == xDim-1 || y == yDim-1) {
-                map.tiles[x][y] = '#';
+                // Add wall tile
+                map.tiles[x][y] = initMapTile(1);
             } else {
-                map.tiles[x][y] = '.';
+                // Add non-wall tile
+                map.tiles[x][y] = initMapTile(0);
             }
         }
     }
@@ -64,8 +67,7 @@ void deleteMap(Map* map) {
 void displayMap(WINDOW* window, Map* map) {
     for (int x=0; x < map->xDim; x++) {
         for (int y=0; y < map->yDim; y++) {
-            int c = map->tiles[x][y];
-            printChar(c, x, y, 1);
+            displayMapTile(&map->tiles[x][y], x, y);
         }
     }
 }
