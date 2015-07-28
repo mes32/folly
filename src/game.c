@@ -8,6 +8,7 @@
 #include <unistd.h>
 #include "game.h"
 #include "map.h"
+#include "playercharacter.h"
 
 
 /**
@@ -23,6 +24,8 @@ typedef struct _Coordinates {
  */
 typedef struct _GameState {
     Map map;
+
+    PlayerCharacter player;
 
     int moveDir;
     Coordinates playerPosition;
@@ -60,7 +63,6 @@ void initGame(WINDOW* ncursesWindow) {
  *  Runs the main game loop (increments game state time-steps)
  */
 void runGame() {
-    //initColors();
 
     displayHelpScreen();
 
@@ -123,11 +125,7 @@ static void displayGameScreen() {
     }
     attroff(COLOR_PAIR(3));*/
 
-    attron(COLOR_PAIR(WHITE_ON_BLACK));
-    attron(A_BOLD);
-    mvprintw(gameState.playerPosition.y, gameState.playerPosition.x, "@");
-    attroff(A_BOLD);
-    attroff(COLOR_PAIR(WHITE_ON_BLACK));
+    displayPlayerCharacter(&gameState.player);
 
     wmove(window, gameState.maximumPosition.y, gameState.maximumPosition.x);
 
@@ -141,6 +139,8 @@ static void displayGameScreen() {
 static void initGameState() {
 
     gameState.map = initMap(20, 10);
+
+    gameState.player = initPlayerCharacter();
 
     Coordinates playerPosition = {1, 1};
     Coordinates maximumPosition = {19, 9};
@@ -159,41 +159,49 @@ static void updateGameState(int input) {
         case KEY_UP:
             gameState.moveDir = 0;
             gameState.playerPosition.y -= 1;
+            movePlayerCharacter(&gameState.player, 0, -1);
             break;
         case 'j':
         case KEY_DOWN:
             gameState.moveDir = 4;
             gameState.playerPosition.y += 1;
+            movePlayerCharacter(&gameState.player, 0, 1);
             break;
         case 'h':
         case KEY_LEFT:
             gameState.moveDir = 6;
             gameState.playerPosition.x -= 1;
+            movePlayerCharacter(&gameState.player, -1, 0);
             break;
         case 'l':
         case KEY_RIGHT:
             gameState.moveDir = 2;
             gameState.playerPosition.x += 1;
+            movePlayerCharacter(&gameState.player, 1, 0);
             break;
         case 'y':
             gameState.moveDir = 7;
             gameState.playerPosition.y -= 1;
             gameState.playerPosition.x -= 1;
+            movePlayerCharacter(&gameState.player, -1, -1);
             break;
         case 'u':
             gameState.moveDir = 1;
             gameState.playerPosition.y -= 1;
             gameState.playerPosition.x += 1;
+            movePlayerCharacter(&gameState.player, 1, -1);
             break;
         case 'b':
             gameState.moveDir = 5;
             gameState.playerPosition.y += 1;
             gameState.playerPosition.x -= 1;
+            movePlayerCharacter(&gameState.player, -1, 1);
             break;
         case 'n':
             gameState.moveDir = 3;
             gameState.playerPosition.y += 1;
             gameState.playerPosition.x += 1;
+            movePlayerCharacter(&gameState.player, 1, 1);
             break;
         default:
             gameState.moveDir = 8;
