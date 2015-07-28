@@ -12,9 +12,11 @@
 #include <ncurses.h>
 
 typedef enum {
-   WHITE_ON_BLACK = 1,
-   BLUE_ON_BLACK = 2,
-   RED_ON_BLACK = 3
+    WHITE_ON_BLACK = 1,
+    BLUE_ON_BLACK = 2,
+    RED_ON_BLACK = 3,
+    BLACK_ON_WHITE = 4,
+    BLUE_ON_WHITE = 5
 } textColorPair;
 
 /**

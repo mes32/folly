@@ -49,9 +49,11 @@ void endNCWindow() {
  */
 void initColors() {
 	start_color();
-	init_pair(WHITE_ON_BLACK, COLOR_WHITE, COLOR_BLACK); // 1 - white on black
-	init_pair(BLUE_ON_BLACK, COLOR_BLUE, COLOR_BLACK);   // 2 - blue on black
-	init_pair(RED_ON_BLACK, COLOR_RED, COLOR_BLACK);     // 3 - red on black
+	init_pair(WHITE_ON_BLACK, COLOR_WHITE, COLOR_BLACK);  // 1 - white on black
+	init_pair(BLUE_ON_BLACK, COLOR_BLUE, COLOR_BLACK);    // 2 - blue on black
+	init_pair(RED_ON_BLACK, COLOR_RED, COLOR_BLACK);      // 3 - red on black
+	init_pair(BLACK_ON_WHITE, COLOR_BLACK, COLOR_WHITE);  // 4 - black on white
+	init_pair(BLUE_ON_WHITE, COLOR_BLUE, COLOR_WHITE);    // 5 - blue on white
 }
 
 /**

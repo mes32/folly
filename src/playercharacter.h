@@ -14,11 +14,19 @@
  *  A tile in the game map
  */
 typedef struct _PlayerCharacter {
+
+    char* name;
+
     int x;
     int y;
 
     int healthPoints;
     int maxHealthPoints;
+
+    int lightRadius;
+
+    char* equipedWeapon;
+    char* equipedShield;
 } PlayerCharacter;
 
 /**

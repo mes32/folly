@@ -14,10 +14,14 @@
 PlayerCharacter initPlayerCharacter() {
     PlayerCharacter player;
 
+    player.name = "Player1";
     player.x = 1;
     player.y = 1;
     player.healthPoints = 20;
     player.maxHealthPoints = 20;
+    player.lightRadius = 5;
+    player.equipedWeapon = "Short Sword";
+    player.equipedShield = "Small Round Shield";
 
     return player;
 }

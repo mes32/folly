@@ -8,7 +8,9 @@
 #include <unistd.h>
 #include "game.h"
 #include "map.h"
+#include "ncwindow.h"
 #include "playercharacter.h"
+#include "statusbar.h"
 
 
 /**
@@ -26,6 +28,8 @@ typedef struct _GameState {
     Map map;
 
     PlayerCharacter player;
+
+    const char *eventQueue[3];
 
     int moveDir;
     Coordinates playerPosition;
@@ -127,8 +131,10 @@ static void displayGameScreen() {
 
     displayPlayerCharacter(&gameState.player);
 
-    wmove(window, gameState.maximumPosition.y, gameState.maximumPosition.x);
+    displayStatusBar(&gameState.player);
+    //displayEventWindow(&gameState.eventQueue);
 
+    wmove(window, gameState.maximumPosition.y, gameState.maximumPosition.x);
     usleep(DISPLAY_DELAY);
     refresh();
 }
@@ -141,6 +147,10 @@ static void initGameState() {
     gameState.map = initMap(20, 10);
 
     gameState.player = initPlayerCharacter();
+
+    gameState.eventQueue[0] = "You walk up.";
+    gameState.eventQueue[1] = "You walk right.";
+    gameState.eventQueue[2] = "You walk down.";
 
     Coordinates playerPosition = {1, 1};
     Coordinates maximumPosition = {19, 9};

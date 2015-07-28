@@ -16,6 +16,7 @@ OBJECT_FILES= \
     bin/map.o \
     bin/maptile.o \
     bin/playercharacter.o \
+    bin/statusbar.o \
 
 all: start_game
 
