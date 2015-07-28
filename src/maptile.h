@@ -8,6 +8,8 @@
 #ifndef MAPTILE_H_
 #define MAPTILE_H_
 
+#include "ncwindow.h"
+
 /**
  *  A tile in the game map
  */

@@ -5,13 +5,9 @@
  *
  */
 
-#include <stdio.h>
 #include <unistd.h>
-#include <ncurses.h>
-#include "ncwindow.h"
-#include "maptile.h"
-#include "map.h"
 #include "game.h"
+#include "map.h"
 
 
 /**

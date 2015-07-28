@@ -9,6 +9,7 @@
 #ifndef NCWINDOW_H_
 #define NCWINDOW_H_
 
+#include <ncurses.h>
 
 /**
  *  Initializes ncurses-based display mode and returns a pointer to the current WINDOW

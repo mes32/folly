@@ -5,9 +5,7 @@
  *
  */
 
-#include <ncurses.h>
 #include "maptile.h"
-#include "ncwindow.h"
 
 
 /**

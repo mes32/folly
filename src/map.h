@@ -8,6 +8,8 @@
 #ifndef MAP_H_
 #define MAP_H_
 
+#include "maptile.h"
+
 /**
  *  A gameplay map composed of a two dimensional grid of map tiles
  */

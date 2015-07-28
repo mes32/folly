@@ -8,10 +8,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <ncurses.h>
-#include "maptile.h"
 #include "map.h"
-#include "ncwindow.h"
+#include "maptile.h"
 
 
 /**

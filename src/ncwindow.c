@@ -6,9 +6,8 @@
  *
  */
 
-#include <stdio.h>
-#include <unistd.h>
 #include <ncurses.h>
+#include "ncwindow.h"
 
 
 // The window width in characters

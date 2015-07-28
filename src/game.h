@@ -8,6 +8,8 @@
 #ifndef GAME_H_
 #define GAME_H_
 
+#include "ncwindow.h"
+
 /**
  *  Initializes the game state and retains a pointer to the ncurses display window
  */
