@@ -45,35 +45,45 @@ void endNCWindow() {
 }
 
 /**
+ *  Initializes color pairs for use with the ncurses display window
+ */
+void initColors() {
+	start_color();
+	init_pair(WHITE_ON_BLACK, COLOR_WHITE, COLOR_BLACK); // 1 - white on black
+	init_pair(BLUE_ON_BLACK, COLOR_BLUE, COLOR_BLACK);   // 2 - blue on black
+	init_pair(RED_ON_BLACK, COLOR_RED, COLOR_BLACK);     // 3 - red on black
+}
+
+/**
  *  Prints a character c at location (x, y) using a given ncurses color pair
  */
-void printChar(char c, int x, int y, int colorPair) {
+void printChar(char c, int x, int y, textColorPair color) {
 
     char buffer[2];
     buffer[0] = c;
     buffer[1] = '\0';
 
-    	attron(COLOR_PAIR(colorPair));
+    	attron(COLOR_PAIR(color));
     mvprintw(y, x, buffer);
-    attroff(COLOR_PAIR(colorPair));
+    attroff(COLOR_PAIR(color));
 }
 
 /**
  *  Prints a bold character c at location (x, y) using a given ncurses color pair
  */
-void printCharBold(char c, int x, int y, int colorPair) {
+void printCharBold(char c, int x, int y, textColorPair color) {
     attron(A_BOLD);
-    printChar(c, x, y, colorPair);
+    printChar(c, x, y, color);
     attroff(A_BOLD);
 }
 
 /**
  *  Prints an integer c at location (x, y) using a given ncurses color pair
  */
-void printInt(int c, int x, int y, int colorPair) {
+void printInt(int c, int x, int y, textColorPair color) {
     c %= 10;
     c += 48;
     char castToChar = (char) c;
 
-    printChar(castToChar, x, y, colorPair);
+    printChar(castToChar, x, y, color);
 }

@@ -24,9 +24,9 @@ MapTile initMapTile(int isWall) {
  */
 void displayMapTile(MapTile* tile, int x, int y) {
     if (tile->isWall) {
-        printChar('#', x, y, 1);
+        printChar('#', x, y, WHITE_ON_BLACK);
     } else {
-        printChar('.', x, y, 1);
+        printChar('.', x, y, WHITE_ON_BLACK);
     }
 }
 

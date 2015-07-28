@@ -41,7 +41,6 @@ static GameState gameState;
 
 
 // Static function prototypes
-static void initColors();
 static void displayHelpScreen();
 static void displayGameScreen();
 static void initGameState();
@@ -71,16 +70,6 @@ void runGame() {
         updateGameState(c);
         displayGameScreen();
 	}
-}
-
-/**
- *  Initializes color pairs for use with the ncurses display window
- */
-static void initColors() {
-	start_color();
-	init_pair(1, COLOR_WHITE, COLOR_BLACK); // 1 - white on black
-	init_pair(2, COLOR_BLUE, COLOR_BLACK);  // 2 - blue on black
-	init_pair(3, COLOR_RED, COLOR_BLACK);   // 3 - red on black
 }
 
 /**
@@ -134,11 +123,11 @@ static void displayGameScreen() {
     }
     attroff(COLOR_PAIR(3));*/
 
-    attron(COLOR_PAIR(1));
+    attron(COLOR_PAIR(WHITE_ON_BLACK));
     attron(A_BOLD);
     mvprintw(gameState.playerPosition.y, gameState.playerPosition.x, "@");
     attroff(A_BOLD);
-    attroff(COLOR_PAIR(1));
+    attroff(COLOR_PAIR(WHITE_ON_BLACK));
 
     wmove(window, gameState.maximumPosition.y, gameState.maximumPosition.x);
 
