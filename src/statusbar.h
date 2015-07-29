@@ -14,7 +14,7 @@
 /**
  *  Displays the ...
  */
-void displayStatusBar(PlayerCharacter* player);
+void displayStatusBar(WINDOW* window, PlayerCharacter* player);
 
 
 #endif // STATUSBAR_H_

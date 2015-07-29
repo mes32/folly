@@ -31,9 +31,6 @@ typedef struct _GameState {
 
     const char *eventQueue[3];
 
-    int moveDir;
-    Coordinates playerPosition;
-    Coordinates maximumPosition;
 } GameState;
 
 
@@ -94,47 +91,11 @@ static void displayGameScreen() {
     clear();
 
     displayMap(window, &gameState.map);
-
-    	/*attron(COLOR_PAIR(3));
-	switch(gameState.moveDir) {
-        case 0:
-            mvprintw(0, 0, "UP");
-            break;
-        case 4:
-            mvprintw(0, 0, "DOWN");
-            break;
-        case 6:
-            mvprintw(0, 0, "LEFT");
-            break;
-        case 2:
-            mvprintw(0, 0, "RIGHT");
-            break;
-        case 7:
-        	    mvprintw(0, 0, "UP LEFT");
-            break;
-        case 1:
-            mvprintw(0, 0, "UP RIGHT");
-            break;
-        case 5:
-            mvprintw(0, 0, "DOWN LEFT");
-            break;
-        case 3:
-            mvprintw(0, 0, "DOWN RIGHT");
-            break;
-        case 8:
-            mvprintw(0, 0, "OTHER");
-            break;
-        default:
-            mvprintw(0, 0, "UNKNOWN");
-    }
-    attroff(COLOR_PAIR(3));*/
-
     displayPlayerCharacter(&gameState.player);
+    displayStatusBar(window, &gameState.player);
+    //displayEventWindow(window, &gameState.eventQueue);
 
-    displayStatusBar(&gameState.player);
-    //displayEventWindow(&gameState.eventQueue);
-
-    wmove(window, gameState.maximumPosition.y, gameState.maximumPosition.x);
+    wmove(window, 0, 0);
     usleep(DISPLAY_DELAY);
     refresh();
 }
@@ -151,13 +112,6 @@ static void initGameState() {
     gameState.eventQueue[0] = "You walk up.";
     gameState.eventQueue[1] = "You walk right.";
     gameState.eventQueue[2] = "You walk down.";
-
-    Coordinates playerPosition = {1, 1};
-    Coordinates maximumPosition = {19, 9};
-
-    gameState.moveDir = 0;
-    gameState.playerPosition = playerPosition;
-    gameState.maximumPosition = maximumPosition;
 }
 
 /**
@@ -167,67 +121,34 @@ static void updateGameState(int input) {
     switch(input) {
         case 'k':
         case KEY_UP:
-            gameState.moveDir = 0;
-            gameState.playerPosition.y -= 1;
             movePlayerCharacter(&gameState.player, 0, -1);
             break;
         case 'j':
         case KEY_DOWN:
-            gameState.moveDir = 4;
-            gameState.playerPosition.y += 1;
             movePlayerCharacter(&gameState.player, 0, 1);
             break;
         case 'h':
         case KEY_LEFT:
-            gameState.moveDir = 6;
-            gameState.playerPosition.x -= 1;
             movePlayerCharacter(&gameState.player, -1, 0);
             break;
         case 'l':
         case KEY_RIGHT:
-            gameState.moveDir = 2;
-            gameState.playerPosition.x += 1;
             movePlayerCharacter(&gameState.player, 1, 0);
             break;
         case 'y':
-            gameState.moveDir = 7;
-            gameState.playerPosition.y -= 1;
-            gameState.playerPosition.x -= 1;
             movePlayerCharacter(&gameState.player, -1, -1);
             break;
         case 'u':
-            gameState.moveDir = 1;
-            gameState.playerPosition.y -= 1;
-            gameState.playerPosition.x += 1;
             movePlayerCharacter(&gameState.player, 1, -1);
             break;
         case 'b':
-            gameState.moveDir = 5;
-            gameState.playerPosition.y += 1;
-            gameState.playerPosition.x -= 1;
             movePlayerCharacter(&gameState.player, -1, 1);
             break;
         case 'n':
-            gameState.moveDir = 3;
-            gameState.playerPosition.y += 1;
-            gameState.playerPosition.x += 1;
             movePlayerCharacter(&gameState.player, 1, 1);
             break;
         default:
-            gameState.moveDir = 8;
             break;
-    }
-
-    if (gameState.playerPosition.x > gameState.maximumPosition.x) {
-        gameState.playerPosition.x = gameState.maximumPosition.x;
-    } else if (gameState.playerPosition.x < 0) {
-        gameState.playerPosition.x = 0;
-    }
-
-    if (gameState.playerPosition.y > gameState.maximumPosition.y) {
-        gameState.playerPosition.y = gameState.maximumPosition.y;
-    } else if (gameState.playerPosition.y < 0) {
-        gameState.playerPosition.y = 0;
     }
 }
 

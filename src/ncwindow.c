@@ -11,10 +11,10 @@
 
 
 // The window width in characters
-static const int WIDTH = 100;
+static const int WIDTH = 500;
 
 // The window height in characters
-static const int HEIGHT = 100;
+static const int HEIGHT = 500;
 
 
 /**
@@ -28,7 +28,7 @@ WINDOW* startNCWindow() {
 	cbreak();	// Line buffering disabled. Pass on everything
 		
 	WINDOW *window;
-	window = newwin(HEIGHT, WIDTH, HEIGHT, WIDTH);
+	window = newwin(HEIGHT, WIDTH, 0, 0);
 	keypad(window, TRUE);
 	clear();
 
@@ -49,6 +49,7 @@ void endNCWindow() {
  */
 void initColors() {
 	start_color();
+
 	init_pair(WHITE_ON_BLACK, COLOR_WHITE, COLOR_BLACK);  // 1 - white on black
 	init_pair(BLUE_ON_BLACK, COLOR_BLUE, COLOR_BLACK);    // 2 - blue on black
 	init_pair(RED_ON_BLACK, COLOR_RED, COLOR_BLACK);      // 3 - red on black
