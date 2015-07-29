@@ -11,6 +11,7 @@
 #include "ncwindow.h"
 #include "playercharacter.h"
 #include "statusbar.h"
+#include "eventwindow.h"
 
 
 /**

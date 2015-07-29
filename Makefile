@@ -17,6 +17,7 @@ OBJECT_FILES= \
     bin/maptile.o \
     bin/playercharacter.o \
     bin/statusbar.o \
+    bin/eventwindow.o \
 
 all: start_game
 
