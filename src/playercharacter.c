@@ -5,6 +5,7 @@
  *
  */
 
+#include "mapcoordinate.h"
 #include "playercharacter.h"
 
 
@@ -15,8 +16,7 @@ PlayerCharacter initPlayerCharacter() {
     PlayerCharacter player;
 
     player.name = "Player1";
-    player.x = 1;
-    player.y = 1;
+    player.position = initMapCoordinate(1, 1);
     player.healthPoints = 20;
     player.maxHealthPoints = 20;
     player.lightRadius = 5;
@@ -31,12 +31,13 @@ PlayerCharacter initPlayerCharacter() {
  */
 void displayPlayerCharacter(WINDOW* window, PlayerCharacter* player) {
 
-    printCharBoldPC('@', player->x, player->y, window, player->x, player->y, WHITE_ON_BLACK);
+    MapCoordinate playerPosition = player->position;
+
+    printCharBoldPC('@', playerPosition, window, playerPosition, WHITE_ON_BLACK);
 }
 
 void movePlayerCharacter(PlayerCharacter* player, int deltaX, int deltaY) {
-    player->x += deltaX;
-    player->y += deltaY;
+    movePosition(&player->position, deltaX, deltaY);
 }
 
 /**

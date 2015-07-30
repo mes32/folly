@@ -6,6 +6,7 @@
  */
 
 #include <string.h>
+#include "mapcoordinate.h"
 #include "statusbar.h"
 #include "playercharacter.h"
 
@@ -46,7 +47,8 @@ static int addStringToBar(char* str, int index, textColorPair color) {
     int x = 0;
     char c = str[x];
     while (c != '\0') {
-        printChar(c, index, 0, color);
+        MapCoordinate position = initMapCoordinate(index, 0);
+        printChar(c, position, color);
 
         x += 1;
         c = str[x];
@@ -57,7 +59,8 @@ static int addStringToBar(char* str, int index, textColorPair color) {
 
 static void clearToBar(int start, int stop, textColorPair color) {
     for (int i=start; i <= stop; i++) {
-        printChar(' ', i, 0, color);
+        MapCoordinate position = initMapCoordinate(i, 0);
+        printChar(' ', position, color);
     }
 }
 

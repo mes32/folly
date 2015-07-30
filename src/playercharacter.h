@@ -8,6 +8,7 @@
 #ifndef PLAYERCHARACTER_H_
 #define PLAYERCHARACTER_H_
 
+#include "mapcoordinate.h"
 #include "ncwindow.h"
 
 /**
@@ -17,8 +18,7 @@ typedef struct _PlayerCharacter {
 
     char* name;
 
-    int x;
-    int y;
+    MapCoordinate position;
 
     int healthPoints;
     int maxHealthPoints;

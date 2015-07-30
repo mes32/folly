@@ -15,14 +15,6 @@
 
 
 /**
- *  Grid coordinates of objects in the game space
- */
-typedef struct _Coordinates {
-    int x;
-    int y;
-} Coordinates;
-
-/**
  *  Configuration of all game objects at one time-step
  */
 typedef struct _GameState {
@@ -91,7 +83,7 @@ static void displayHelpScreen() {
 static void displayGameScreen() {
     clear();
 
-    displayMap(window, &gameState.map, &gameState.player);
+    displayMap(window, &gameState.map, gameState.player.position);
     displayPlayerCharacter(window, &gameState.player);
     displayStatusBar(window, &gameState.player);
 
@@ -156,7 +148,7 @@ static void updateGameState(int input) {
             break;
     }
 
-    updateVisibility(&gameState.map, gameState.player.x, gameState.player.y, gameState.player.lightRadius);
+    updateVisibility(&gameState.map, gameState.player.position, gameState.player.lightRadius);
 }
 
 

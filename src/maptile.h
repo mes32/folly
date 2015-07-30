@@ -8,14 +8,17 @@
 #ifndef MAPTILE_H_
 #define MAPTILE_H_
 
+#include "mapcoordinate.h"
 #include "ncwindow.h"
-#include "playercharacter.h"
 
 /**
  *  A tile in the game map
  */
 typedef struct _MapTile {
     //MapTileType* type;
+
+    MapCoordinate position;
+
     int explored;
     int visible;
 
@@ -25,12 +28,12 @@ typedef struct _MapTile {
 /**
  *  Initializes a map tile
  */
-MapTile initMapTile(int isWall);
+MapTile initMapTile(int x, int y, int isWall);
 
 /**
  *  Displays the map tile in an ncurses window at the given coordinates
  */
-void displayMapTile(WINDOW* window, MapTile* tile, int x, int y, PlayerCharacter* player);
+void displayMapTile(WINDOW* window, MapTile* tile, MapCoordinate playerPosition);
 
 
 #endif // MAPTILE_H_

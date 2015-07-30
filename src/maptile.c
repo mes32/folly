@@ -5,15 +5,16 @@
  *
  */
 
+#include "mapcoordinate.h"
 #include "maptile.h"
-#include "playercharacter.h"
 
 
 /**
  *  Initializes a map tile
  */
-MapTile initMapTile(int isWall) {
+MapTile initMapTile(int x, int y, int isWall) {
     MapTile mapTile;
+    mapTile.position = initMapCoordinate(x, y);
     mapTile.explored = 0;
     mapTile.visible = 0;
     mapTile.isWall = isWall;
@@ -23,23 +24,26 @@ MapTile initMapTile(int isWall) {
 /**
  *  Displays the map tile in an ncurses window at the given coordinates
  */
-void displayMapTile(WINDOW* window, MapTile* tile, int x, int y, PlayerCharacter* player) {
+void displayMapTile(WINDOW* window, MapTile* tile, MapCoordinate playerPosition) {
+
+    MapCoordinate tilePosition = tile->position;
+
     if (tile->explored) {
         if (tile->visible) {
             if (tile->isWall) {
-                printCharPC('#', x, y, window, player->x, player->y, WHITE_ON_BLACK);
+                printCharPC('#', tilePosition, window, playerPosition, WHITE_ON_BLACK);
             } else {
-                printCharPC('.', x, y, window, player->x, player->y, WHITE_ON_BLACK);
+                printCharPC('.', tilePosition, window, playerPosition, WHITE_ON_BLACK);
             }
         } else {
             if (tile->isWall) {
-                printCharPC('#', x, y, window, player->x, player->y, RED_ON_BLACK);
+                printCharPC('#', tilePosition, window, playerPosition, RED_ON_BLACK);
             } else {
-                printCharPC(' ', x, y, window, player->x, player->y, RED_ON_BLACK);
+                printCharPC(' ', tilePosition, window, playerPosition, RED_ON_BLACK);
             }
         }
     } else {
-        printCharPC(' ', x, y, window, player->x, player->y, WHITE_ON_BLACK);
+        printCharPC(' ', tilePosition, window, playerPosition, WHITE_ON_BLACK);
     }
 }
 

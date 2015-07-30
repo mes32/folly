@@ -9,14 +9,8 @@
 #include <sys/ioctl.h>
 //#include <stdio.h>
 #include <ncurses.h>
+#include "mapcoordinate.h"
 #include "ncwindow.h"
-
-
-// The window width in characters
-static const int WIDTH = 500;
-
-// The window height in characters
-static const int HEIGHT = 500;
 
 
 /**
@@ -68,30 +62,33 @@ void initColors() {
 /**
  *  Prints a character c at location (x, y) using a given ncurses color pair
  */
-void printChar(char c, int x, int y, textColorPair color) {
+void printChar(char c, MapCoordinate position, textColorPair color) {
 
     char buffer[2];
     buffer[0] = c;
     buffer[1] = '\0';
 
     	attron(COLOR_PAIR(color));
-    mvprintw(y, x, buffer);
+    mvprintw(position.y, position.x, buffer);
     attroff(COLOR_PAIR(color));
 }
 
 /**
  *  Prints a bold character c at location (x, y) using a given ncurses color pair
  */
-void printCharBold(char c, int x, int y, textColorPair color) {
+void printCharBold(char c, MapCoordinate position, textColorPair color) {
     attron(A_BOLD);
-    printChar(c, x, y, color);
+    printChar(c, position, color);
     attroff(A_BOLD);
 }
 
 /**
  *  Prints a character c at relative location (x, y) where the player's position is centered on the window
  */
-void printCharPC(char c, int x, int y, WINDOW* window, int playerX, int playerY, textColorPair color) {
+void printCharPC(char c, MapCoordinate position, WINDOW* window, MapCoordinate playerPosition, textColorPair color) {
+
+    int x = position.x;
+    int y = position.y;
 
     int maxX;
     int maxY;
@@ -100,28 +97,30 @@ void printCharPC(char c, int x, int y, WINDOW* window, int playerX, int playerY,
     int centerX = maxX/2;
     int centerY = (maxY-3)/2;
 
-    int deltaX = centerX - playerX;
-    int deltaY = centerY - playerY;
+    int deltaX = centerX - playerPosition.x;
+    int deltaY = centerY - playerPosition.y;
 
-    printChar(c, x + deltaX, y + deltaY, color);
+    MapCoordinate playerCenteredPosition = initMapCoordinate(x + deltaX, y + deltaY);
+
+    printChar(c, playerCenteredPosition, color);
 }
 
 /**
  *  Prints a bold character c at relative location (x, y) where the player's position is centered on the window
  */
-void printCharBoldPC(char c, int x, int y, WINDOW* window, int playerX, int playerY, textColorPair color) {
+void printCharBoldPC(char c, MapCoordinate position, WINDOW* window, MapCoordinate playerPosition, textColorPair color) {
     attron(A_BOLD);
-    printCharPC(c, x, y, window, playerX, playerY, color);
+    printCharPC(c, position, window, playerPosition, color);
     attroff(A_BOLD);
 }
 
 /**
  *  Prints an integer c at location (x, y) using a given ncurses color pair
  */
-void printInt(int c, int x, int y, textColorPair color) {
+void printInt(int c, MapCoordinate position, textColorPair color) {
     c %= 10;
     c += 48;
     char castToChar = (char) c;
 
-    printChar(castToChar, x, y, color);
+    printChar(castToChar, position, color);
 }

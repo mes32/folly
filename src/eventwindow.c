@@ -6,6 +6,7 @@
  */
 
 #include "eventwindow.h"
+#include "mapcoordinate.h"
 #include "ncwindow.h"
 
 
@@ -19,7 +20,8 @@ void displayEventWindow(WINDOW* window) {
 
     for (int y=maxY-3; y <= maxY; y++) {
         for (int x=0; x <= maxX; x++) {
-            printChar(' ', x, y, BLACK_ON_WHITE);
+            MapCoordinate position = initMapCoordinate(x, y);
+            printChar(' ', position, BLACK_ON_WHITE);
         }
     }
 }

@@ -10,6 +10,7 @@
 #define NCWINDOW_H_
 
 #include <ncurses.h>
+#include "mapcoordinate.h"
 
 typedef enum {
     WHITE_ON_BLACK = 1,
@@ -37,26 +38,26 @@ void initColors();
 /**
  *  Prints a character c at location (x, y) using a given ncurses color pair
  */
-void printChar(char c, int x, int y, textColorPair color);
+void printChar(char c, MapCoordinate position, textColorPair color);
 
 /**
  *  Prints a bold character c at location (x, y) using a given ncurses color pair
  */
-void printCharBold(char c, int x, int y, textColorPair color);
+void printCharBold(char c, MapCoordinate position, textColorPair color);
 
 /**
  *  Prints a character c at relative location (x, y) where the player's position is centered on the window
  */
-void printCharPC(char c, int x, int y, WINDOW* window, int playerX, int playerY, textColorPair color);
+void printCharPC(char c, MapCoordinate position, WINDOW* window, MapCoordinate playerPosition, textColorPair color);
 
 /**
  *  Prints a bold character c at relative location (x, y) where the player's position is centered on the window
  */
-void printCharBoldPC(char c, int x, int y, WINDOW* window, int playerX, int playerY, textColorPair color);
+void printCharBoldPC(char c, MapCoordinate position, WINDOW* window, MapCoordinate playerPosition, textColorPair color);
 
 /**
  *  Prints an integer c at location (x, y) using a given ncurses color pair
  */
-void printInt(int c, int x, int y, textColorPair color);
+void printInt(int c, MapCoordinate position, textColorPair color);
 
 #endif // NCWINDOW_H_

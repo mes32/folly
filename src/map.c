@@ -11,7 +11,6 @@
 #include <string.h>
 #include "map.h"
 #include "maptile.h"
-#include "playercharacter.h"
 
 
 /**
@@ -40,10 +39,10 @@ Map initMap(int xDim, int yDim) {
         for (int y=0; y < yDim; y++) {
             if (x == 0 || y == 0 || x == xDim-1 || y == yDim-1) {
                 // Add wall tile
-                map.tiles[x][y] = initMapTile(1);
+                map.tiles[x][y] = initMapTile(x, y, 1);
             } else {
                 // Add non-wall tile
-                map.tiles[x][y] = initMapTile(0);
+                map.tiles[x][y] = initMapTile(x, y, 0);
             }
         }
     }
@@ -64,15 +63,18 @@ void deleteMap(Map* map) {
 /**
  *  Displays the map in an ncurses window
  */
-void displayMap(WINDOW* window, Map* map, PlayerCharacter* player) {
+void displayMap(WINDOW* window, Map* map, MapCoordinate playerPosition) {
     for (int x=0; x < map->xDim; x++) {
         for (int y=0; y < map->yDim; y++) {
-            displayMapTile(window, &map->tiles[x][y], x, y, player);
+            displayMapTile(window, &map->tiles[x][y], playerPosition);
         }
     }
 }
 
-void updateVisibility(Map* map, int playerX, int playerY, int lightRadius) {
+void updateVisibility(Map* map, MapCoordinate playerPosition, int lightRadius) {
+
+    int playerX = playerPosition.x;
+    int playerY = playerPosition.y;
 
     int xMinBox = playerX-lightRadius;
     int xMaxBox = playerX+lightRadius;

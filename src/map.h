@@ -8,8 +8,8 @@
 #ifndef MAP_H_
 #define MAP_H_
 
+#include "mapcoordinate.h"
 #include "maptile.h"
-#include "playercharacter.h"
 
 /**
  *  A gameplay map composed of a two dimensional grid of map tiles
@@ -33,8 +33,8 @@ void deleteMap(Map* map);
 /**
  *  Displays the map in an ncurses window
  */
-void displayMap(WINDOW* window, Map* map, PlayerCharacter* player);
+void displayMap(WINDOW* window, Map* map, MapCoordinate playerPosition);
 
-void updateVisibility(Map* map, int x, int y, int lightRadius);
+void updateVisibility(Map* map, MapCoordinate playerPosition, int lightRadius);
 
 #endif // MAP_H_
