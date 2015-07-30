@@ -7,7 +7,11 @@
 
 CC=gcc
 CFLAGS=-Wall -g
-CFLAGS=-Wall -g -ansi -std=c89 -std=c99 -O3
+CFLAGS=-Wall -g -ansi -O3
+CFLAGS=-Wall -g -std=c89 -O3
+CFLAGS=-Wall -Wextra -g -ansi -std=c89 -std=c99 -O3
+CFLAGS=-Wall -g -std=c99 -O3
+#CFLAGS=-Wall -Wextra -g -std=c99 -O3
 LDFLAGS=-lncurses
 
 OBJECT_FILES= \

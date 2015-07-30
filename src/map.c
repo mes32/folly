@@ -37,7 +37,7 @@ Map initMap(int xDim, int yDim) {
 
     for (int x=0; x < xDim; x++) {
         for (int y=0; y < yDim; y++) {
-            if (x == 0 || y == 0 || x == xDim-1 || y == yDim-1) {
+            if (x == 0 || y == 0 || x == xDim-1 || y == yDim-1 || (y == yDim/2 && x == xDim/2)) {
                 // Add wall tile
                 map.tiles[x][y] = initMapTile(x, y, 1);
             } else {
