@@ -14,6 +14,7 @@ OBJECT_FILES= \
     bin/game.o \
     bin/ncwindow.o \
     bin/map.o \
+    bin/mapcoordinate.o \
     bin/maptile.o \
     bin/playercharacter.o \
     bin/statusbar.o \
