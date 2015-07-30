@@ -91,13 +91,17 @@ static void displayHelpScreen() {
 static void displayGameScreen() {
     clear();
 
-    displayMap(window, &gameState.map);
-    displayPlayerCharacter(&gameState.player);
+    displayMap(window, &gameState.map, &gameState.player);
+    displayPlayerCharacter(window, &gameState.player);
     displayStatusBar(window, &gameState.player);
-    //displayEventWindow(window, &gameState.eventQueue);
 
-    wmove(window, 0, 0);
+    //char* events[3] = gameState.eventQueue;
+
+    displayEventWindow(window);
+
+    //wmove(window, 0, 0);
     usleep(DISPLAY_DELAY);
+    //wrefresh(window);
     refresh();
 }
 
@@ -106,7 +110,7 @@ static void displayGameScreen() {
  */
 static void initGameState() {
 
-    gameState.map = initMap(20, 10);
+    gameState.map = initMap(40, 20);
 
     gameState.player = initPlayerCharacter();
 
@@ -151,6 +155,8 @@ static void updateGameState(int input) {
         default:
             break;
     }
+
+    updateVisibility(&gameState.map, gameState.player.x, gameState.player.y, gameState.player.lightRadius);
 }
 
 

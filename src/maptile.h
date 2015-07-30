@@ -9,6 +9,7 @@
 #define MAPTILE_H_
 
 #include "ncwindow.h"
+#include "playercharacter.h"
 
 /**
  *  A tile in the game map
@@ -29,7 +30,7 @@ MapTile initMapTile(int isWall);
 /**
  *  Displays the map tile in an ncurses window at the given coordinates
  */
-void displayMapTile(MapTile* tile, int x, int y);
+void displayMapTile(WINDOW* window, MapTile* tile, int x, int y, PlayerCharacter* player);
 
 
 #endif // MAPTILE_H_

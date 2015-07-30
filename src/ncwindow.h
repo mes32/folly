@@ -45,6 +45,16 @@ void printChar(char c, int x, int y, textColorPair color);
 void printCharBold(char c, int x, int y, textColorPair color);
 
 /**
+ *  Prints a character c at relative location (x, y) where the player's position is centered on the window
+ */
+void printCharPC(char c, int x, int y, WINDOW* window, int playerX, int playerY, textColorPair color);
+
+/**
+ *  Prints a bold character c at relative location (x, y) where the player's position is centered on the window
+ */
+void printCharBoldPC(char c, int x, int y, WINDOW* window, int playerX, int playerY, textColorPair color);
+
+/**
  *  Prints an integer c at location (x, y) using a given ncurses color pair
  */
 void printInt(int c, int x, int y, textColorPair color);

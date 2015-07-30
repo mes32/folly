@@ -6,6 +6,7 @@
  */
 
 #include "maptile.h"
+#include "playercharacter.h"
 
 
 /**
@@ -22,11 +23,23 @@ MapTile initMapTile(int isWall) {
 /**
  *  Displays the map tile in an ncurses window at the given coordinates
  */
-void displayMapTile(MapTile* tile, int x, int y) {
-    if (tile->isWall) {
-        printChar('#', x, y, WHITE_ON_BLACK);
+void displayMapTile(WINDOW* window, MapTile* tile, int x, int y, PlayerCharacter* player) {
+    if (tile->explored) {
+        if (tile->visible) {
+            if (tile->isWall) {
+                printCharPC('#', x, y, window, player->x, player->y, WHITE_ON_BLACK);
+            } else {
+                printCharPC('.', x, y, window, player->x, player->y, WHITE_ON_BLACK);
+            }
+        } else {
+            if (tile->isWall) {
+                printCharPC('#', x, y, window, player->x, player->y, RED_ON_BLACK);
+            } else {
+                printCharPC(' ', x, y, window, player->x, player->y, RED_ON_BLACK);
+            }
+        }
     } else {
-        printChar('.', x, y, WHITE_ON_BLACK);
+        printCharPC(' ', x, y, window, player->x, player->y, WHITE_ON_BLACK);
     }
 }
 

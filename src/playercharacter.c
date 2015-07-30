@@ -29,15 +29,9 @@ PlayerCharacter initPlayerCharacter() {
 /**
  *  Displays the map tile in an ncurses window at the given coordinates
  */
-void displayPlayerCharacter(PlayerCharacter* player) {
+void displayPlayerCharacter(WINDOW* window, PlayerCharacter* player) {
 
-    printCharBold('@', player->x, player->y, WHITE_ON_BLACK);
-
-    /*attron(COLOR_PAIR(WHITE_ON_BLACK));
-    attron(A_BOLD);
-    mvprintw(player->y, player->x, "@");
-    attroff(A_BOLD);
-    attroff(COLOR_PAIR(WHITE_ON_BLACK));*/
+    printCharBoldPC('@', player->x, player->y, window, player->x, player->y, WHITE_ON_BLACK);
 }
 
 void movePlayerCharacter(PlayerCharacter* player, int deltaX, int deltaY) {

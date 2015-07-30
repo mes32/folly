@@ -6,6 +6,8 @@
  *
  */
 
+#include <sys/ioctl.h>
+//#include <stdio.h>
 #include <ncurses.h>
 #include "ncwindow.h"
 
@@ -26,9 +28,15 @@ WINDOW* startNCWindow() {
 	noecho();
     curs_set(FALSE);
 	cbreak();	// Line buffering disabled. Pass on everything
-		
+
+    struct winsize terminalWindow;
+    ioctl(0, TIOCGWINSZ, &terminalWindow);
+    int rows = terminalWindow.ws_row;
+    int columns = terminalWindow.ws_col;
+
 	WINDOW *window;
-	window = newwin(HEIGHT, WIDTH, 0, 0);
+	window = newwin(rows, columns, 0, 0);
+
 	keypad(window, TRUE);
 	clear();
 
@@ -77,6 +85,33 @@ void printChar(char c, int x, int y, textColorPair color) {
 void printCharBold(char c, int x, int y, textColorPair color) {
     attron(A_BOLD);
     printChar(c, x, y, color);
+    attroff(A_BOLD);
+}
+
+/**
+ *  Prints a character c at relative location (x, y) where the player's position is centered on the window
+ */
+void printCharPC(char c, int x, int y, WINDOW* window, int playerX, int playerY, textColorPair color) {
+
+    int maxX;
+    int maxY;
+    getmaxyx(window, maxY, maxX);
+
+    int centerX = maxX/2;
+    int centerY = (maxY-3)/2;
+
+    int deltaX = centerX - playerX;
+    int deltaY = centerY - playerY;
+
+    printChar(c, x + deltaX, y + deltaY, color);
+}
+
+/**
+ *  Prints a bold character c at relative location (x, y) where the player's position is centered on the window
+ */
+void printCharBoldPC(char c, int x, int y, WINDOW* window, int playerX, int playerY, textColorPair color) {
+    attron(A_BOLD);
+    printCharPC(c, x, y, window, playerX, playerY, color);
     attroff(A_BOLD);
 }
 

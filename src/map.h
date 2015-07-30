@@ -9,6 +9,7 @@
 #define MAP_H_
 
 #include "maptile.h"
+#include "playercharacter.h"
 
 /**
  *  A gameplay map composed of a two dimensional grid of map tiles
@@ -32,6 +33,8 @@ void deleteMap(Map* map);
 /**
  *  Displays the map in an ncurses window
  */
-void displayMap(WINDOW* window, Map* map);
+void displayMap(WINDOW* window, Map* map, PlayerCharacter* player);
+
+void updateVisibility(Map* map, int x, int y, int lightRadius);
 
 #endif // MAP_H_
