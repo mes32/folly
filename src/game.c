@@ -42,6 +42,7 @@ static void displayHelpScreen();
 static void displayGameScreen();
 static void initGameState();
 static void updateGameState(int input);
+static int isWall(Map* map, MapCoordinate position, int deltaX, int deltaY);
 
 
 /**
@@ -115,40 +116,56 @@ static void initGameState() {
  *  Increments the game state by one time step based on the player's input 
  */
 static void updateGameState(int input) {
+
+    int deltaX = 0;
+    int deltaY = 0;
+
     switch(input) {
         case 'k':
         case KEY_UP:
-            movePlayerCharacter(&gameState.player, 0, -1);
+            deltaY = -1;
             break;
         case 'j':
         case KEY_DOWN:
-            movePlayerCharacter(&gameState.player, 0, 1);
+            deltaY = 1;
             break;
         case 'h':
         case KEY_LEFT:
-            movePlayerCharacter(&gameState.player, -1, 0);
+            deltaX = -1;
             break;
         case 'l':
         case KEY_RIGHT:
-            movePlayerCharacter(&gameState.player, 1, 0);
+            deltaX = 1;
             break;
         case 'y':
-            movePlayerCharacter(&gameState.player, -1, -1);
+            deltaX = -1;
+            deltaY = -1;
             break;
         case 'u':
-            movePlayerCharacter(&gameState.player, 1, -1);
+            deltaX = 1;
+            deltaY = -1;
             break;
         case 'b':
-            movePlayerCharacter(&gameState.player, -1, 1);
+            deltaX = -1;
+            deltaY = 1;
             break;
         case 'n':
-            movePlayerCharacter(&gameState.player, 1, 1);
+            deltaX = 1;
+            deltaY = 1;
             break;
         default:
             break;
     }
 
+    if (! isWall(&gameState.map, gameState.player.position, deltaX, deltaY)) {
+        movePlayerCharacter(&gameState.player, deltaX, deltaY);
+    }
+
     updateVisibility(&gameState.map, gameState.player.position, gameState.player.lightRadius);
+}
+
+static int isWall(Map* map, MapCoordinate position, int deltaX, int deltaY) {
+    return map->tiles[position.x+deltaX][position.y+deltaY].isWall;
 }
 
 
