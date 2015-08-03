@@ -5,6 +5,7 @@
  *
  */
 
+#include <stdlib.h>
 #include <unistd.h>
 #include "game.h"
 #include "map.h"
@@ -40,7 +41,7 @@ static GameState gameState;
 // Static function prototypes
 static void displayHelpScreen();
 static void displayGameScreen();
-static void initGameState();
+static void initGameState(unsigned int randomSeed);
 static void updateGameState(int input);
 static int isWall(Map* map, MapCoordinate position, int deltaX, int deltaY);
 
@@ -48,10 +49,10 @@ static int isWall(Map* map, MapCoordinate position, int deltaX, int deltaY);
 /**
  *  Initializes the game state and retains a pointer to the ncurses display window
  */
-void initGame(WINDOW* ncursesWindow) {
+void initGame(WINDOW* ncursesWindow, unsigned int randomSeed) {
     window = ncursesWindow;
     initColors();
-    initGameState();
+    initGameState(randomSeed);
 }
 
 /**
@@ -101,7 +102,9 @@ static void displayGameScreen() {
 /**
  *  Initializes the game in the starting state
  */
-static void initGameState() {
+static void initGameState(unsigned int randomSeed) {
+
+    srand(randomSeed);
 
     gameState.map = initMap(40, 20);
 

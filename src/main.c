@@ -5,25 +5,35 @@
  *
  */
 
-#include <stdio.h>
-#include <unistd.h>
 #include <ncurses.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <unistd.h>
 #include "game.h"
 #include "ncwindow.h"
 
 
-void printTitleAndWait(char* version);
+void printTitleAndWait(char* version, unsigned int randomSeed);
 
 
-int main() {
+int main(int argc, char *argv[]) {
+
+    // Setup random seed
+    unsigned int randomSeed = 0;
+    if (argc > 1) {
+        randomSeed = (unsigned int)atoi(argv[1]);
+    } else {
+        randomSeed = (unsigned int)time(NULL);
+    }
 
     // Print the title screen
     char* VERSION = "0.1";
-    printTitleAndWait(VERSION);
+    printTitleAndWait(VERSION, randomSeed);
 
     // Initialize and run the game inside an ncurses window
 	WINDOW *window = startNCWindow();
-    initGame(window);
+    initGame(window, randomSeed);
     runGame();
     endNCWindow();
 
@@ -34,7 +44,7 @@ int main() {
  *  Prints the version number and 'FOLLY' in ASCII-art
  *  Then it waits for keyboard input
  */
-void printTitleAndWait(char* version) {
+void printTitleAndWait(char* version, unsigned int randomSeed) {
     printf("\n");
     printf("Starting Folly v%s\n", version);
     printf("\n");
@@ -47,7 +57,9 @@ void printTitleAndWait(char* version) {
     printf("    \\/_/      )_____(  \\/_____/ \\/_____/\\/_/     \n");
     printf("\n");
     printf("\n");
-    printf("Press enter key to continue...\n");
+    printf("RANDOM SEED: %u\n", randomSeed);
+    printf("\n");
+    printf("Press enter to continue.\n");
 
     getchar();
 }

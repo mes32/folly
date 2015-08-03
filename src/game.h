@@ -13,7 +13,7 @@
 /**
  *  Initializes the game state and retains a pointer to the ncurses display window
  */
-void initGame(WINDOW* window);
+void initGame(WINDOW* window, unsigned int randomSeed);
 
 /**
  *  Runs the main game loop (increments game state time-steps)
