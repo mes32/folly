@@ -16,36 +16,67 @@
 /**
  *  Initializes the game map
  */
-Map initMap(int xDim, int yDim) {
-    Map map;
-    map.xDim = xDim;
-    map.yDim = yDim;
+Map initMap() {
 
-    map.tiles = (MapTile**)malloc(sizeof(MapTile*) * xDim);
+    int i = rand();
+
+    Map map;
+    char* fileName = "data/maps/small_maze_0.txt";
+    FILE* mapFile;
+    char buf[1000];
+    int xDim = 0;
+    int yDim = 0;
+
+    // Find y-dimension of map file
+    mapFile = fopen(fileName, "r");
+    while(fgets(buf, 1000, mapFile) != NULL) {
+        yDim++;
+    }
+    fclose(mapFile);
+
+    // Allocate map tiles to fit the y-dimension
+    map.tiles = (MapTile**)malloc(sizeof(MapTile*) * yDim);
     if (! map.tiles) {
         perror("Error allocating memory. See initMap() in map.c");
         abort();
     }
 
-    for (int i=0; i < xDim; i++) {
-        map.tiles[i] = (MapTile*)malloc(sizeof(MapTile) * yDim);
-        if (! map.tiles[i]) {
+    mapFile = fopen(fileName, "r");
+    char* line = fgets(buf, 1000, mapFile);
+    int y = 0;
+    while (line != NULL) {
+
+        // Allocate map tiles to fit the x-dimension of the current row
+        xDim = strlen(line);
+        map.tiles[y] = (MapTile*)malloc(sizeof(MapTile) * xDim);
+        if (! map.tiles[y]) {
             perror("Error allocating memory. See initMap() in map.c");
             abort();
         }
-    }
 
-    for (int x=0; x < xDim; x++) {
-        for (int y=0; y < yDim; y++) {
-            if (x == 0 || y == 0 || x == xDim-1 || y == yDim-1 || (y == yDim/2 && x == xDim/2)) {
+        // Read the current row and initialize map tile to match
+        int x = 0;
+        char c = line[x];
+        while (c != '\n') {
+            if (c == '#') {
                 // Add wall tile
-                map.tiles[x][y] = initMapTile(x, y, 1);
+                map.tiles[y][x] = initMapTile(x, y, 1);
             } else {
                 // Add non-wall tile
-                map.tiles[x][y] = initMapTile(x, y, 0);
+                map.tiles[y][x] = initMapTile(x, y, 0); 
             }
+
+            x++;
+            c = line[x];
         }
+
+        y++;
+        line = fgets(buf, 1000, mapFile);
     }
+    fclose(mapFile);
+
+    map.yDim = yDim;
+    map.xDim = xDim;
 
     return map;
 }
@@ -54,8 +85,8 @@ Map initMap(int xDim, int yDim) {
  *  Frees dynamically allocated memory used for map tiles
  */
 void deleteMap(Map* map) {
-    for (int x = map->xDim - 1; x >= 0; x--) {
-        free(map->tiles[x]);
+    for (int y = map->yDim - 1; y >= 0; y--) {
+        free(map->tiles[y]);
     }
     free(map->tiles);
 }
@@ -64,9 +95,9 @@ void deleteMap(Map* map) {
  *  Displays the map in an ncurses window
  */
 void displayMap(WINDOW* window, Map* map, MapCoordinate playerPosition) {
-    for (int x=0; x < map->xDim; x++) {
-        for (int y=0; y < map->yDim; y++) {
-            displayMapTile(window, &map->tiles[x][y], playerPosition);
+    for (int y=0; y < map->yDim; y++) {
+        for (int x=0; x < map->xDim; x++) {
+            displayMapTile(window, &map->tiles[y][x], playerPosition);
         }
     }
 }
@@ -105,13 +136,13 @@ void updateVisibility(Map* map, MapCoordinate playerPosition, int lightRadius) {
         yMaxBox = map->yDim;
     }
 
-    for (int i=0; i < map->xDim; i++) {
-        for (int j=0; j < map->yDim; j++) {
-            if (i < xMinBox || i > xMaxBox || j < yMinBox || j > yMaxBox) {
+    for (int i=0; i < map->yDim; i++) {
+        for (int j=0; j < map->xDim; j++) {
+            if (i < yMinBox || i > yMaxBox || j < xMinBox || j > xMaxBox) {
                 map->tiles[i][j].visible = 0;
             } else {
-                float h = (float)(j - playerY);
-                float w = (float)(i - playerX);
+                float h = (float)(i - playerY);
+                float w = (float)(j - playerX);
                 float dist = sqrt(w*w + h*h);
                 if (dist < (float)lightRadius) {
                     map->tiles[i][j].visible = 1;

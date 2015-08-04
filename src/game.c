@@ -106,7 +106,7 @@ static void initGameState(unsigned int randomSeed) {
 
     srand(randomSeed);
 
-    gameState.map = initMap(40, 20);
+    gameState.map = initMap();
 
     gameState.player = initPlayerCharacter();
 
@@ -168,7 +168,7 @@ static void updateGameState(int input) {
 }
 
 static int isWall(Map* map, MapCoordinate position, int deltaX, int deltaY) {
-    return map->tiles[position.x+deltaX][position.y+deltaY].isWall;
+    return map->tiles[position.y+deltaY][position.x+deltaX].isWall;
 }
 
 
