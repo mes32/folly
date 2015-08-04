@@ -23,6 +23,7 @@ OBJECT_FILES= \
     bin/playercharacter.o \
     bin/statusbar.o \
     bin/eventwindow.o \
+    bin/randfolly.o \
 
 all: start_game
 
