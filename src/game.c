@@ -11,6 +11,7 @@
 #include "map.h"
 #include "ncwindow.h"
 #include "playercharacter.h"
+#include "randfolly.h"
 #include "statusbar.h"
 #include "eventwindow.h"
 
@@ -104,7 +105,7 @@ static void displayGameScreen() {
  */
 static void initGameState(unsigned int randomSeed) {
 
-    srand(randomSeed);
+    initRandomSeed(randomSeed);
 
     gameState.map = initMap();
 

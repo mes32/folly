@@ -11,6 +11,7 @@
 #include <string.h>
 #include "map.h"
 #include "maptile.h"
+#include "randfolly.h"
 
 
 /**
@@ -18,10 +19,11 @@
  */
 Map initMap() {
 
-    int i = rand();
+    int i = randUnif(0, 3);
 
     Map map;
-    char* fileName = "data/maps/small_maze_0.txt";
+    char fileName[32];
+    sprintf(fileName, "data/maps/small_maze_%d.txt", i);
     FILE* mapFile;
     char buf[1000];
     int xDim = 0;
