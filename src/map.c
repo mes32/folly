@@ -148,7 +148,7 @@ void updateVisibility(Map* map, MapCoordinate playerPosition, int lightRadius) {
                 float dist = sqrt(w*w + h*h);
                 if (dist < (float)lightRadius) {
                     map->tiles[i][j].visible = 1;
-                    map->tiles[i][j].explored = 1;
+                    //map->tiles[i][j].explored = 1;
                 } else {
                     map->tiles[i][j].visible = 0;
                 }
@@ -198,14 +198,14 @@ void updateVisibility(Map* map, MapCoordinate playerPosition, int lightRadius) {
             }
         }
 
-    }
+    }*/
 
-    for (int i = xMinBox; i < xMaxBox; i++) {
-        for (int j = yMinBox; j < yMaxBox; j++) {
-            if (map->tiles[i][j].visible == 1) {
-                map->tiles[i][j].explored = 1;
+    for (int y = yMinBox; y < yMaxBox; y++) {
+        for (int x = xMinBox; x < xMaxBox; x++) {
+            if (map->tiles[y][x].visible == 1) {
+                map->tiles[y][x].explored = 1;
             }
         }
-    }*/
+    }
 }
 

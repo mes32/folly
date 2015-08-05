@@ -24,6 +24,7 @@ OBJECT_FILES= \
     bin/statusbar.o \
     bin/eventwindow.o \
     bin/randfolly.o \
+    bin/bresenhamline.o \
 
 all: start_game
 
