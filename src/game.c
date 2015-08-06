@@ -106,14 +106,8 @@ static void displayGameScreen() {
 static void initGameState(unsigned int randomSeed) {
 
     initRandomSeed(randomSeed);
-
     gameState.map = initMap();
-
     gameState.player = initPlayerCharacter();
-
-    gameState.eventQueue[0] = "You walk up.";
-    gameState.eventQueue[1] = "You walk right.";
-    gameState.eventQueue[2] = "You walk down.";
 }
 
 /**

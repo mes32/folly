@@ -19,11 +19,11 @@
  */
 Map initMap() {
 
-    int i = randUnif(0, 3);
+    int randomInt = randUnif(0, 3);
 
     Map map;
     char fileName[32];
-    sprintf(fileName, "data/maps/small_maze_%d.txt", i);
+    sprintf(fileName, "data/maps/small_maze_%d.txt", randomInt);
     FILE* mapFile;
     char buf[1000];
     int xDim = 0;
@@ -50,6 +50,14 @@ Map initMap() {
 
         // Allocate map tiles to fit the x-dimension of the current row
         xDim = strlen(line);
+        int i = 0;
+        for (i=0; i < xDim; i++) {
+            if (line[i] != '#' && line[i] != ' ') {
+                break;
+            }
+        }
+        xDim = i;
+
         map.tiles[y] = (MapTile*)malloc(sizeof(MapTile) * xDim);
         if (! map.tiles[y]) {
             perror("Error allocating memory. See initMap() in map.c");
@@ -59,13 +67,15 @@ Map initMap() {
         // Read the current row and initialize map tile to match
         int x = 0;
         char c = line[x];
-        while (c != '\n') {
+        while (c == '#' || c == ' ') {
             if (c == '#') {
                 // Add wall tile
                 map.tiles[y][x] = initMapTile(x, y, 1);
-            } else {
+            } else if (c == ' ') {
                 // Add non-wall tile
-                map.tiles[y][x] = initMapTile(x, y, 0); 
+                map.tiles[y][x] = initMapTile(x, y, 0);
+            } else {
+                break;
             }
 
             x++;
@@ -97,6 +107,7 @@ void deleteMap(Map* map) {
  *  Displays the map in an ncurses window
  */
 void displayMap(WINDOW* window, Map* map, MapCoordinate playerPosition) {
+
     for (int y=0; y < map->yDim; y++) {
         for (int x=0; x < map->xDim; x++) {
             displayMapTile(window, &map->tiles[y][x], playerPosition);

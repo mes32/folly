@@ -16,7 +16,7 @@ PlayerCharacter initPlayerCharacter() {
     PlayerCharacter player;
 
     player.name = "Player1";
-    player.position = initMapCoordinate(1, 1);
+    player.position = initMapCoordinate(1, 2);
     player.healthPoints = 20;
     player.maxHealthPoints = 20;
     player.lightRadius = 5;
@@ -40,9 +40,3 @@ void movePlayerCharacter(PlayerCharacter* player, int deltaX, int deltaY) {
     movePosition(&player->position, deltaX, deltaY);
 }
 
-/**
- *  Displays the map tile in an ncurses window at the given coordinates
- */
-//static void displayUnexplored(int x, int y) {
-//    int k = 0;
-//}

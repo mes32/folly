@@ -32,24 +32,23 @@ void displayMapTile(WINDOW* window, MapTile* tile, MapCoordinate playerPosition)
         if (tile->visible) {
             if (tile->isWall) {
                 printCharPC('#', tilePosition, window, playerPosition, WHITE_ON_BLACK);
+                return;
             } else {
                 printCharPC('.', tilePosition, window, playerPosition, WHITE_ON_BLACK);
+                return;
             }
         } else {
             if (tile->isWall) {
                 printCharPC('#', tilePosition, window, playerPosition, RED_ON_BLACK);
+                return;
             } else {
                 printCharPC(' ', tilePosition, window, playerPosition, RED_ON_BLACK);
+                return;
             }
         }
     } else {
         printCharPC(' ', tilePosition, window, playerPosition, WHITE_ON_BLACK);
+        return;
     }
 }
 
-/**
- *  Displays the map tile in an ncurses window at the given coordinates
- */
-//static void displayUnexplored(int x, int y) {
-//    int k = 0;
-//}
