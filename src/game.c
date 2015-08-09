@@ -162,6 +162,9 @@ static void updateGameState(int input) {
     updateVisibility(&gameState.map, gameState.player.position, gameState.player.lightRadius);
 }
 
+/**
+ *  Returns 1 of the proposed change in position would place the character on a wall tile. Returns 0 otherwise.
+ */
 static int isWall(Map* map, MapCoordinate position, int deltaX, int deltaY) {
     return map->tiles[position.y+deltaY][position.x+deltaX].isWall;
 }
