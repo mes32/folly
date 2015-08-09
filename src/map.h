@@ -35,10 +35,19 @@ void deleteMap(Map* map);
  */
 void displayMap(WINDOW* window, Map* map, MapCoordinate playerPosition);
 
+/**
+ *  Updates the visibility status of map tiles based on the player's position and the radius of illumination around that position
+ */
 void updateVisibility(Map* map, MapCoordinate playerPosition, int lightRadius);
 
+/**
+ *  Returns 1 if a given location on the map contains a wall tile. Returns 0 otherwise.
+ */
 int isLocationWall(Map* map, MapCoordinate location);
 
+/**
+ *  Sets the visibility status of the maptile at a given location.
+ */
 void setVisibility(Map* map, MapCoordinate location, int visibility);
 
 #endif // MAP_H_

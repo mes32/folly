@@ -118,6 +118,9 @@ void displayMap(WINDOW* window, Map* map, MapCoordinate playerPosition) {
     }
 }
 
+/**
+ *  Updates the visibility status of map tiles based on the player's position and the radius of illumination around that position
+ */
 void updateVisibility(Map* map, MapCoordinate playerPosition, int lightRadius) {
 
     int playerX = playerPosition.x;
@@ -196,6 +199,9 @@ void updateVisibility(Map* map, MapCoordinate playerPosition, int lightRadius) {
     }
 }
 
+/**
+ *  Further refines the visibility status of tiles based on line-of-sight blocked by walls
+ */
 void static traceLineOfSight(Map* map, MapCoordinate playerPos, MapCoordinate endPos) {
 
     BresenhamLine** traceRef = NULL;
@@ -264,12 +270,18 @@ void static traceLineOfSight(Map* map, MapCoordinate playerPos, MapCoordinate en
     }*/
 }
 
+/**
+ *  Returns 1 if a given location on the map contains a wall tile. Returns 0 otherwise.
+ */
 int isLocationWall(Map* map, MapCoordinate location) {
     int x = location.x;
     int y = location.y;
     return map->tiles[y][x].isWall;
 }
 
+/**
+ *  Sets the visibility status of the maptile at a given location.
+ */
 void setVisibility(Map* map, MapCoordinate location, int visibility) {
     int x = location.x;
     int y = location.y;
