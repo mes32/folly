@@ -1,7 +1,7 @@
 /**
  *  randfolly.c - folly
  *
- *  This module defines ...
+ *  This module defines pseudorandom number generation for randomizing game behavior
  *
  */
 
