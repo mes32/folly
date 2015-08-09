@@ -1,7 +1,7 @@
 /**
  *  statusbar.c - folly
  *
- *  This module defines ...
+ *  This module defines a status bar displayed at the top of the game window to summarize the state of the player's character.
  *
  */
 
@@ -12,11 +12,11 @@
 
 
 static int addStringToBar(char* str, int index, textColorPair color);
-
 static void clearToBar(int start, int stop, textColorPair color);
 
+
 /**
- *  Displays the ...
+ *  Displays the status bar at the top of the game window. This status bar summarizes the state of the player character.
  */
 void displayStatusBar(WINDOW* window, PlayerCharacter* player) {
 
@@ -43,6 +43,9 @@ void displayStatusBar(WINDOW* window, PlayerCharacter* player) {
 
 }
 
+/**
+ *  Puts a character string into the status bar
+ */
 static int addStringToBar(char* str, int index, textColorPair color) {
     int x = 0;
     char c = str[x];
@@ -57,6 +60,9 @@ static int addStringToBar(char* str, int index, textColorPair color) {
     return index;
 }
 
+/**
+ *  Clears all text in the status bar
+ */
 static void clearToBar(int start, int stop, textColorPair color) {
     for (int i=start; i <= stop; i++) {
         MapCoordinate position = initMapCoordinate(i, 0);

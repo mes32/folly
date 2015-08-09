@@ -1,7 +1,7 @@
 /**
  *  statusbar.c - folly
  *
- *  This module defines ...
+ *  This module defines a status bar displayed at the top of the game window to summarize the state of the player's character.
  *
  */
 
@@ -12,7 +12,7 @@
 #include "playercharacter.h"
 
 /**
- *  Displays the ...
+ *  Displays the status bar at the top of the game window. This status bar summarizes the state of the player character.
  */
 void displayStatusBar(WINDOW* window, PlayerCharacter* player);
 
