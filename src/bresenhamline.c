@@ -1,7 +1,7 @@
 /**
  *  bresenhamline.c - folly
  *
- *  This module defines ...
+ *  This module defines a line created using Bresenham's Line Algorithm represented as a linked list of MapCoordinates
  *
  */
 
