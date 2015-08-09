@@ -1,7 +1,7 @@
 /**
  *  statusbar.c - folly
  *
- *  This module defines ...
+ *  This module defines the game event window that displays story events and narration as the player interacts with the game
  *
  */
 
@@ -12,7 +12,7 @@
 #include "eventwindow.h"
 
 /**
- *  Displays the ...
+ * Displays the game story events (i.e. event feed) in a section near the bottom of the game window
  */
 void displayEventWindow(WINDOW* window);
 
