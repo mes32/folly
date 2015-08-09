@@ -1,7 +1,7 @@
 /**
  *  mapcoordinate.h - folly
  *
- *  This module defines ...
+ *  This module defines a location on the game map based on x-y coordinate space
  *
  */
 
