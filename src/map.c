@@ -9,10 +9,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "bresenhamline.h"
 #include "map.h"
 #include "maptile.h"
 #include "randfolly.h"
 
+
+void static traceLineOfSight(Map* map, MapCoordinate playerPos, MapCoordinate endPos);
 
 /**
  *  Initializes the game map
@@ -167,7 +170,56 @@ void updateVisibility(Map* map, MapCoordinate playerPosition, int lightRadius) {
         }
     }
 
-    // Line-of-sight trace to bottome edge of light radius block (See Bresenham's Line Algorithm)
+    for (int i = xMinBox + 1; i < xMaxBox; i++) {
+        MapCoordinate topEdge = initMapCoordinate(i, yMaxBox);
+        traceLineOfSight(map, playerPosition, topEdge);
+
+        MapCoordinate bottomEdge = initMapCoordinate(i, yMinBox);
+        traceLineOfSight(map, playerPosition, bottomEdge);
+    }
+
+    for (int j = yMinBox; j <= yMaxBox; j++) {
+        MapCoordinate rightEdge = initMapCoordinate(xMaxBox, j);
+        traceLineOfSight(map, playerPosition, rightEdge);
+
+        MapCoordinate leftEdge = initMapCoordinate(xMinBox, j);
+        traceLineOfSight(map, playerPosition, leftEdge);
+    }
+
+
+    for (int y = yMinBox; y < yMaxBox; y++) {
+        for (int x = xMinBox; x < xMaxBox; x++) {
+            if (map->tiles[y][x].visible == 1) {
+                map->tiles[y][x].explored = 1;
+            }
+        }
+    }
+}
+
+void static traceLineOfSight(Map* map, MapCoordinate playerPos, MapCoordinate endPos) {
+
+    BresenhamLine** traceRef = NULL;
+    initBresenhamLine(traceRef, playerPos, endPos);
+    BresenhamLine* trace = *traceRef;
+
+    BresenhamLine* current = trace;
+    int hitWall = 0;
+
+    /*while (current != NULL) {
+
+        //if (hitWall) {
+            setVisibility(map, current->location, 0);
+        //}
+
+        if (isLocationWall(map, current->location)) {
+            hitWall = 1;
+        }
+
+        current = current->next;
+    }*/
+
+    //deleteBresenhamLine(traceRef);
+
     /*for (int i = xMinBox; i < xMaxBox; i++) {
         int j = yMinBox;
         int hitWall = 0;
@@ -210,13 +262,17 @@ void updateVisibility(Map* map, MapCoordinate playerPosition, int lightRadius) {
         }
 
     }*/
+}
 
-    for (int y = yMinBox; y < yMaxBox; y++) {
-        for (int x = xMinBox; x < xMaxBox; x++) {
-            if (map->tiles[y][x].visible == 1) {
-                map->tiles[y][x].explored = 1;
-            }
-        }
-    }
+int isLocationWall(Map* map, MapCoordinate location) {
+    int x = location.x;
+    int y = location.y;
+    return map->tiles[y][x].isWall;
+}
+
+void setVisibility(Map* map, MapCoordinate location, int visibility) {
+    int x = location.x;
+    int y = location.y;
+    map->tiles[1][1].visible = 1;
 }
 

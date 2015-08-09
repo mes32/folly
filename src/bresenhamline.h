@@ -22,12 +22,12 @@ struct _BresenhamLine {
 /**
  *  Initializes a line tracing from starting location to stopping location built using Bresenham's Line Alogrithm
  */
-//BresenhamLine initBresenhamLine(MapCoordinate startLoc, MapCoordinate stopLoc);
+void initBresenhamLine(BresenhamLine** lineRef, MapCoordinate startLoc, MapCoordinate endLoc);
 
 /**
  *  Frees dynamically allocated memory used for BresenhamLine
  */
-//void deleteBresenhamLine(BresenhamLine* line);
+void deleteBresenhamLine(BresenhamLine** line);
 
 
 #endif // BRESENHAMLINE_H_

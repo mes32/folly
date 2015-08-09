@@ -37,4 +37,8 @@ void displayMap(WINDOW* window, Map* map, MapCoordinate playerPosition);
 
 void updateVisibility(Map* map, MapCoordinate playerPosition, int lightRadius);
 
+int isLocationWall(Map* map, MapCoordinate location);
+
+void setVisibility(Map* map, MapCoordinate location, int visibility);
+
 #endif // MAP_H_
