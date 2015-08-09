@@ -1,7 +1,7 @@
 /**
  *  playercharacter.h - folly
  *
- *  This module defines ...
+ *  This module defines the player's character
  *
  */
 
@@ -39,6 +39,9 @@ PlayerCharacter initPlayerCharacter();
  */
 void displayPlayerCharacter(WINDOW* window, PlayerCharacter* player);
 
+/**
+ *  Change the player character's location
+ */
 void movePlayerCharacter(PlayerCharacter* player, int deltaX, int deltaY);
 
 

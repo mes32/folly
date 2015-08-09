@@ -1,7 +1,7 @@
 /**
  *  playercharacter.c - folly
  *
- *  This module defines ...
+ *  This module defines the player's character
  *
  */
 
@@ -36,6 +36,9 @@ void displayPlayerCharacter(WINDOW* window, PlayerCharacter* player) {
     printCharBoldPC('@', playerPosition, window, playerPosition, WHITE_ON_BLACK);
 }
 
+/**
+ *  Change the player character's location
+ */
 void movePlayerCharacter(PlayerCharacter* player, int deltaX, int deltaY) {
     movePosition(&player->position, deltaX, deltaY);
 }
