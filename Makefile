@@ -18,6 +18,7 @@ OBJECT_FILES= \
     bin/maptile.o \
     bin/playercharacter.o \
     bin/statusbar.o \
+    bin/storyevent.o \
     bin/eventwindow.o \
     bin/randfolly.o \
     bin/bresenhamline.o \

@@ -61,7 +61,7 @@ void initGame(WINDOW* ncursesWindow, unsigned int randomSeed) {
  */
 void runGame() {
 
-    displayHelpScreen();
+    //displayHelpScreen();
 
     int c;
 	while(1) {
