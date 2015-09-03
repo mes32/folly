@@ -1,7 +1,8 @@
 /**
  *  storyevent.h - folly
  *
- *  This module defines ...
+ *  This module defines events in the unfolding story. These are printed lines of texted displayed
+ *  to let the player know what is happening in the game.
  *
  */
 
@@ -11,10 +12,54 @@
 //#include "ncwindow.h"
 //#include "eventwindow.h"
 
+/*typedef enum {
+    INSTANT,
+    FAST,
+    SLOW
+} PrintSpeed;*/
+
+typedef struct _StoryEvent StoryEvent;
+struct _StoryEvent {
+    const char* text;
+    int isNew;
+    //PrintSpeed speed;
+
+    StoryEvent* eventBefore;
+    StoryEvent* eventAfter;
+};
+
+typedef struct _StoryStack {
+    StoryEvent* head;
+    StoryEvent* firstPrinted;
+    StoryEvent* lastPrinted;
+} StoryStack;
+
 /**
- * Displays the game story events (i.e. event feed) in a section near the bottom of the game window
+ * Initializes a new story event
  */
-//void displayEventWindow(WINDOW* window);
+void initStoryEvent(StoryEvent** eventRef, const char* text);
+
+/**
+ * Deletes story event and frees alocated memory
+ */
+void deleteStoryEvent(StoryEvent** eventRef);
+
+/**
+ * Initializes a new story stack
+ */
+void initStoryStack(StoryStack** stackRef);
+
+/**
+ * Deletes story stack and frees alocated memory
+ */
+void deleteStoryStack(StoryStack** stackRef);
+
+/**
+ * Push a story event on the stack
+ */
+void pushStoryStack(StoryStack* stack, StoryEvent* event);
+
+
 
 
 #endif // STORYEVENT_H_
