@@ -20,7 +20,7 @@
 
 typedef struct _StoryEvent StoryEvent;
 struct _StoryEvent {
-    const char* text;
+    char* text;
     int isNew;
     //PrintSpeed speed;
 
@@ -37,7 +37,7 @@ typedef struct _StoryStack {
 /**
  * Initializes a new story event
  */
-void initStoryEvent(StoryEvent** eventRef, const char* text);
+void initStoryEvent(StoryEvent** eventRef, char* text);
 
 /**
  * Deletes story event and frees alocated memory

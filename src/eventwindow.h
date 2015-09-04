@@ -10,11 +10,13 @@
 
 #include "ncwindow.h"
 #include "eventwindow.h"
+#include "storyevent.h"
+
 
 /**
  * Displays the game story events (i.e. event feed) in a section near the bottom of the game window
  */
-void displayEventWindow(WINDOW* window);
+void displayEventWindow(WINDOW* window, StoryStack* storyEvents);
 
 
 #endif // EVENTWINDOW_H_

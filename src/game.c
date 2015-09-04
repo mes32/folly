@@ -13,6 +13,7 @@
 #include "playercharacter.h"
 #include "randfolly.h"
 #include "statusbar.h"
+#include "storyevent.h"
 #include "eventwindow.h"
 
 
@@ -24,7 +25,7 @@ typedef struct _GameState {
 
     PlayerCharacter player;
 
-    const char *eventQueue[3];
+    StoryStack* storyEvents;
 
 } GameState;
 
@@ -89,13 +90,12 @@ static void displayGameScreen() {
     displayMap(window, &gameState.map, gameState.player.position);
     displayPlayerCharacter(window, &gameState.player);
     displayStatusBar(window, &gameState.player);
+    displayEventWindow(window, gameState.storyEvents);
 
-    //char* events[3] = gameState.eventQueue;
+    wmove(window, 0, 0);
 
-    displayEventWindow(window);
-
-    //wmove(window, 0, 0);
     usleep(DISPLAY_DELAY);
+
     //wrefresh(window);
     refresh();
 }
@@ -108,6 +108,7 @@ static void initGameState(unsigned int randomSeed) {
     initRandomSeed(randomSeed);
     gameState.map = initMap();
     gameState.player = initPlayerCharacter();
+    initStoryStack(&gameState.storyEvents);
 }
 
 /**
@@ -118,38 +119,48 @@ static void updateGameState(int input) {
     int deltaX = 0;
     int deltaY = 0;
 
+    StoryEvent* movementEvent;
+
     switch(input) {
         case 'k':
         case KEY_UP:
             deltaY = -1;
+            initStoryEvent(&movementEvent, "You walk north.");
             break;
         case 'j':
         case KEY_DOWN:
             deltaY = 1;
+            initStoryEvent(&movementEvent, "You walk south.");
             break;
         case 'h':
         case KEY_LEFT:
             deltaX = -1;
+            initStoryEvent(&movementEvent, "You walk west.");
             break;
         case 'l':
         case KEY_RIGHT:
             deltaX = 1;
+            initStoryEvent(&movementEvent, "You walk east.");
             break;
         case 'y':
             deltaX = -1;
             deltaY = -1;
+            initStoryEvent(&movementEvent, "You walk northwest.");
             break;
         case 'u':
             deltaX = 1;
             deltaY = -1;
+            initStoryEvent(&movementEvent, "You walk northeast.");
             break;
         case 'b':
             deltaX = -1;
             deltaY = 1;
+            initStoryEvent(&movementEvent, "You walk southwest.");
             break;
         case 'n':
             deltaX = 1;
             deltaY = 1;
+            initStoryEvent(&movementEvent, "You walk southeast.");
             break;
         default:
             break;
@@ -157,7 +168,11 @@ static void updateGameState(int input) {
 
     if (! isWall(&gameState.map, gameState.player.position, deltaX, deltaY)) {
         movePlayerCharacter(&gameState.player, deltaX, deltaY);
+    } else {
+        initStoryEvent(&movementEvent, "You seem to have hit a wall.");
     }
+
+    pushStoryStack(gameState.storyEvents, movementEvent);
 
     updateVisibility(&gameState.map, gameState.player.position, gameState.player.lightRadius);
 }

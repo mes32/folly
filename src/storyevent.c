@@ -7,6 +7,8 @@
  */
 
 #include <stdlib.h>
+#include <string.h>
+
 #include "storyevent.h"
 /*#include "mapcoordinate.h"
 #include "ncwindow.h"*/
@@ -15,11 +17,14 @@
 /**
  * Initializes a new story event
  */
-void initStoryEvent(StoryEvent** eventRef, const char* text) {
+void initStoryEvent(StoryEvent** eventRef, char* text) {
     *eventRef = (StoryEvent*)malloc(sizeof(StoryEvent));
     StoryEvent* newEvent = *eventRef;
 
-    newEvent->text = text;
+    size_t len = strlen(text);
+    newEvent->text = (char*)malloc(len + 1);
+    strncpy(newEvent->text, text, len + 1);
+
     newEvent->isNew = 1;
     newEvent->eventBefore = NULL;
     newEvent->eventAfter = NULL;
@@ -30,7 +35,7 @@ void initStoryEvent(StoryEvent** eventRef, const char* text) {
  */
 void deleteStoryEvent(StoryEvent** eventRef) {
     // *** Need to free text field correctly
-    //free((*eventRef)->text);
+    free((*eventRef)->text);
     free(*eventRef);
     *eventRef = NULL;
 }
@@ -70,7 +75,9 @@ void deleteStoryStack(StoryStack** stackRef) {
 void pushStoryStack(StoryStack* stack, StoryEvent* event) {
     StoryEvent* oldHead = stack->head;
     event->eventBefore = oldHead;
-    oldHead->eventAfter = event;
+    if (oldHead != NULL) {
+        oldHead->eventAfter = event;
+    }
     stack->head = event;
 }
 
