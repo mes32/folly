@@ -1,0 +1,90 @@
+/**
+ *  enemies.h - folly
+ *
+ *  This module defines enemies that the player character encounters and fights in the game.
+ *
+ */
+
+#ifndef ENEMIES_H_
+#define ENEMIES_H_
+
+#include "mapcoordinate.h"
+#include "ncwindow.h"
+
+
+/*typedef enum {
+    IMMOBILE,
+    WAIT,
+    WANDER
+} MovementStyle;*/
+
+/*typedef enum {
+    STATIONARY,
+    EVASIVE,
+    RELENTLESS,
+    HIT_AND_RUN,
+    CHAOTIC,
+    ENCIRCLE,
+    KITE
+} AttackStyle;*/
+
+typedef struct _Enemy Enemy;
+struct _Enemy {
+    char* name;
+    char* description;
+
+    char displayChar;
+    textColorPair displayColor;
+    MapCoordinate position;
+
+    int healthPoints;
+    int maxHealthPoints;
+
+    int lightRadius;
+
+    Enemy* next;
+    Enemy* previous;
+};
+
+typedef struct _AllEnemies {
+    Enemy* head;
+    Enemy* levelBoss;
+} AllEnemies;
+
+/**
+ * Initializes a new enemy entity
+ */
+Enemy* initEnemy();
+
+/**
+ * Deletes enemy and frees alocated memory
+ */
+void deleteEnemy(Enemy** enemy);
+
+/**
+ * Initializes a new boss-type enemy entity
+ */
+Enemy* initBoss();
+
+/**
+ * Initializes collection of enemies
+ */
+AllEnemies* initAllEnemies();
+
+/**
+ * Deletes all enemies and frees alocated memory
+ */
+void deleteAllEnemies(AllEnemies** allEnemiesRef);
+
+/**
+ * Inserts an enemy into the collection of all enemies
+ */
+void insertEnemy(AllEnemies* allEnemies, Enemy enemy);
+
+/**
+ * Removes an enemy from the collection of all enemies
+ */
+void removeEnemy(AllEnemies* allEnemies, Enemy enemy);
+
+
+#endif // ENEMIES_H_

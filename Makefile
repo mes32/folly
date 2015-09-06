@@ -19,6 +19,7 @@ OBJECT_FILES= \
     bin/playercharacter.o \
     bin/statusbar.o \
     bin/storyevent.o \
+    bin/enemies.o \
     bin/eventwindow.o \
     bin/randfolly.o \
     bin/bresenhamline.o \
