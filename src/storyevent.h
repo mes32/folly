@@ -22,6 +22,7 @@ typedef struct _StoryEvent StoryEvent;
 struct _StoryEvent {
     char* text;
     int isNew;
+    int isError;
     //PrintSpeed speed;
 
     StoryEvent* eventBefore;
@@ -43,6 +44,16 @@ void initStoryEvent(StoryEvent** eventRef, char* text);
  * Deletes story event and frees alocated memory
  */
 void deleteStoryEvent(StoryEvent** eventRef);
+
+/**
+ * Initializes a new error event
+ */
+void initErrorEvent(StoryEvent** eventRef, char* text);
+
+/**
+ * Deletes error event and frees alocated memory
+ */
+void deleteErrorEvent(StoryEvent** eventRef);
 
 /**
  * Initializes a new story stack
