@@ -58,6 +58,7 @@ void initColors() {
 	init_pair(BLACK_ON_WHITE, COLOR_BLACK, COLOR_WHITE);  // 4 - black on white
 	init_pair(BLUE_ON_WHITE, COLOR_BLUE, COLOR_WHITE);    // 5 - blue on white
 	init_pair(RED_ON_WHITE, COLOR_RED, COLOR_WHITE);      // 6 - red on white
+	init_pair(GREEN_ON_BLACK, COLOR_GREEN, COLOR_BLACK);      // 6 - red on white
 }
 
 /**

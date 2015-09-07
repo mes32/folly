@@ -58,7 +58,7 @@ void deleteErrorEvent(StoryEvent** eventRef);
 /**
  * Initializes a new story stack
  */
-void initStoryStack(StoryStack** stackRef);
+StoryStack* initStoryStack(char* bossName);
 
 /**
  * Deletes story stack and frees alocated memory

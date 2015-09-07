@@ -79,12 +79,12 @@ void deleteAllEnemies(AllEnemies** allEnemiesRef);
 /**
  * Inserts an enemy into the collection of all enemies
  */
-void insertEnemy(AllEnemies* allEnemies, Enemy enemy);
+void insertEnemy(AllEnemies* allEnemies, Enemy* enemy);
 
 /**
  * Removes an enemy from the collection of all enemies
  */
-void removeEnemy(AllEnemies* allEnemies, Enemy enemy);
+void removeEnemy(AllEnemies* allEnemies, Enemy* enemy);
 
 
 #endif // ENEMIES_H_

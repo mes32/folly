@@ -15,6 +15,7 @@
 #include "statusbar.h"
 #include "storyevent.h"
 #include "eventwindow.h"
+#include "enemies.h"
 
 
 /**
@@ -26,6 +27,8 @@ typedef struct _GameState {
     PlayerCharacter player;
 
     StoryStack* storyEvents;
+
+    AllEnemies* allEnemies;
 
 } GameState;
 
@@ -108,7 +111,8 @@ static void initGameState(unsigned int randomSeed) {
     initRandomSeed(randomSeed);
     gameState.map = initMap();
     gameState.player = initPlayerCharacter();
-    initStoryStack(&gameState.storyEvents);
+    gameState.allEnemies = initAllEnemies();
+    gameState.storyEvents = initStoryStack(gameState.allEnemies->levelBoss->name);
 }
 
 /**
@@ -163,6 +167,7 @@ static void updateGameState(int input) {
             initStoryEvent(&movementEvent, "You walk southeast.");
             break;
         default:
+            return;
             break;
     }
 
@@ -172,7 +177,7 @@ static void updateGameState(int input) {
         initStoryEvent(&movementEvent, "You seem to have hit a wall.");
     }
 
-    pushStoryStack(gameState.storyEvents, movementEvent);
+    //pushStoryStack(gameState.storyEvents, movementEvent);
 
     updateVisibility(&gameState.map, gameState.player.position, gameState.player.lightRadius);
 }

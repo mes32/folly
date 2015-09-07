@@ -68,13 +68,21 @@ void deleteErrorEvent(StoryEvent** eventRef) {
 /**
  * Initializes a new story stack
  */
-void initStoryStack(StoryStack** stackRef) {
-    *stackRef = (StoryStack*)malloc(sizeof(StoryStack));
-    StoryStack* newStack = *stackRef;
+StoryStack* initStoryStack(char* bossName) {
+    StoryStack* stack = malloc(sizeof(StoryStack));
 
-    newStack->head = NULL;
-    newStack->firstPrinted = NULL;
-    newStack->lastPrinted = NULL;
+    stack->head = NULL;
+    stack->firstPrinted = NULL;
+    stack->lastPrinted = NULL;
+
+    StoryEvent* storyOpen;
+    initStoryEvent(&storyOpen, "One way or another your quest to defeat THE WRAITH will end here.");
+    pushStoryStack(stack, storyOpen);
+
+    initStoryEvent(&storyOpen, "You find yourself in a dark place below the ruins of a small tower.");
+    pushStoryStack(stack, storyOpen);
+
+    return stack;
 }
 
 /**

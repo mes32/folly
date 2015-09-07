@@ -9,15 +9,28 @@
 #include <string.h>
 
 #include "enemies.h"
-/*#include "mapcoordinate.h"
-#include "ncwindow.h"*/
+#include "mapcoordinate.h"
 
+
+static int NUMBER_OF_ENEMIES = 0;
 
 /**
  * Initializes a new enemy entity
  */
 Enemy* initEnemy() {
 
+    Enemy* enemy = malloc(sizeof(Enemy));
+
+    enemy->name = "an orc";
+
+    enemy->displayChar = 'o';
+    enemy->displayColor = GREEN_ON_BLACK;
+    enemy->position = initMapCoordinate(22, 22);
+
+    enemy->next = NULL;
+    enemy->previous = NULL;
+
+    return enemy;
 }
 
 /**
@@ -32,6 +45,18 @@ void deleteEnemy(Enemy** enemy) {
  */
 Enemy* initBoss() {
 
+    Enemy* boss = malloc(sizeof(Enemy));
+
+    boss->name = "the Wraith";
+
+    boss->displayChar = 'W';
+    boss->displayColor = BLUE_ON_BLACK;
+    boss->position = initMapCoordinate(5, 5);
+
+    boss->next = NULL;
+    boss->previous = NULL;
+
+    return boss;
 }
 
 /**
@@ -39,6 +64,22 @@ Enemy* initBoss() {
  */
 AllEnemies* initAllEnemies() {
 
+    AllEnemies* allEnemies = malloc(sizeof(AllEnemies));
+
+    allEnemies->head = NULL;
+    allEnemies->levelBoss = NULL;
+
+    // Set boss
+    allEnemies->levelBoss = initBoss();
+    insertEnemy(allEnemies, allEnemies->levelBoss);
+
+    // Set other enemies
+    for (int i=0; i < NUMBER_OF_ENEMIES; i++) {
+        Enemy* newEnemy = initEnemy();
+        insertEnemy(allEnemies, newEnemy);
+    }
+
+    return allEnemies;
 }
 
 /**
@@ -51,14 +92,14 @@ void deleteAllEnemies(AllEnemies** allEnemiesRef) {
 /**
  * Inserts an enemy into the collection of all enemies
  */
-void insertEnemy(AllEnemies* allEnemies, Enemy enemy) {
+void insertEnemy(AllEnemies* allEnemies, Enemy* enemy) {
 
 }
 
 /**
  * Removes an enemy from the collection of all enemies
  */
-void removeEnemy(AllEnemies* allEnemies, Enemy enemy) {
+void removeEnemy(AllEnemies* allEnemies, Enemy* enemy) {
 
 }
 

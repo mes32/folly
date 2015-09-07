@@ -18,7 +18,8 @@ typedef enum {
     RED_ON_BLACK = 3,
     BLACK_ON_WHITE = 4,
     BLUE_ON_WHITE = 5,
-    RED_ON_WHITE = 6
+    RED_ON_WHITE = 6,
+    GREEN_ON_BLACK = 7
 } textColorPair;
 
 /**
