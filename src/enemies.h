@@ -57,7 +57,7 @@ typedef struct _AllEnemies {
 /**
  * Initializes a new enemy entity
  */
-Enemy* initEnemy();
+Enemy* initEnemy(Map* map);
 
 /**
  * Deletes enemy and frees alocated memory
@@ -67,12 +67,12 @@ void deleteEnemy(Enemy** enemy);
 /**
  * Initializes a new boss-type enemy entity
  */
-Enemy* initBoss();
+Enemy* initBoss(Map* map);
 
 /**
  * Initializes collection of enemies
  */
-AllEnemies* initAllEnemies();
+AllEnemies* initAllEnemies(Map* map);
 
 /**
  * Deletes all enemies and frees alocated memory

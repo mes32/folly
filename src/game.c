@@ -112,7 +112,7 @@ static void initGameState(unsigned int randomSeed) {
     initRandomSeed(randomSeed);
     gameState.map = initMap();
     gameState.player = initPlayerCharacter();
-    gameState.allEnemies = initAllEnemies();
+    gameState.allEnemies = initAllEnemies(&gameState.map);
     gameState.storyEvents = initStoryStack(gameState.allEnemies->levelBoss->name);
 }
 

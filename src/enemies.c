@@ -12,6 +12,7 @@
 #include "mapcoordinate.h"
 #include "playercharacter.h"
 #include "map.h"
+#include "randfolly.h"
 
 
 static int NUMBER_OF_ENEMIES = 0;
@@ -19,7 +20,7 @@ static int NUMBER_OF_ENEMIES = 0;
 /**
  * Initializes a new enemy entity
  */
-Enemy* initEnemy() {
+Enemy* initEnemy(Map* map) {
 
     Enemy* enemy = malloc(sizeof(Enemy));
 
@@ -27,7 +28,12 @@ Enemy* initEnemy() {
 
     enemy->displayChar = 'o';
     enemy->displayColor = GREEN_ON_BLACK;
-    enemy->position = initMapCoordinate(22, 22);
+
+    do {
+        int x = randUnif(1, map->xDim - 1);
+        int y = randUnif(1, map->yDim - 1);
+        enemy->position = initMapCoordinate(x, y);
+    } while(isLocationWall(map, enemy->position));
 
     enemy->next = NULL;
     enemy->previous = NULL;
@@ -45,7 +51,7 @@ void deleteEnemy(Enemy** enemy) {
 /**
  * Initializes a new boss-type enemy entity
  */
-Enemy* initBoss() {
+Enemy* initBoss(Map* map) {
 
     Enemy* boss = malloc(sizeof(Enemy));
 
@@ -53,7 +59,12 @@ Enemy* initBoss() {
 
     boss->displayChar = 'W';
     boss->displayColor = BLUE_ON_BLACK;
-    boss->position = initMapCoordinate(5, 5);
+
+    do {
+        int x = randUnif(1, map->xDim - 1);
+        int y = randUnif(1, map->yDim - 1);
+        boss->position = initMapCoordinate(x, y);
+    } while(isLocationWall(map, boss->position));
 
     boss->next = NULL;
     boss->previous = NULL;
@@ -64,7 +75,7 @@ Enemy* initBoss() {
 /**
  * Initializes collection of enemies
  */
-AllEnemies* initAllEnemies() {
+AllEnemies* initAllEnemies(Map* map) {
 
     AllEnemies* allEnemies = malloc(sizeof(AllEnemies));
 
@@ -73,12 +84,12 @@ AllEnemies* initAllEnemies() {
     allEnemies->levelBoss = NULL;
 
     // Set boss
-    allEnemies->levelBoss = initBoss();
+    allEnemies->levelBoss = initBoss(map);
     insertEnemy(allEnemies, allEnemies->levelBoss);
 
     // Set other enemies
     for (int i=0; i < NUMBER_OF_ENEMIES; i++) {
-        Enemy* newEnemy = initEnemy();
+        Enemy* newEnemy = initEnemy(map);
         insertEnemy(allEnemies, newEnemy);
     }
 
