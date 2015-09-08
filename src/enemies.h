@@ -10,6 +10,8 @@
 
 #include "mapcoordinate.h"
 #include "ncwindow.h"
+#include "playercharacter.h"
+#include "map.h"
 
 
 /*typedef enum {
@@ -48,6 +50,7 @@ struct _Enemy {
 
 typedef struct _AllEnemies {
     Enemy* head;
+    Enemy* tail;
     Enemy* levelBoss;
 } AllEnemies;
 
@@ -75,6 +78,11 @@ AllEnemies* initAllEnemies();
  * Deletes all enemies and frees alocated memory
  */
 void deleteAllEnemies(AllEnemies** allEnemiesRef);
+
+/**
+ *  Displays all visible enemies relative to the player's position on the ncurses window
+ */
+void displayAllEnemies(WINDOW* window, PlayerCharacter* player, AllEnemies* allEnemies, Map* map);
 
 /**
  * Inserts an enemy into the collection of all enemies

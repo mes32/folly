@@ -91,6 +91,7 @@ static void displayGameScreen() {
     clear();
 
     displayMap(window, &gameState.map, gameState.player.position);
+    displayAllEnemies(window, &gameState.player, gameState.allEnemies, &gameState.map);
     displayPlayerCharacter(window, &gameState.player);
     displayStatusBar(window, &gameState.player);
     displayEventWindow(window, gameState.storyEvents);

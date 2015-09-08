@@ -288,3 +288,12 @@ void setVisibility(Map* map, MapCoordinate location, int visibility) {
     map->tiles[1][1].visible = 1;
 }
 
+/**
+ * Returns one if the position on the map is visible to the player
+ */
+int isVisible(Map* map, MapCoordinate position) {
+    int x = position.x;
+    int y = position.y;
+    return map->tiles[y][x].visible;
+}
+

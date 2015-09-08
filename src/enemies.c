@@ -10,6 +10,8 @@
 
 #include "enemies.h"
 #include "mapcoordinate.h"
+#include "playercharacter.h"
+#include "map.h"
 
 
 static int NUMBER_OF_ENEMIES = 0;
@@ -67,6 +69,7 @@ AllEnemies* initAllEnemies() {
     AllEnemies* allEnemies = malloc(sizeof(AllEnemies));
 
     allEnemies->head = NULL;
+    allEnemies->tail = NULL;
     allEnemies->levelBoss = NULL;
 
     // Set boss
@@ -87,6 +90,18 @@ AllEnemies* initAllEnemies() {
  */
 void deleteAllEnemies(AllEnemies** allEnemiesRef) {
 
+}
+
+/**
+ *  Displays all visible enemies relative to the player's position on the ncurses window
+ */
+void displayAllEnemies(WINDOW* window, PlayerCharacter* player, AllEnemies* allEnemies, Map* map) {
+
+    Enemy* boss = allEnemies->levelBoss;
+
+    if (isVisible(map, boss->position)) {
+        printCharBoldPC(boss->displayChar, boss->position, window, player->position, boss->displayColor);
+    }
 }
 
 /**
