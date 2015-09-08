@@ -15,7 +15,7 @@
 #include "randfolly.h"
 
 
-static int NUMBER_OF_ENEMIES = 0;
+static int NUMBER_OF_ENEMIES = 20;
 
 /**
  * Initializes a new enemy entity
@@ -119,7 +119,17 @@ void displayAllEnemies(WINDOW* window, PlayerCharacter* player, AllEnemies* allE
  * Inserts an enemy into the collection of all enemies
  */
 void insertEnemy(AllEnemies* allEnemies, Enemy* enemy) {
+    if (allEnemies->tail == NULL) {
+        allEnemies->head = enemy; 
+        allEnemies->tail = enemy;
+        enemy->next = NULL;
+        enemy->previous = NULL;
+    }
 
+    allEnemies->tail->next = enemy;
+    enemy->previous = allEnemies->tail;
+    enemy->next = NULL;
+    allEnemies->tail = enemy;
 }
 
 /**
