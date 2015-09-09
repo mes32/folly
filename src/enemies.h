@@ -65,6 +65,11 @@ Enemy* initEnemy(Map* map);
 void deleteEnemy(Enemy** enemy);
 
 /**
+ * Displays an enemy on the game screen
+ */
+void displayEnemy(WINDOW* window, PlayerCharacter* player, Map* map, Enemy* enemy);
+
+/**
  * Initializes a new boss-type enemy entity
  */
 Enemy* initBoss(Map* map);

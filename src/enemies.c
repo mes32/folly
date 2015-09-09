@@ -49,6 +49,15 @@ void deleteEnemy(Enemy** enemy) {
 }
 
 /**
+ * Displays an enemy on the game screen
+ */
+void displayEnemy(WINDOW* window, PlayerCharacter* player, Map* map, Enemy* enemy) {
+    if (isVisible(map, enemy->position)) {
+        printCharBoldPC(enemy->displayChar, enemy->position, window, player->position, enemy->displayColor);
+    }
+}
+
+/**
  * Initializes a new boss-type enemy entity
  */
 Enemy* initBoss(Map* map) {
@@ -108,10 +117,11 @@ void deleteAllEnemies(AllEnemies** allEnemiesRef) {
  */
 void displayAllEnemies(WINDOW* window, PlayerCharacter* player, AllEnemies* allEnemies, Map* map) {
 
-    Enemy* boss = allEnemies->levelBoss;
+    Enemy* current = allEnemies->head;
 
-    if (isVisible(map, boss->position)) {
-        printCharBoldPC(boss->displayChar, boss->position, window, player->position, boss->displayColor);
+    while (current != NULL) {
+        displayEnemy(window, player, map, current);
+        current = current->next;
     }
 }
 
