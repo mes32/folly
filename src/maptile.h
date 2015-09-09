@@ -10,6 +10,7 @@
 
 #include "mapcoordinate.h"
 #include "ncwindow.h"
+//#include "enemies.h"
 
 /**
  *  A tile in the game map
@@ -21,6 +22,7 @@ typedef struct _MapTile {
 
     int explored;
     int visible;
+    struct _Enemy* enemy;
 
     int isWall; // *** Replace with type eventually
 } MapTile;

@@ -5,8 +5,9 @@
  *
  */
 
-#include "mapcoordinate.h"
 #include "maptile.h"
+#include "mapcoordinate.h"
+#include "enemies.h"
 
 
 /**
@@ -17,6 +18,7 @@ MapTile initMapTile(int x, int y, int isWall) {
     mapTile.position = initMapCoordinate(x, y);
     mapTile.explored = 0;
     mapTile.visible = 0;
+    mapTile.enemy = NULL;
     mapTile.isWall = isWall;
     return mapTile;
 }

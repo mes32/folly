@@ -41,9 +41,14 @@ void displayMap(WINDOW* window, Map* map, MapCoordinate playerPosition);
 void updateVisibility(Map* map, MapCoordinate playerPosition, int lightRadius);
 
 /**
- *  Returns 1 if a given location on the map contains a wall tile. Returns 0 otherwise.
+ *  Returns 1 if a given location on the map can be traversed by the player (i.e. no obstacles like walls or enemies). Returns 0 otherwise.
  */
-int isLocationWall(Map* map, MapCoordinate location);
+int isTraversable(Map* map, MapCoordinate location);
+
+/**
+ * Sets the enemy at a given location
+ */
+void setEnemy(Map* map, struct _Enemy* enemy, MapCoordinate location);
 
 /**
  *  Sets the visibility status of the maptile at a given location.

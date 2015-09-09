@@ -22,6 +22,11 @@ typedef struct _MapCoordinate {
 MapCoordinate initMapCoordinate(int x, int y);
 
 /**
+ * Returns the changed map coordinates when moving deltaX, deltaY from current position
+ */
+MapCoordinate deltaMapCoordiante(MapCoordinate* position, int deltaX, int deltaY);
+
+/**
  *  Moves the map coordinates by (deltaX, deltaY)
  */
 void movePosition(MapCoordinate* position, int deltaX, int deltaY);

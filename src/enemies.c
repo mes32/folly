@@ -9,7 +9,7 @@
 #include <string.h>
 
 #include "enemies.h"
-#include "mapcoordinate.h"
+//#include "mapcoordinate.h"
 #include "playercharacter.h"
 #include "map.h"
 #include "randfolly.h"
@@ -33,7 +33,8 @@ Enemy* initEnemy(Map* map) {
         int x = randUnif(1, map->xDim - 1);
         int y = randUnif(1, map->yDim - 1);
         enemy->position = initMapCoordinate(x, y);
-    } while(isLocationWall(map, enemy->position));
+    } while(!isTraversable(map, enemy->position));
+    setEnemy(map, enemy, enemy->position);
 
     enemy->next = NULL;
     enemy->previous = NULL;
@@ -73,7 +74,8 @@ Enemy* initBoss(Map* map) {
         int x = randUnif(1, map->xDim - 1);
         int y = randUnif(1, map->yDim - 1);
         boss->position = initMapCoordinate(x, y);
-    } while(isLocationWall(map, boss->position));
+    } while(!isTraversable(map, boss->position));
+    setEnemy(map, boss, boss->position);
 
     boss->next = NULL;
     boss->previous = NULL;

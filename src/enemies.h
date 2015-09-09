@@ -8,7 +8,7 @@
 #ifndef ENEMIES_H_
 #define ENEMIES_H_
 
-#include "mapcoordinate.h"
+//#include "mapcoordinate.h"
 #include "ncwindow.h"
 #include "playercharacter.h"
 #include "map.h"

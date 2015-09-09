@@ -19,6 +19,15 @@ MapCoordinate initMapCoordinate(int x, int y) {
 }
 
 /**
+ * Returns the changed map coordinates when moving deltaX, deltaY from current position
+ */
+MapCoordinate deltaMapCoordiante(MapCoordinate* position, int deltaX, int deltaY) {
+    int x = position->x + deltaX;
+    int y = position->y + deltaY;
+    return initMapCoordinate(x, y);
+}
+
+/**
  *  Moves the map coordinates by (deltaX, deltaY)
  */
 void movePosition(MapCoordinate* position, int deltaX, int deltaY) {

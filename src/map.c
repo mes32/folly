@@ -13,6 +13,7 @@
 #include "map.h"
 #include "maptile.h"
 #include "randfolly.h"
+#include "enemies.h"
 
 
 void static traceLineOfSight(Map* map, MapCoordinate playerPos, MapCoordinate endPos);
@@ -271,12 +272,25 @@ void static traceLineOfSight(Map* map, MapCoordinate playerPos, MapCoordinate en
 }
 
 /**
- *  Returns 1 if a given location on the map contains a wall tile. Returns 0 otherwise.
+ *  Returns 1 if a given location on the map can be traversed by the player (i.e. no obstacles like walls or enemies). Returns 0 otherwise.
  */
-int isLocationWall(Map* map, MapCoordinate location) {
+int isTraversable(Map* map, MapCoordinate location) {
     int x = location.x;
     int y = location.y;
-    return map->tiles[y][x].isWall;
+    if (!(map->tiles[y][x].isWall) && map->tiles[y][x].enemy == NULL) {
+        return 1;
+    } else {
+        return 0;
+    }
+}
+
+/**
+ * Sets the enemy at a given location
+ */
+void setEnemy(Map* map, Enemy* enemy, MapCoordinate location) {
+    int x = location.x;
+    int y = location.y;
+    map->tiles[y][x].enemy = enemy;
 }
 
 /**

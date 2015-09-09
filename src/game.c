@@ -172,7 +172,9 @@ static void updateGameState(int input) {
             break;
     }
 
-    if (! isWall(&gameState.map, gameState.player.position, deltaX, deltaY)) {
+    MapCoordinate newPosition = deltaMapCoordiante(&gameState.player.position, deltaX, deltaY);
+
+    if (isTraversable(&gameState.map, newPosition)) {
         movePlayerCharacter(&gameState.player, deltaX, deltaY);
     } else {
         initStoryEvent(&movementEvent, "You seem to have hit a wall.");
@@ -186,8 +188,8 @@ static void updateGameState(int input) {
 /**
  *  Returns 1 of the proposed change in position would place the character on a wall tile. Returns 0 otherwise.
  */
-static int isWall(Map* map, MapCoordinate position, int deltaX, int deltaY) {
+/*static int isWall(Map* map, MapCoordinate position, int deltaX, int deltaY) {
     return map->tiles[position.y+deltaY][position.x+deltaX].isWall;
-}
+}*/
 
 
