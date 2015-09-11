@@ -5,29 +5,32 @@
  *
  */
 
+#include <assert.h>
+
 #include "mapcoordinate.h"
 #include "playercharacter.h"
 
 
 /**
- *  Initializes a map tile
+ * Initialize the player's character
  */
-PlayerCharacter initPlayerCharacter() {
-    PlayerCharacter player;
+PlayerCharacter* initPlayerCharacter() {
+    PlayerCharacter* player = malloc(sizeof(PlayerCharacter));
+    assert(player != NULL);
 
-    player.name = "Player1";
-    player.position = initMapCoordinate(1, 2);
-    player.healthPoints = 20;
-    player.maxHealthPoints = 20;
-    player.lightRadius = 5;
-    player.equipedWeapon = "Short Sword";
-    player.equipedShield = "Small Round Shield";
+    player->name = "Player1";
+    player->position = initMapCoordinate(1, 2);
+    player->healthPoints = 20;
+    player->maxHealthPoints = 20;
+    player->lightRadius = 5;
+    player->equipedWeapon = "Short Sword";
+    player->equipedShield = "Small Round Shield";
 
     return player;
 }
 
 /**
- *  Displays the map tile in an ncurses window at the given coordinates
+ * Displays the player character on the tiled map
  */
 void displayPlayerCharacter(WINDOW* window, PlayerCharacter* player) {
 
@@ -37,7 +40,7 @@ void displayPlayerCharacter(WINDOW* window, PlayerCharacter* player) {
 }
 
 /**
- *  Change the player character's location
+ * Change the player character's location
  */
 void movePlayerCharacter(PlayerCharacter* player, int deltaX, int deltaY) {
     movePosition(&player->position, deltaX, deltaY);

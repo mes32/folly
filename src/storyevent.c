@@ -76,10 +76,10 @@ StoryStack* initStoryStack(char* bossName) {
     stack->lastPrinted = NULL;
 
     StoryEvent* storyOpen;
-    initStoryEvent(&storyOpen, "In victory or death, your quest to defeat THE WRAITH ends here.");
+    initStoryEvent(&storyOpen, "In victory or death, your quest to defeat THE WRAITH ends in this place.");
     pushStoryStack(stack, storyOpen);
 
-    initStoryEvent(&storyOpen, "You find yourself in a dark place below the ruins of a small tower.");
+    initStoryEvent(&storyOpen, "Beneath the ruins of a small tower you find a maze of dark passageways.");
     pushStoryStack(stack, storyOpen);
 
     return stack;

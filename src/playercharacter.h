@@ -30,17 +30,17 @@ typedef struct _PlayerCharacter {
 } PlayerCharacter;
 
 /**
- *  Initializes the player's character
+ * Initialize the player's character
  */
-PlayerCharacter initPlayerCharacter();
+PlayerCharacter* initPlayerCharacter();
 
 /**
- *  Displays the player character on the tiled map
+ * Displays the player character on the tiled map
  */
 void displayPlayerCharacter(WINDOW* window, PlayerCharacter* player);
 
 /**
- *  Change the player character's location
+ * Change the player character's location
  */
 void movePlayerCharacter(PlayerCharacter* player, int deltaX, int deltaY);
 

@@ -24,7 +24,7 @@
 typedef struct _GameState {
     Map map;
 
-    PlayerCharacter player;
+    PlayerCharacter* player;
 
     StoryStack* storyEvents;
 
@@ -90,10 +90,10 @@ static void displayHelpScreen() {
 static void displayGameScreen() {
     clear();
 
-    displayMap(window, &gameState.map, gameState.player.position);
-    displayAllEnemies(window, &gameState.player, gameState.allEnemies, &gameState.map);
-    displayPlayerCharacter(window, &gameState.player);
-    displayStatusBar(window, &gameState.player);
+    displayMap(window, &gameState.map, gameState.player->position);
+    displayAllEnemies(window, gameState.player, gameState.allEnemies, &gameState.map);
+    displayPlayerCharacter(window, gameState.player);
+    displayStatusBar(window, gameState.player);
     displayEventWindow(window, gameState.storyEvents);
 
     wmove(window, 0, 0);
@@ -172,17 +172,17 @@ static void updateGameState(int input) {
             break;
     }
 
-    MapCoordinate newPosition = deltaMapCoordiante(&gameState.player.position, deltaX, deltaY);
+    MapCoordinate newPosition = deltaMapCoordiante(&gameState.player->position, deltaX, deltaY);
 
     if (isTraversable(&gameState.map, newPosition)) {
-        movePlayerCharacter(&gameState.player, deltaX, deltaY);
+        movePlayerCharacter(gameState.player, deltaX, deltaY);
     } else {
         initStoryEvent(&movementEvent, "You seem to have hit a wall.");
     }
 
     //pushStoryStack(gameState.storyEvents, movementEvent);
 
-    updateVisibility(&gameState.map, gameState.player.position, gameState.player.lightRadius);
+    updateVisibility(&gameState.map, gameState.player->position, gameState.player->lightRadius);
 }
 
 /**
