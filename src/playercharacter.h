@@ -12,7 +12,7 @@
 #include "ncwindow.h"
 
 /**
- *  A tile in the game map
+ * The player's character
  */
 typedef struct _PlayerCharacter {
 
