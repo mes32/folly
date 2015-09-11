@@ -15,16 +15,11 @@
  * The player's character
  */
 typedef struct _PlayerCharacter {
-
     char* name;
-
     MapCoordinate position;
-
     int healthPoints;
     int maxHealthPoints;
-
     int lightRadius;
-
     char* equipedWeapon;
     char* equipedShield;
 } PlayerCharacter;

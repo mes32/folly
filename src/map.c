@@ -74,10 +74,10 @@ Map initMap() {
         while (c == '#' || c == ' ') {
             if (c == '#') {
                 // Add wall tile
-                map.tiles[y][x] = initMapTile(x, y, 1);
+                map.tiles[y][x] = *initMapTile(x, y, 1);
             } else if (c == ' ') {
                 // Add non-wall tile
-                map.tiles[y][x] = initMapTile(x, y, 0);
+                map.tiles[y][x] = *initMapTile(x, y, 0);
             } else {
                 break;
             }

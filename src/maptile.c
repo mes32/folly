@@ -5,26 +5,31 @@
  *
  */
 
+#include <assert.h>
+
 #include "maptile.h"
 #include "mapcoordinate.h"
 #include "enemies.h"
 
 
 /**
- *  Initializes a map tile
+ * Initializes a map tile
  */
-MapTile initMapTile(int x, int y, int isWall) {
-    MapTile mapTile;
-    mapTile.position = initMapCoordinate(x, y);
-    mapTile.explored = 0;
-    mapTile.visible = 0;
-    mapTile.enemy = NULL;
-    mapTile.isWall = isWall;
+MapTile* initMapTile(int x, int y, int isWall) {
+    MapTile* mapTile = malloc(sizeof(MapTile));
+    assert(mapTile != NULL);
+
+    mapTile->position = initMapCoordinate(x, y);
+    mapTile->explored = 0;
+    mapTile->visible = 0;
+    mapTile->enemy = NULL;
+    mapTile->isWall = isWall;
+
     return mapTile;
 }
 
 /**
- *  Displays the map tile in an ncurses window at the given coordinates
+ * Displays the map tile in an ncurses window at the given coordinates
  */
 void displayMapTile(WINDOW* window, MapTile* tile, MapCoordinate playerPosition) {
 

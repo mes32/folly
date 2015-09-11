@@ -13,27 +13,23 @@
 //#include "enemies.h"
 
 /**
- *  A tile in the game map
+ * A tile in the game map
  */
 typedef struct _MapTile {
-    //MapTileType* type;
-
     MapCoordinate position;
-
     int explored;
     int visible;
     struct _Enemy* enemy;
-
     int isWall; // *** Replace with type eventually
 } MapTile;
 
 /**
- *  Initializes a map tile
+ * Initializes a map tile
  */
-MapTile initMapTile(int x, int y, int isWall);
+MapTile* initMapTile(int x, int y, int isWall);
 
 /**
- *  Displays the map tile in an ncurses window at the given coordinates
+ * Displays the map tile in an ncurses window at the given coordinates
  */
 void displayMapTile(WINDOW* window, MapTile* tile, MapCoordinate playerPosition);
 
