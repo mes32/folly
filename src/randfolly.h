@@ -10,12 +10,17 @@
 
 
 /**
- *  Initializes randomization with the provided random seed
+ * Initializes randomization with the provided random seed
  */
 void initRandomSeed(unsigned seed);
 
 /**
- *  Produces a random int with a uniform distribution ranging from min to max
+ * Produces a random double with a uniform distribution normalized to the range [0, 1)
+ */
+double normalizedRand();
+
+/**
+ * Produces a random int with a uniform distribution ranging from min to max
  */
 int randUnif(int min, int max);
 
