@@ -12,7 +12,7 @@
 #include "maptile.h"
 
 /**
- *  A gameplay map composed of a two dimensional grid of map tiles
+ * A gameplay map composed of a two dimensional grid of map tiles
  */
 typedef struct _Map {
     int xDim;
@@ -21,7 +21,7 @@ typedef struct _Map {
 } Map;
 
 /**
- *  Initializes the game map
+ * Initializes the game map
  */
 Map initMap();
 
@@ -31,17 +31,17 @@ Map initMap();
 void deleteMap(Map* map);
 
 /**
- *  Displays the map in an ncurses window
+ * Displays the map in an ncurses window
  */
 void displayMap(WINDOW* window, Map* map, MapCoordinate playerPosition);
 
 /**
- *  Updates the visibility status of map tiles based on the player's position and the radius of illumination around that position
+ * Updates the visibility status of map tiles based on the player's position and the radius of illumination around that position
  */
 void updateVisibility(Map* map, MapCoordinate playerPosition, int lightRadius);
 
 /**
- *  Returns 1 if a given location on the map can be traversed by the player (i.e. no obstacles like walls or enemies). Returns 0 otherwise.
+ * Returns 1 if a given location on the map can be traversed by the player (i.e. no obstacles like walls or enemies). Returns 0 otherwise.
  */
 int isTraversable(Map* map, MapCoordinate location);
 
@@ -51,7 +51,7 @@ int isTraversable(Map* map, MapCoordinate location);
 void setEnemy(Map* map, struct _Enemy* enemy, MapCoordinate location);
 
 /**
- *  Sets the visibility status of the maptile at a given location.
+ * Sets the visibility status of the maptile at a given location.
  */
 void setVisibility(Map* map, MapCoordinate location, int visibility);
 
