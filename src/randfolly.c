@@ -6,18 +6,19 @@
  */
 
 #include <stdlib.h>
+
 #include "randfolly.h"
 
 
 /**
- *  Initializes randomization with the provided random seed
+ * Initializes randomization with the provided random seed
  */
 void initRandomSeed(unsigned seed) {
     srand(seed);
 }
 
 /**
- *  Produces a random double with a uniform distribution normalized to the range [0, 1)
+ * Produces a random double with a uniform distribution normalized to the range [0, 1)
  */
 double normalizedRand() {
     double p = (double)rand();
@@ -26,7 +27,7 @@ double normalizedRand() {
 }
 
 /**
- *  Produces a random int with a uniform distribution ranging from min to max
+ * Produces a random int with a uniform distribution ranging from min to max
  */
 int randUnif(int min, int max) {
     double range = (double)(max - min + 1);
