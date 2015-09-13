@@ -5,11 +5,11 @@
  *
  */
 
+#include <assert.h>
 #include <stdlib.h>
 #include <string.h>
 
 #include "enemies.h"
-//#include "mapcoordinate.h"
 #include "playercharacter.h"
 #include "map.h"
 #include "randfolly.h"
@@ -23,6 +23,7 @@ static int NUMBER_OF_ENEMIES = 20;
 Enemy* initEnemy(Map* map) {
 
     Enemy* enemy = malloc(sizeof(Enemy));
+    assert(enemy != NULL);
 
     enemy->name = "an orc";
 
