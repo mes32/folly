@@ -20,7 +20,7 @@ PlayerCharacter* initPlayerCharacter() {
     assert(player != NULL);
 
     player->name = "Player1";
-    player->position = initMapCoordinate(1, 2);
+    player->position = initMapCoordinate(2, 2);
     player->healthPoints = 20;
     player->maxHealthPoints = 20;
     player->lightRadius = 5;

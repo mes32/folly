@@ -5,6 +5,8 @@
  *
  */
 
+#include <math.h>
+
 #include "mapcoordinate.h"
 
 
@@ -25,6 +27,18 @@ MapCoordinate deltaMapCoordiante(MapCoordinate* position, int deltaX, int deltaY
     int x = position->x + deltaX;
     int y = position->y + deltaY;
     return initMapCoordinate(x, y);
+}
+
+/**
+ * Returns the euclidian distance between two map coordinates
+ */
+double distance(MapCoordinate* position1, MapCoordinate* position2) {
+    double x1 = (double)position1->x;
+    double y1 = (double)position1->y;
+    double x2 = (double)position2->x;
+    double y2 = (double)position2->y;
+
+    return sqrt(pow(x1 - x2, 2) + pow(y1 - y2, 2));
 }
 
 /**

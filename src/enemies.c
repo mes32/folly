@@ -16,27 +16,28 @@
 
 
 static int NUMBER_OF_ENEMIES = 20;
+static double BOSS_FREE_DIST = 40.0;
+static double ENEMY_FREE_DIST = 8.0;
 
 /**
  * Initializes a new enemy entity
  */
-Enemy* initEnemy(Map* map) {
+Enemy* initEnemy(Map* map, MapCoordinate playerPosition) {
 
     Enemy* enemy = malloc(sizeof(Enemy));
     assert(enemy != NULL);
 
     enemy->name = "an orc";
-
     enemy->displayChar = 'o';
     enemy->displayColor = GREEN_ON_BLACK;
 
     do {
-        int x = randUnif(1, map->xDim - 1);
-        int y = randUnif(1, map->yDim - 1);
+        int x = randUnif(0, map->xDim - 1);
+        int y = randUnif(0, map->yDim - 1);
         enemy->position = initMapCoordinate(x, y);
-    } while(!isTraversable(map, enemy->position));
-    setEnemy(map, enemy, enemy->position);
+    } while (!isTraversable(map, enemy->position) || distance(&enemy->position, &playerPosition) < ENEMY_FREE_DIST);
 
+    setEnemy(map, enemy, enemy->position);
     enemy->next = NULL;
     enemy->previous = NULL;
 
@@ -66,12 +67,11 @@ void displayEnemy(WINDOW* window, PlayerCharacter* player, Map* map, Enemy* enem
 /**
  * Initializes a new boss-type enemy entity
  */
-Enemy* initBoss(Map* map) {
+Enemy* initBoss(Map* map, MapCoordinate playerPosition) {
 
     Enemy* boss = malloc(sizeof(Enemy));
 
     boss->name = "the Wraith";
-
     boss->displayChar = 'W';
     boss->displayColor = BLUE_ON_BLACK;
 
@@ -79,9 +79,9 @@ Enemy* initBoss(Map* map) {
         int x = randUnif(1, map->xDim - 1);
         int y = randUnif(1, map->yDim - 1);
         boss->position = initMapCoordinate(x, y);
-    } while(!isTraversable(map, boss->position));
-    setEnemy(map, boss, boss->position);
+    } while(!isTraversable(map, boss->position) || distance(&boss->position, &playerPosition) < BOSS_FREE_DIST);
 
+    setEnemy(map, boss, boss->position);
     boss->next = NULL;
     boss->previous = NULL;
 
@@ -91,7 +91,7 @@ Enemy* initBoss(Map* map) {
 /**
  * Initializes collection of enemies
  */
-AllEnemies* initAllEnemies(Map* map) {
+AllEnemies* initAllEnemies(Map* map, MapCoordinate playerPosition) {
 
     AllEnemies* allEnemies = malloc(sizeof(AllEnemies));
 
@@ -100,12 +100,12 @@ AllEnemies* initAllEnemies(Map* map) {
     allEnemies->levelBoss = NULL;
 
     // Set boss
-    allEnemies->levelBoss = initBoss(map);
+    allEnemies->levelBoss = initBoss(map, playerPosition);
     insertEnemy(allEnemies, allEnemies->levelBoss);
 
     // Set other enemies
     for (int i=0; i < NUMBER_OF_ENEMIES; i++) {
-        Enemy* newEnemy = initEnemy(map);
+        Enemy* newEnemy = initEnemy(map, playerPosition);
         insertEnemy(allEnemies, newEnemy);
     }
 

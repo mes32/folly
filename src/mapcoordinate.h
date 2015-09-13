@@ -27,6 +27,11 @@ MapCoordinate initMapCoordinate(int x, int y);
 MapCoordinate deltaMapCoordiante(MapCoordinate* position, int deltaX, int deltaY);
 
 /**
+ * Returns the euclidian distance between two map coordinates
+ */
+double distance(MapCoordinate* position1, MapCoordinate* position2);
+
+/**
  *  Moves the map coordinates by (deltaX, deltaY)
  */
 void movePosition(MapCoordinate* position, int deltaX, int deltaY);

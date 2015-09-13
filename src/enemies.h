@@ -57,7 +57,7 @@ typedef struct _AllEnemies {
 /**
  * Initializes a new enemy entity
  */
-Enemy* initEnemy(Map* map);
+Enemy* initEnemy(Map* map, MapCoordinate playerPosition);
 
 /**
  * Deletes enemy and frees alocated memory
@@ -72,12 +72,12 @@ void displayEnemy(WINDOW* window, PlayerCharacter* player, Map* map, Enemy* enem
 /**
  * Initializes a new boss-type enemy entity
  */
-Enemy* initBoss(Map* map);
+Enemy* initBoss(Map* map, MapCoordinate playerPosition);
 
 /**
  * Initializes collection of enemies
  */
-AllEnemies* initAllEnemies(Map* map);
+AllEnemies* initAllEnemies(Map* map, MapCoordinate playerPosition);
 
 /**
  * Deletes all enemies and frees alocated memory
