@@ -26,7 +26,7 @@ void initStoryEvent(StoryEvent** eventRef, char* text) {
     strncpy(newEvent->text, text, len + 1);
 
     newEvent->isNew = 1;
-    newEvent->isError = 0;
+    //newEvent->isError = 0;
     newEvent->eventBefore = NULL;
     newEvent->eventAfter = NULL;
 }
@@ -53,7 +53,7 @@ void initErrorEvent(StoryEvent** eventRef, char* text) {
     strncpy(newEvent->text, text, len + 1);
 
     newEvent->isNew = 1;
-    newEvent->isError = 1;
+    //newEvent->isError = 1;
     newEvent->eventBefore = NULL;
     newEvent->eventAfter = NULL;
 }

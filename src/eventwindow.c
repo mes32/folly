@@ -57,11 +57,11 @@ static void printEvent(StoryEvent* event, int y) {
     MapCoordinate position = initMapCoordinate(x, y);
 
     while (character != '\0') {
-        if (event->isError) {
-            printChar(character, position, RED_ON_WHITE);
-        } else {
+        //if (event->isError) {
+        //    printChar(character, position, RED_ON_WHITE);
+        //} else {
             printChar(character, position, BLACK_ON_WHITE);
-        }
+        //}
         x++;
         character = text[x];
         position = initMapCoordinate(x, y);

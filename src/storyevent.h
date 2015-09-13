@@ -22,7 +22,7 @@ typedef struct _StoryEvent StoryEvent;
 struct _StoryEvent {
     char* text;
     int isNew;
-    int isError;
+    //int isError;
     //PrintSpeed speed;
 
     StoryEvent* eventBefore;
