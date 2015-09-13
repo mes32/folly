@@ -11,6 +11,7 @@ CFLAGS=-Wall -g -std=c99 -O3
 LDFLAGS=-lncurses
 
 OBJECT_FILES= \
+    bin/debugfolly.o \
     bin/game.o \
     bin/ncwindow.o \
     bin/map.o \

@@ -121,6 +121,8 @@ void displayMap(WINDOW* window, Map* map, MapCoordinate playerPosition) {
             displayMapTile(window, &map->tiles[y][x], playerPosition);
         }
     }
+
+    // if (DEBUG_STACK != NULL) displayDebugStack()
 }
 
 /**
