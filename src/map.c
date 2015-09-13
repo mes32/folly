@@ -209,14 +209,14 @@ void updateVisibility(Map* map, MapCoordinate playerPosition, int lightRadius) {
  */
 void static traceLineOfSight(Map* map, MapCoordinate playerPos, MapCoordinate endPos) {
 
-    BresenhamLine** traceRef = NULL;
+    /*BresenhamLine** traceRef = NULL;
     initBresenhamLine(traceRef, playerPos, endPos);
     BresenhamLine* trace = *traceRef;
 
     BresenhamLine* current = trace;
     int hitWall = 0;
 
-    /*while (current != NULL) {
+    while (current != NULL) {
 
         //if (hitWall) {
             setVisibility(map, current->location, 0);
@@ -303,7 +303,7 @@ void setEnemy(Map* map, Enemy* enemy, MapCoordinate location) {
 void setVisibility(Map* map, MapCoordinate location, int visibility) {
     int x = location.x;
     int y = location.y;
-    map->tiles[1][1].visible = 1;
+    map->tiles[y][x].visible = 1;
 }
 
 /**

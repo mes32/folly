@@ -49,7 +49,6 @@ static void displayHelpScreen();
 static void displayGameScreen();
 static void initGameState(unsigned int randomSeed);
 static void updateGameState(int input);
-static int isWall(Map* map, MapCoordinate position, int deltaX, int deltaY);
 
 
 /**
@@ -66,7 +65,7 @@ void initGame(WINDOW* ncursesWindow, unsigned int randomSeed) {
  */
 void runGame() {
 
-    //displayHelpScreen();
+    displayHelpScreen();
 
     int c;
 	while(1) {
@@ -80,9 +79,9 @@ void runGame() {
  *  Displays the game instructions (help screen)
  */
 static void displayHelpScreen() {
-    clear();
+    /*clear();
 	mvprintw(0, 0, "Use arrow keys to move around");
-	refresh();
+	refresh();*/
 }
 
 /**

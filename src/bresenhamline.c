@@ -17,7 +17,7 @@ void initBresenhamLine(BresenhamLine** lineRef, MapCoordinate startLoc, MapCoord
 
     double x_0 = (double)startLoc.x;
     double y_0 = (double)startLoc.y;
-    double x_N = (double)endLoc.x;
+    //double x_N = (double)endLoc.x;
     double y_N = (double)endLoc.y;
 
     line = (BresenhamLine*)malloc(sizeof(BresenhamLine));
@@ -25,7 +25,7 @@ void initBresenhamLine(BresenhamLine** lineRef, MapCoordinate startLoc, MapCoord
     line->next = NULL;
     BresenhamLine* current = line;
 
-    double deltaX = x_N - x_0;
+    //double deltaX = x_N - x_0;
     //double deltaY = y_N - y_0;
     //double error = 0;
     //if (deltaX != 0) {
