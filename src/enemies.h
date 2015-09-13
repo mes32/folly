@@ -62,7 +62,7 @@ Enemy* initEnemy(Map* map);
 /**
  * Deletes enemy and frees alocated memory
  */
-void deleteEnemy(Enemy** enemy);
+void deleteEnemy(Enemy** enemyRef);
 
 /**
  * Displays an enemy on the game screen

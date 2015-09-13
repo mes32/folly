@@ -46,8 +46,12 @@ Enemy* initEnemy(Map* map) {
 /**
  * Deletes enemy and frees alocated memory
  */
-void deleteEnemy(Enemy** enemy) {
-
+void deleteEnemy(Enemy** enemyRef) {
+    Enemy* enemy = *enemyRef;
+    free(enemy->name);
+    free(enemy->description);
+    free(*enemyRef);
+    *enemyRef = NULL;
 }
 
 /**
@@ -113,6 +117,19 @@ AllEnemies* initAllEnemies(Map* map) {
  */
 void deleteAllEnemies(AllEnemies** allEnemiesRef) {
 
+    AllEnemies* allEnemies = *allEnemiesRef;
+    Enemy* head = allEnemies->head;
+    while (head != NULL) {
+        Enemy* oldHead = head;
+        head = oldHead->next;
+        deleteEnemy(&oldHead);
+    }
+    allEnemies->head = NULL;
+    allEnemies->tail = NULL;
+    allEnemies->levelBoss = NULL;
+
+    free(*allEnemiesRef);
+    *allEnemiesRef = NULL;
 }
 
 /**
@@ -149,6 +166,8 @@ void insertEnemy(AllEnemies* allEnemies, Enemy* enemy) {
  * Removes an enemy from the collection of all enemies
  */
 void removeEnemy(AllEnemies* allEnemies, Enemy* enemy) {
-
+    enemy->previous->next = enemy->next;
+    enemy->next->previous = enemy->previous;
+    deleteEnemy(&enemy);
 }
 
