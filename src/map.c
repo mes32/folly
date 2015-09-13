@@ -5,10 +5,12 @@
  *
  */
 
+#include <assert.h>
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
 #include "bresenhamline.h"
 #include "map.h"
 #include "maptile.h"
@@ -21,11 +23,13 @@ void static traceLineOfSight(Map* map, MapCoordinate playerPos, MapCoordinate en
 /**
  * Initializes the game map
  */
-Map initMap() {
+Map* initMap() {
 
     int randomInt = randUnif(0, 3);
 
-    Map map;
+    Map* map = malloc(sizeof(Map));
+    assert(map != NULL);
+
     char fileName[32];
     sprintf(fileName, "data/maps/small_maze_%d.txt", randomInt);
     FILE* mapFile;
@@ -41,8 +45,8 @@ Map initMap() {
     fclose(mapFile);
 
     // Allocate map tiles to fit the y-dimension
-    map.tiles = (MapTile**)malloc(sizeof(MapTile*) * yDim);
-    if (! map.tiles) {
+    map->tiles = (MapTile**)malloc(sizeof(MapTile*) * yDim);
+    if (! map->tiles) {
         perror("Error allocating memory. See initMap() in map.c");
         abort();
     }
@@ -62,8 +66,8 @@ Map initMap() {
         }
         xDim = i;
 
-        map.tiles[y] = (MapTile*)malloc(sizeof(MapTile) * xDim);
-        if (! map.tiles[y]) {
+        map->tiles[y] = (MapTile*)malloc(sizeof(MapTile) * xDim);
+        if (! map->tiles[y]) {
             perror("Error allocating memory. See initMap() in map.c");
             abort();
         }
@@ -74,10 +78,10 @@ Map initMap() {
         while (c == '#' || c == ' ') {
             if (c == '#') {
                 // Add wall tile
-                map.tiles[y][x] = *initMapTile(x, y, 1);
+                map->tiles[y][x] = *initMapTile(x, y, 1);
             } else if (c == ' ') {
                 // Add non-wall tile
-                map.tiles[y][x] = *initMapTile(x, y, 0);
+                map->tiles[y][x] = *initMapTile(x, y, 0);
             } else {
                 break;
             }
@@ -91,8 +95,8 @@ Map initMap() {
     }
     fclose(mapFile);
 
-    map.yDim = yDim;
-    map.xDim = xDim;
+    map->yDim = yDim;
+    map->xDim = xDim;
 
     return map;
 }

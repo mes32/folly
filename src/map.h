@@ -23,7 +23,7 @@ typedef struct _Map {
 /**
  * Initializes the game map
  */
-Map initMap();
+Map* initMap();
 
 /**
  *  Frees dynamically allocated memory used for map tiles

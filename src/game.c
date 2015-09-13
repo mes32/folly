@@ -7,6 +7,7 @@
 
 #include <stdlib.h>
 #include <unistd.h>
+
 #include "game.h"
 #include "map.h"
 #include "ncwindow.h"
@@ -22,7 +23,7 @@
  *  Configuration of all game objects at one time-step
  */
 typedef struct _GameState {
-    Map map;
+    Map* map;
 
     PlayerCharacter* player;
 
@@ -90,8 +91,8 @@ static void displayHelpScreen() {
 static void displayGameScreen() {
     clear();
 
-    displayMap(window, &gameState.map, gameState.player->position);
-    displayAllEnemies(window, gameState.player, gameState.allEnemies, &gameState.map);
+    displayMap(window, gameState.map, gameState.player->position);
+    displayAllEnemies(window, gameState.player, gameState.allEnemies, gameState.map);
     displayPlayerCharacter(window, gameState.player);
     displayStatusBar(window, gameState.player);
     displayEventWindow(window, gameState.storyEvents);
@@ -112,7 +113,7 @@ static void initGameState(unsigned int randomSeed) {
     initRandomSeed(randomSeed);
     gameState.map = initMap();
     gameState.player = initPlayerCharacter();
-    gameState.allEnemies = initAllEnemies(&gameState.map);
+    gameState.allEnemies = initAllEnemies(gameState.map);
     gameState.storyEvents = initStoryStack(gameState.allEnemies->levelBoss->name);
 }
 
@@ -174,7 +175,7 @@ static void updateGameState(int input) {
 
     MapCoordinate newPosition = deltaMapCoordiante(&gameState.player->position, deltaX, deltaY);
 
-    if (isTraversable(&gameState.map, newPosition)) {
+    if (isTraversable(gameState.map, newPosition)) {
         movePlayerCharacter(gameState.player, deltaX, deltaY);
     } else {
         initStoryEvent(&movementEvent, "You seem to have hit a wall.");
@@ -182,7 +183,7 @@ static void updateGameState(int input) {
 
     //pushStoryStack(gameState.storyEvents, movementEvent);
 
-    updateVisibility(&gameState.map, gameState.player->position, gameState.player->lightRadius);
+    updateVisibility(gameState.map, gameState.player->position, gameState.player->lightRadius);
 }
 
 /**
