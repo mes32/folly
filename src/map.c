@@ -12,6 +12,7 @@
 #include <string.h>
 
 #include "bresenhamline.h"
+//#include "debugfolly.h"
 #include "map.h"
 #include "maptile.h"
 #include "randfolly.h"
@@ -122,7 +123,9 @@ void displayMap(WINDOW* window, Map* map, MapCoordinate playerPosition) {
         }
     }
 
-    // if (DEBUG_STACK != NULL) displayDebugStack()
+    //if (DEBUG_STACK != NULL) {
+        // displayDebugStack();
+    //}
 }
 
 /**

@@ -10,6 +10,8 @@
 #define DEBUGFOLLY_H_
 
 
+extern int* DEBUG_STACK = NULL;
+
 /**
  * Creates a new debug message
  */
