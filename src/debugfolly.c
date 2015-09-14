@@ -20,6 +20,8 @@ struct _DebugNode {
     DebugNode* previous;
 };
 
+static void printDebug(const DebugNode* node, int y);
+
 /**
  * Initialize the stack of debug messages
  */
@@ -55,5 +57,47 @@ void debugMessage(const char* message) {
  * Display the debugging messages in the ncurses window
  */
 void displayDebugStack(WINDOW* window) {
+    int maxY = 24;
+    int maxX = 80;
+    getmaxyx(window, maxY, maxX);
 
+    for (int y=1; y <= 3; y++) {
+        for (int x=0; x <= maxX; x++) {
+            MapCoordinate position = initMapCoordinate(x, y);
+            printChar(' ', position, BLACK_ON_WHITE);
+        }
+    }
+
+    // Print three most recent debug messages
+    DebugNode* current = DEBUG_STACK;
+    if (current != NULL) {
+        printDebug(current, 3);
+        current = current->previous;
+        if (current != NULL) {
+            printDebug(current, 2);
+            current = current->previous;
+            if (current != NULL) {
+                printDebug(current, 1);
+            }
+        }
+    }
+}
+
+/**
+ * Prints one debug message at the specified vertical possition on the ncurses window. This will 
+ * usually be near the top.
+ */
+static void printDebug(const DebugNode* node, int y) {
+    char* message = node->message;
+
+    int x = 0;
+    char character = message[x];
+    MapCoordinate position = initMapCoordinate(x, y);
+
+    while (character != '\0') {
+        printChar(character, position, BLACK_ON_WHITE);
+        x++;
+        character = message[x];
+        position = initMapCoordinate(x, y);
+    }
 }
