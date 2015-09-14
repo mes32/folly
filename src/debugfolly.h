@@ -9,13 +9,26 @@
 #ifndef DEBUGFOLLY_H_
 #define DEBUGFOLLY_H_
 
+#include "ncwindow.h"
 
-extern int* DEBUG_STACK = NULL;
+
+typedef struct _DebugNode DebugNode;
+
+DebugNode* DEBUG_STACK;
+
+/**
+ * Initialize the stack of debug messages
+ */
+void initDebugStack();
 
 /**
  * Creates a new debug message
  */
-void debugMessage(char* message);
+void debugMessage(const char* message);
 
+/**
+ * Display the debugging messages in the ncurses window
+ */
+void displayDebugStack(WINDOW* window);
 
 #endif // DEBUGFOLLY_H_

@@ -10,6 +10,8 @@
 #include <stdlib.h>
 #include <time.h>
 #include <unistd.h>
+
+#include "debugfolly.h"
 #include "game.h"
 #include "ncwindow.h"
 
@@ -18,6 +20,9 @@ void printTitleAndWait(char* version, unsigned int randomSeed);
 
 
 int main(int argc, char *argv[]) {
+
+    // Initialize debug messages once for the program
+    initDebugStack();
 
     // Setup random seed
     unsigned int randomSeed = 0;
