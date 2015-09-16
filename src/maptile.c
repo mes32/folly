@@ -8,6 +8,7 @@
 #include <assert.h>
 #include <stdlib.h>
 
+#include "debugfolly.h"
 #include "maptile.h"
 #include "mapcoordinate.h"
 #include "enemies.h"

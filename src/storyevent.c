@@ -9,6 +9,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "debugfolly.h"
 #include "storyevent.h"
 /*#include "mapcoordinate.h"
 #include "ncwindow.h"*/

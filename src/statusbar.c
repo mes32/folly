@@ -6,6 +6,8 @@
  */
 
 #include <string.h>
+
+#include "debugfolly.h"
 #include "mapcoordinate.h"
 #include "statusbar.h"
 #include "playercharacter.h"

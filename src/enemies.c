@@ -9,6 +9,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "debugfolly.h"
 #include "enemies.h"
 #include "playercharacter.h"
 #include "map.h"

@@ -8,6 +8,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 
+#include "debugfolly.h"
 #include "game.h"
 #include "map.h"
 #include "ncwindow.h"
@@ -151,6 +152,7 @@ static void updateGameState(int input) {
             deltaX = -1;
             deltaY = -1;
             initStoryEvent(&movementEvent, "You walk northwest.");
+            debugMessage("NW");
             break;
         case 'u':
             deltaX = 1;
