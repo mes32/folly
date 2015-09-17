@@ -9,6 +9,7 @@
 #include <sys/ioctl.h>
 #include <ncurses.h>
 
+#include "debugfolly.h"
 #include "mapcoordinate.h"
 #include "ncwindow.h"
 

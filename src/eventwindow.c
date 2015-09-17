@@ -5,6 +5,7 @@
  *
  */
 
+#include "debugfolly.h"
 #include "eventwindow.h"
 #include "mapcoordinate.h"
 #include "ncwindow.h"

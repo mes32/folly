@@ -8,6 +8,7 @@
 #include <assert.h>
 #include <stdlib.h>
 
+#include "debugfolly.h"
 #include "mapcoordinate.h"
 #include "playercharacter.h"
 

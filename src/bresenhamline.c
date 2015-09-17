@@ -6,6 +6,8 @@
  */
 
 #include <stdlib.h>
+
+#include "debugfolly.h"
 #include "bresenhamline.h"
 
 /**
