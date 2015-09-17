@@ -71,6 +71,18 @@ void runGame() {
     int c;
 	while(1) {
         c = wgetch(window);
+
+        while (c == DEBUG_SCROLL_UP || c == DEBUG_SCROLL_DOWN) {
+            if (c == DEBUG_SCROLL_UP) {
+                debugMessage("scroll up");
+                displayGameScreen();
+            } else {
+                debugMessage("scroll down");
+                displayGameScreen();
+            }
+            c = wgetch(window);
+        }
+
         updateGameState(c);
         displayGameScreen();
 	}
@@ -152,7 +164,6 @@ static void updateGameState(int input) {
             deltaX = -1;
             deltaY = -1;
             initStoryEvent(&movementEvent, "You walk northwest.");
-            debugMessage("NW");
             break;
         case 'u':
             deltaX = 1;

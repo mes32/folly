@@ -15,6 +15,8 @@
 typedef struct _DebugNode DebugNode;
 
 DebugNode* DEBUG_STACK;
+int DEBUG_SCROLL_UP;
+int DEBUG_SCROLL_DOWN;
 
 /**
  * Initialize the stack of debug messages

@@ -27,6 +27,8 @@ static void printDebug(const DebugNode* node, int y);
  */
 void initDebugStack() {
     DEBUG_STACK = NULL;
+    DEBUG_SCROLL_UP = (int)'z';
+    DEBUG_SCROLL_DOWN = (int)'x';
 }
 
 /**
