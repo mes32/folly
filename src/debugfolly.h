@@ -13,8 +13,9 @@
 
 
 typedef struct _DebugNode DebugNode;
+typedef struct _DebugStack DebugStack;
 
-DebugNode* DEBUG_STACK;
+DebugStack* DEBUG_STACK;
 int DEBUG_SCROLL_UP;
 int DEBUG_SCROLL_DOWN;
 
@@ -32,5 +33,15 @@ void debugMessage(const char* message);
  * Display the debugging messages in the ncurses window
  */
 void displayDebugStack(WINDOW* window);
+
+/**
+ * Scrolls up the stack of debugging messages (towards older messages)
+ */
+void debugScrollUp();
+
+/**
+ * Scrolls down the stack of debugging messages (towards newer messages)
+ */
+void debugScrollDown();
 
 #endif // DEBUGFOLLY_H_

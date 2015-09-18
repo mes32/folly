@@ -74,10 +74,10 @@ void runGame() {
 
         while (c == DEBUG_SCROLL_UP || c == DEBUG_SCROLL_DOWN) {
             if (c == DEBUG_SCROLL_UP) {
-                debugMessage("scroll up");
+                debugScrollUp();
                 displayGameScreen();
             } else {
-                debugMessage("scroll down");
+                debugScrollDown();
                 displayGameScreen();
             }
             c = wgetch(window);

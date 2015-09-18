@@ -123,9 +123,7 @@ void displayMap(WINDOW* window, Map* map, MapCoordinate playerPosition) {
         }
     }
 
-    if (DEBUG_STACK != NULL) {
-        displayDebugStack(window);
-    }
+    displayDebugStack(window);
 }
 
 /**

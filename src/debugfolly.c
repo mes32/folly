@@ -20,13 +20,23 @@ struct _DebugNode {
     DebugNode* previous;
 };
 
+struct _DebugStack {
+    DebugNode* head;
+    DebugNode* current;
+};
+
 static void printDebug(const DebugNode* node, int y);
 
 /**
  * Initialize the stack of debug messages
  */
 void initDebugStack() {
-    DEBUG_STACK = NULL;
+    DEBUG_STACK = malloc(sizeof(DebugStack));
+    assert(DEBUG_STACK != NULL);
+
+    DEBUG_STACK->head = NULL;
+    DEBUG_STACK->current = NULL;
+
     DEBUG_SCROLL_UP = (int)'[';
     DEBUG_SCROLL_DOWN = (int)']';
 }
@@ -46,12 +56,14 @@ void debugMessage(const char* message) {
     node->next = NULL;
     node->previous = NULL;
 
-    if (DEBUG_STACK == NULL) {
-        DEBUG_STACK = node;
+    if (DEBUG_STACK->head == NULL) {
+        DEBUG_STACK->head = node;
+        DEBUG_STACK->current = node;
     } else {
-        DEBUG_STACK->next = node;
-        node->previous = DEBUG_STACK;
-        DEBUG_STACK = node;
+        DEBUG_STACK->head->next = node;
+        node->previous = DEBUG_STACK->head;
+        DEBUG_STACK->head = node;
+        DEBUG_STACK->current = node;
     }
 }
 
@@ -59,6 +71,10 @@ void debugMessage(const char* message) {
  * Display the debugging messages in the ncurses window
  */
 void displayDebugStack(WINDOW* window) {
+    if (DEBUG_STACK->head == NULL) {
+        return;
+    }
+
     int maxY = 24;
     int maxX = 80;
     getmaxyx(window, maxY, maxX);
@@ -71,7 +87,7 @@ void displayDebugStack(WINDOW* window) {
     }
 
     // Print three most recent debug messages
-    DebugNode* current = DEBUG_STACK;
+    DebugNode* current = DEBUG_STACK->current;
     if (current != NULL) {
         printDebug(current, 3);
         current = current->previous;
@@ -82,6 +98,24 @@ void displayDebugStack(WINDOW* window) {
                 printDebug(current, 1);
             }
         }
+    }
+}
+
+/**
+ * Scrolls up the stack of debugging messages (towards older messages)
+ */
+void debugScrollUp() {
+    if (DEBUG_STACK->current->previous != NULL) {
+        DEBUG_STACK->current = DEBUG_STACK->current->previous;
+    }
+}
+
+/**
+ * Scrolls down the stack of debugging messages (towards newer messages)
+ */
+void debugScrollDown() {
+    if (DEBUG_STACK->current->next != NULL) {
+        DEBUG_STACK->current = DEBUG_STACK->current->next;
     }
 }
 
@@ -103,3 +137,5 @@ static void printDebug(const DebugNode* node, int y) {
         position = initMapCoordinate(x, y);
     }
 }
+
+
