@@ -8,8 +8,11 @@
 #ifndef MAP_H_
 #define MAP_H_
 
+#include <stdlib.h>
+
 #include "mapcoordinate.h"
 #include "maptile.h"
+
 
 /**
  * A gameplay map composed of a two dimensional grid of map tiles
