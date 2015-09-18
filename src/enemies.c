@@ -49,9 +49,14 @@ Enemy* initEnemy(Map* map, MapCoordinate playerPosition) {
  * Deletes enemy and frees alocated memory
  */
 void deleteEnemy(Enemy** enemyRef) {
+    assert(enemyRef != NULL);
+
     Enemy* enemy = *enemyRef;
+    assert(enemy != NULL);
+
     free(enemy->name);
     free(enemy->description);
+
     free(*enemyRef);
     *enemyRef = NULL;
 }
@@ -59,7 +64,7 @@ void deleteEnemy(Enemy** enemyRef) {
 /**
  * Displays an enemy on the game screen
  */
-void displayEnemy(WINDOW* window, PlayerCharacter* player, Map* map, Enemy* enemy) {
+void displayEnemy(const WINDOW* window, const PlayerCharacter* player, const Map* map, const Enemy* enemy) {
     if (isVisible(map, enemy->position)) {
         printCharBoldPC(enemy->displayChar, enemy->position, window, player->position, enemy->displayColor);
     }
@@ -71,6 +76,7 @@ void displayEnemy(WINDOW* window, PlayerCharacter* player, Map* map, Enemy* enem
 Enemy* initBoss(Map* map, MapCoordinate playerPosition) {
 
     Enemy* boss = malloc(sizeof(Enemy));
+    assert(boss != NULL);
 
     boss->name = "the Wraith";
     boss->displayChar = 'W';
@@ -95,6 +101,7 @@ Enemy* initBoss(Map* map, MapCoordinate playerPosition) {
 AllEnemies* initAllEnemies(Map* map, MapCoordinate playerPosition) {
 
     AllEnemies* allEnemies = malloc(sizeof(AllEnemies));
+    assert(allEnemies != NULL);
 
     allEnemies->head = NULL;
     allEnemies->tail = NULL;
@@ -117,17 +124,17 @@ AllEnemies* initAllEnemies(Map* map, MapCoordinate playerPosition) {
  * Deletes all enemies and frees alocated memory
  */
 void deleteAllEnemies(AllEnemies** allEnemiesRef) {
+    assert(allEnemiesRef != NULL);
 
     AllEnemies* allEnemies = *allEnemiesRef;
+    assert(allEnemies != NULL);
+
     Enemy* head = allEnemies->head;
     while (head != NULL) {
         Enemy* oldHead = head;
         head = oldHead->next;
         deleteEnemy(&oldHead);
     }
-    allEnemies->head = NULL;
-    allEnemies->tail = NULL;
-    allEnemies->levelBoss = NULL;
 
     free(*allEnemiesRef);
     *allEnemiesRef = NULL;
@@ -136,10 +143,8 @@ void deleteAllEnemies(AllEnemies** allEnemiesRef) {
 /**
  *  Displays all visible enemies relative to the player's position on the ncurses window
  */
-void displayAllEnemies(WINDOW* window, PlayerCharacter* player, AllEnemies* allEnemies, Map* map) {
-
+void displayAllEnemies(const WINDOW* window, const PlayerCharacter* player, const AllEnemies* allEnemies, const Map* map) {
     Enemy* current = allEnemies->head;
-
     while (current != NULL) {
         displayEnemy(window, player, map, current);
         current = current->next;

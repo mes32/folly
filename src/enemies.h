@@ -67,7 +67,7 @@ void deleteEnemy(Enemy** enemyRef);
 /**
  * Displays an enemy on the game screen
  */
-void displayEnemy(WINDOW* window, PlayerCharacter* player, Map* map, Enemy* enemy);
+void displayEnemy(const WINDOW* window, const PlayerCharacter* player, const Map* map, const Enemy* enemy);
 
 /**
  * Initializes a new boss-type enemy entity
@@ -87,7 +87,7 @@ void deleteAllEnemies(AllEnemies** allEnemiesRef);
 /**
  *  Displays all visible enemies relative to the player's position on the ncurses window
  */
-void displayAllEnemies(WINDOW* window, PlayerCharacter* player, AllEnemies* allEnemies, Map* map);
+void displayAllEnemies(const WINDOW* window, const PlayerCharacter* player, const AllEnemies* allEnemies, const Map* map);
 
 /**
  * Inserts an enemy into the collection of all enemies

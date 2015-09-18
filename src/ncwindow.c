@@ -88,7 +88,7 @@ void printCharBold(char c, MapCoordinate position, textColorPair color) {
 /**
  *  Prints a character c at relative location (x, y) where the player's position is centered on the window
  */
-void printCharPC(char c, MapCoordinate position, WINDOW* window, MapCoordinate playerPosition, textColorPair color) {
+void printCharPC(char c, MapCoordinate position, const WINDOW* window, MapCoordinate playerPosition, textColorPair color) {
 
     int x = position.x;
     int y = position.y;
@@ -111,7 +111,7 @@ void printCharPC(char c, MapCoordinate position, WINDOW* window, MapCoordinate p
 /**
  *  Prints a bold character c at relative location (x, y) where the player's position is centered on the window
  */
-void printCharBoldPC(char c, MapCoordinate position, WINDOW* window, MapCoordinate playerPosition, textColorPair color) {
+void printCharBoldPC(char c, MapCoordinate position, const WINDOW* window, MapCoordinate playerPosition, textColorPair color) {
     attron(A_BOLD);
     printCharPC(c, position, window, playerPosition, color);
     attroff(A_BOLD);

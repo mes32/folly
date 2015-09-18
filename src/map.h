@@ -61,6 +61,6 @@ void setVisibility(Map* map, MapCoordinate location, int visibility);
 /**
  * Returns one if the position on the map is visible to the player
  */
-int isVisible(Map* map, MapCoordinate position);
+int isVisible(const Map* map, MapCoordinate position);
 
 #endif // MAP_H_
