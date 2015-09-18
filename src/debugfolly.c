@@ -25,6 +25,9 @@ struct _DebugStack {
     DebugNode* current;
 };
 
+static DebugNode* initDebugNode(const char* message);
+static void deleteDebugNode(DebugNode** nodeRef);
+static void pushDebugNode(DebugStack* stack, DebugNode* node);
 static void printDebug(const DebugNode* node, int y);
 
 /**
@@ -42,9 +45,36 @@ void initDebugStack() {
 }
 
 /**
- * Creates a new debug message
+ * Delete the stack of debug messages
+ */
+void deleteDebugStack(DebugStack** stackRef) {
+    assert(stackRef != NULL);
+
+    DebugStack* stack = *stackRef;
+    assert(stack != NULL);
+
+    while (stack->head != NULL) {
+        DebugNode* oldHead = stack->head;
+        stack->head = oldHead->next;
+        deleteDebugNode(&oldHead);
+    }
+
+    free(*stackRef);
+    *stackRef = NULL;
+}
+
+/**
+ * Creates a new debug message and pushes onto the debug stack
  */
 void debugMessage(const char* message) {
+    DebugNode* node = initDebugNode(message);
+    pushDebugNode(DEBUG_STACK, node);
+}
+
+/**
+ * Initialize a debug message node
+ */
+static DebugNode* initDebugNode(const char* message) {
     size_t len = strlen(message);
 
     DebugNode* node = malloc(sizeof(DebugNode));
@@ -56,21 +86,42 @@ void debugMessage(const char* message) {
     node->next = NULL;
     node->previous = NULL;
 
-    if (DEBUG_STACK->head == NULL) {
-        DEBUG_STACK->head = node;
-        DEBUG_STACK->current = node;
+    return node;
+}
+
+/**
+ * Delete a debug message node
+ */
+static void deleteDebugNode(DebugNode** nodeRef) {
+    assert(nodeRef != NULL);
+
+    DebugNode* node = *nodeRef;
+    assert(node != NULL);
+    free(node->message);
+
+    free(*nodeRef);
+    *nodeRef = NULL;
+}
+
+/**
+ * Push a debug message node onto the stack
+ */
+static void pushDebugNode(DebugStack* stack, DebugNode* node) {
+    if (stack->head == NULL) {
+        stack->head = node;
+        stack->current = node;
     } else {
-        DEBUG_STACK->head->next = node;
+        stack->head->next = node;
         node->previous = DEBUG_STACK->head;
-        DEBUG_STACK->head = node;
-        DEBUG_STACK->current = node;
+        stack->head = node;
+        stack->current = node;
     }
 }
 
 /**
  * Display the debugging messages in the ncurses window
  */
-void displayDebugStack(WINDOW* window) {
+void displayDebugStack(const WINDOW* window) {
     if (DEBUG_STACK->head == NULL) {
         return;
     }
@@ -105,7 +156,9 @@ void displayDebugStack(WINDOW* window) {
  * Scrolls up the stack of debugging messages (towards older messages)
  */
 void debugScrollUp() {
-    if (DEBUG_STACK->current->previous != NULL) {
+    assert(DEBUG_STACK != NULL);
+
+    if (DEBUG_STACK->current != NULL && DEBUG_STACK->current->previous != NULL) {
         DEBUG_STACK->current = DEBUG_STACK->current->previous;
     }
 }
@@ -114,7 +167,9 @@ void debugScrollUp() {
  * Scrolls down the stack of debugging messages (towards newer messages)
  */
 void debugScrollDown() {
-    if (DEBUG_STACK->current->next != NULL) {
+    assert(DEBUG_STACK != NULL);
+
+    if (DEBUG_STACK->current != NULL && DEBUG_STACK->current->next != NULL) {
         DEBUG_STACK->current = DEBUG_STACK->current->next;
     }
 }
