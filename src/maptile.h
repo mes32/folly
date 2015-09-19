@@ -12,6 +12,7 @@
 #include "ncwindow.h"
 //#include "enemies.h"
 
+
 /**
  * A tile in the game map
  */
@@ -22,6 +23,7 @@ typedef struct _MapTile {
     struct _Enemy* enemy;
     int isWall; // *** Replace with type eventually
 } MapTile;
+
 
 /**
  * Initialize a map tile
