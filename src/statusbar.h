@@ -14,7 +14,7 @@
 /**
  *  Displays the status bar at the top of the game window. This status bar summarizes the state of the player character.
  */
-void displayStatusBar(WINDOW* window, PlayerCharacter* player);
+void displayStatusBar(const WINDOW* window, const PlayerCharacter* player);
 
 
 #endif // STATUSBAR_H_

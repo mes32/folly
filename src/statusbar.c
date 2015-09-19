@@ -13,14 +13,14 @@
 #include "playercharacter.h"
 
 
-static int addStringToBar(char* str, int index, textColorPair color);
+static int addStringToBar(const char* str, int index, textColorPair color);
 static void clearToBar(int start, int stop, textColorPair color);
 
 
 /**
  *  Displays the status bar at the top of the game window. This status bar summarizes the state of the player character.
  */
-void displayStatusBar(WINDOW* window, PlayerCharacter* player) {
+void displayStatusBar(const WINDOW* window, const PlayerCharacter* player) {
 
     int maxY = 0;
     int maxX = 0;
@@ -29,26 +29,28 @@ void displayStatusBar(WINDOW* window, PlayerCharacter* player) {
     int index = 0;
     index = addStringToBar("  Player1    ", index, BLACK_ON_WHITE);
     index = addStringToBar("HP: ", index, BLUE_ON_WHITE);
+
     char healthString[15];
     sprintf(healthString, "%d/%d    ", player->healthPoints, player->maxHealthPoints);
     index = addStringToBar(healthString, index, BLACK_ON_WHITE);
+
     index = addStringToBar("W: ", index, BLUE_ON_WHITE);
     char weaponString[30];
     sprintf(weaponString, "%s    ", player->equipedWeapon);
     index = addStringToBar(weaponString, index, BLACK_ON_WHITE);
+
     index = addStringToBar("S: ", index, BLUE_ON_WHITE);
     char shieldString[30];
     sprintf(shieldString, "%s", player->equipedShield);
     index = addStringToBar(shieldString, index, BLACK_ON_WHITE);
 
     clearToBar(index, maxX, BLACK_ON_WHITE);
-
 }
 
 /**
  *  Puts a character string into the status bar
  */
-static int addStringToBar(char* str, int index, textColorPair color) {
+static int addStringToBar(const char* str, int index, textColorPair color) {
     int x = 0;
     char c = str[x];
     while (c != '\0') {
