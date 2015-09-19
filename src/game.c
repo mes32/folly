@@ -143,42 +143,42 @@ static void updateGameState(int input) {
         case 'k':
         case KEY_UP:
             deltaY = -1;
-            initStoryEvent(&movementEvent, "You walk north.");
+            movementEvent = initStoryEvent("You walk north.");
             break;
         case 'j':
         case KEY_DOWN:
             deltaY = 1;
-            initStoryEvent(&movementEvent, "You walk south.");
+            movementEvent = initStoryEvent("You walk south.");
             break;
         case 'h':
         case KEY_LEFT:
             deltaX = -1;
-            initStoryEvent(&movementEvent, "You walk west.");
+            movementEvent = initStoryEvent("You walk west.");
             break;
         case 'l':
         case KEY_RIGHT:
             deltaX = 1;
-            initStoryEvent(&movementEvent, "You walk east.");
+            movementEvent = initStoryEvent("You walk east.");
             break;
         case 'y':
             deltaX = -1;
             deltaY = -1;
-            initStoryEvent(&movementEvent, "You walk northwest.");
+            movementEvent = initStoryEvent("You walk northwest.");
             break;
         case 'u':
             deltaX = 1;
             deltaY = -1;
-            initStoryEvent(&movementEvent, "You walk northeast.");
+            movementEvent = initStoryEvent("You walk northeast.");
             break;
         case 'b':
             deltaX = -1;
             deltaY = 1;
-            initStoryEvent(&movementEvent, "You walk southwest.");
+            movementEvent = initStoryEvent("You walk southwest.");
             break;
         case 'n':
             deltaX = 1;
             deltaY = 1;
-            initStoryEvent(&movementEvent, "You walk southeast.");
+            movementEvent = initStoryEvent("You walk southeast.");
             break;
         default:
             return;
@@ -190,7 +190,7 @@ static void updateGameState(int input) {
     if (isTraversable(gameState.map, newPosition)) {
         movePlayerCharacter(gameState.player, deltaX, deltaY);
     } else {
-        initStoryEvent(&movementEvent, "You seem to have hit a wall.");
+        movementEvent = initStoryEvent("You seem to have hit a wall.");
     }
 
     //pushStoryStack(gameState.storyEvents, movementEvent);

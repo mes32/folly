@@ -9,8 +9,6 @@
 #ifndef STORYEVENT_H_
 #define STORYEVENT_H_
 
-//#include "ncwindow.h"
-//#include "eventwindow.h"
 
 /*typedef enum {
     INSTANT,
@@ -18,12 +16,11 @@
     SLOW
 } PrintSpeed;*/
 
+
 typedef struct _StoryEvent StoryEvent;
 struct _StoryEvent {
     char* text;
     int isNew;
-    //int isError;
-    //PrintSpeed speed;
 
     StoryEvent* eventBefore;
     StoryEvent* eventAfter;
@@ -38,22 +35,12 @@ typedef struct _StoryStack {
 /**
  * Initializes a new story event
  */
-void initStoryEvent(StoryEvent** eventRef, char* text);
+StoryEvent* initStoryEvent(char* text);
 
 /**
  * Deletes story event and frees alocated memory
  */
 void deleteStoryEvent(StoryEvent** eventRef);
-
-/**
- * Initializes a new error event
- */
-void initErrorEvent(StoryEvent** eventRef, char* text);
-
-/**
- * Deletes error event and frees alocated memory
- */
-void deleteErrorEvent(StoryEvent** eventRef);
 
 /**
  * Initializes a new story stack
