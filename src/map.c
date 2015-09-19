@@ -112,7 +112,7 @@ void deleteMap(Map** mapRef) {
     }
 
     free(*mapRef);
-    mapRef = NULL;
+    *mapRef = NULL;
 }
 
 /**

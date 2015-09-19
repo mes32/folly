@@ -35,7 +35,7 @@ MapTile* initMapTile(int x, int y, int isWall) {
  */
 void deleteMapTile(MapTile** mapTileRef) {
     free(*mapTileRef);
-    mapTileRef = NULL;
+    *mapTileRef = NULL;
 }
 
 /**
