@@ -24,12 +24,12 @@ MapCoordinate initMapCoordinate(int x, int y);
 /**
  * Returns the changed map coordinates when moving deltaX, deltaY from current position
  */
-MapCoordinate deltaMapCoordiante(MapCoordinate* position, int deltaX, int deltaY);
+MapCoordinate deltaMapCoordiante(const MapCoordinate* position, int deltaX, int deltaY);
 
 /**
  * Returns the euclidian distance between two map coordinates
  */
-double distance(MapCoordinate* position1, MapCoordinate* position2);
+double distance(const MapCoordinate* position1, const MapCoordinate* position2);
 
 /**
  *  Moves the map coordinates by (deltaX, deltaY)
