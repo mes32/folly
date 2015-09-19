@@ -31,12 +31,12 @@ Map* initMap();
 /**
  *  Frees dynamically allocated memory used for map tiles
  */
-void deleteMap(Map* map);
+void deleteMap(Map** mapRef);
 
 /**
  * Displays the map in an ncurses window
  */
-void displayMap(WINDOW* window, Map* map, MapCoordinate playerPosition);
+void displayMap(const WINDOW* window, const Map* map, MapCoordinate playerPosition);
 
 /**
  * Updates the visibility status of map tiles based on the player's position and the radius of illumination around that position
@@ -46,7 +46,7 @@ void updateVisibility(Map* map, MapCoordinate playerPosition, int lightRadius);
 /**
  * Returns 1 if a given location on the map can be traversed by the player (i.e. no obstacles like walls or enemies). Returns 0 otherwise.
  */
-int isTraversable(Map* map, MapCoordinate location);
+int isTraversable(const Map* map, MapCoordinate location);
 
 /**
  * Sets the enemy at a given location

@@ -31,9 +31,17 @@ MapTile* initMapTile(int x, int y, int isWall) {
 }
 
 /**
+ * Delete a map tile
+ */
+void deleteMapTile(MapTile** mapTileRef) {
+    free(*mapTileRef);
+    mapTileRef = NULL;
+}
+
+/**
  * Displays the map tile in an ncurses window at the given coordinates
  */
-void displayMapTile(WINDOW* window, MapTile* tile, MapCoordinate playerPosition) {
+void displayMapTile(const WINDOW* window, const MapTile* tile, MapCoordinate playerPosition) {
 
     MapCoordinate tilePosition = tile->position;
 

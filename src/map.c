@@ -25,21 +25,19 @@ void static traceLineOfSight(Map* map, MapCoordinate playerPos, MapCoordinate en
  * Initializes the game map
  */
 Map* initMap() {
-
-    int randomInt = randUnif(0, 3);
-
     Map* map = malloc(sizeof(Map));
     assert(map != NULL);
 
     char fileName[32];
+    int randomInt = randUnif(0, 3);
     sprintf(fileName, "data/maps/small_maze_%d.txt", randomInt);
+
     FILE* mapFile;
-    char buf[1000];
+    mapFile = fopen(fileName, "r");
+
     int xDim = 0;
     int yDim = 0;
-
-    // Find y-dimension of map file
-    mapFile = fopen(fileName, "r");
+    char buf[1000];
     while(fgets(buf, 1000, mapFile) != NULL) {
         yDim++;
     }
@@ -78,10 +76,10 @@ Map* initMap() {
         char c = line[x];
         while (c == '#' || c == ' ') {
             if (c == '#') {
-                // Add wall tile
+                // Add wall tile (#)
                 map->tiles[y][x] = *initMapTile(x, y, 1);
             } else if (c == ' ') {
-                // Add non-wall tile
+                // Add non-wall tile (.)
                 map->tiles[y][x] = *initMapTile(x, y, 0);
             } else {
                 break;
@@ -105,17 +103,22 @@ Map* initMap() {
 /**
  * Frees dynamically allocated memory used for map tiles
  */
-void deleteMap(Map* map) {
-    for (int y = map->yDim - 1; y >= 0; y--) {
-        free(map->tiles[y]);
+void deleteMap(Map** mapRef) {
+    Map* map = *mapRef;
+    for (int x=0; x < map->xDim; x++) {
+        for (int y=0; y < map->yDim; y++) {
+            //deleteMapTile(&(map->tiles[y][x]));
+        }
     }
-    free(map->tiles);
+
+    free(*mapRef);
+    mapRef = NULL;
 }
 
 /**
  * Displays the map in an ncurses window
  */
-void displayMap(WINDOW* window, Map* map, MapCoordinate playerPosition) {
+void displayMap(const WINDOW* window, const Map* map, MapCoordinate playerPosition) {
 
     for (int y=0; y < map->yDim; y++) {
         for (int x=0; x < map->xDim; x++) {
@@ -281,7 +284,7 @@ void static traceLineOfSight(Map* map, MapCoordinate playerPos, MapCoordinate en
 /**
  * Returns 1 if a given location on the map can be traversed by the player (i.e. no obstacles like walls or enemies). Returns 0 otherwise.
  */
-int isTraversable(Map* map, MapCoordinate location) {
+int isTraversable(const Map* map, MapCoordinate location) {
     int x = location.x;
     int y = location.y;
     if (!(map->tiles[y][x].isWall) && map->tiles[y][x].enemy == NULL) {
