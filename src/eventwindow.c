@@ -17,7 +17,7 @@ static void printEvent(StoryEvent* event, int y);
 /**
  * Displays the game story events (i.e. event feed) in a section near the bottom of the game window
  */
-void displayEventWindow(WINDOW* window, StoryStack* storyEvents) {
+void displayEventWindow(const WINDOW* window, StoryStack* storyEvents) {
     int maxY = 24;
     int maxX = 80;
     getmaxyx(window, maxY, maxX);
