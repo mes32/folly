@@ -32,9 +32,22 @@ PlayerCharacter* initPlayerCharacter() {
 }
 
 /**
+ * Initialize the player's character
+ */
+void deletePlayerCharacter(PlayerCharacter** playerRef) {
+    PlayerCharacter* player = *playerRef;
+    free(player->name);
+    free(player->equipedWeapon);
+    free(player->equipedShield);
+
+    free(*playerRef);
+    *playerRef = NULL;
+}
+
+/**
  * Displays the player character on the tiled map
  */
-void displayPlayerCharacter(WINDOW* window, PlayerCharacter* player) {
+void displayPlayerCharacter(const WINDOW* window, const PlayerCharacter* player) {
 
     MapCoordinate playerPosition = player->position;
 

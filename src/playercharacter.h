@@ -11,9 +11,8 @@
 #include "mapcoordinate.h"
 #include "ncwindow.h"
 
-/**
- * The player's character
- */
+
+// The player's character
 typedef struct _PlayerCharacter {
     char* name;
     MapCoordinate position;
@@ -24,15 +23,21 @@ typedef struct _PlayerCharacter {
     char* equipedShield;
 } PlayerCharacter;
 
+
 /**
  * Initialize the player's character
  */
 PlayerCharacter* initPlayerCharacter();
 
 /**
+ * Initialize the player's character
+ */
+void deletePlayerCharacter(PlayerCharacter** playerRef);
+
+/**
  * Displays the player character on the tiled map
  */
-void displayPlayerCharacter(WINDOW* window, PlayerCharacter* player);
+void displayPlayerCharacter(const WINDOW* window, const PlayerCharacter* player);
 
 /**
  * Change the player character's location
