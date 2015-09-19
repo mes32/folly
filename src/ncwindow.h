@@ -10,8 +10,11 @@
 #define NCWINDOW_H_
 
 #include <ncurses.h>
+
 #include "mapcoordinate.h"
 
+
+// Define text color pairs
 typedef enum {
     WHITE_ON_BLACK = 1,
     BLUE_ON_BLACK = 2,
@@ -21,6 +24,7 @@ typedef enum {
     RED_ON_WHITE = 6,
     GREEN_ON_BLACK = 7
 } textColorPair;
+
 
 /**
  *  Initializes ncurses-based display mode and returns a pointer to the current WINDOW

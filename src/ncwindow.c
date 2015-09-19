@@ -59,14 +59,13 @@ void initColors() {
 	init_pair(BLACK_ON_WHITE, COLOR_BLACK, COLOR_WHITE);  // 4 - black on white
 	init_pair(BLUE_ON_WHITE, COLOR_BLUE, COLOR_WHITE);    // 5 - blue on white
 	init_pair(RED_ON_WHITE, COLOR_RED, COLOR_WHITE);      // 6 - red on white
-	init_pair(GREEN_ON_BLACK, COLOR_GREEN, COLOR_BLACK);      // 6 - red on white
+	init_pair(GREEN_ON_BLACK, COLOR_GREEN, COLOR_BLACK);  // 7 - green on black
 }
 
 /**
  *  Prints a character c at location (x, y) using a given ncurses color pair
  */
 void printChar(char c, MapCoordinate position, textColorPair color) {
-
     char buffer[2];
     buffer[0] = c;
     buffer[1] = '\0';
@@ -89,7 +88,6 @@ void printCharBold(char c, MapCoordinate position, textColorPair color) {
  *  Prints a character c at relative location (x, y) where the player's position is centered on the window
  */
 void printCharPC(char c, MapCoordinate position, const WINDOW* window, MapCoordinate playerPosition, textColorPair color) {
-
     int x = position.x;
     int y = position.y;
 
