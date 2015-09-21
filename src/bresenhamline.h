@@ -10,28 +10,52 @@
 
 #include "mapcoordinate.h"
 
-// A singly linked list element representing one location in a Bresenham line trace
-typedef struct _BresenhamLine BresenhamLine;
-struct _BresenhamLine {
-    MapCoordinate location;
-    BresenhamLine* next;
-};
 
+// A singly linked list node for a single location along a Bresenham line trace
 typedef struct _BresenhamLineNode BresenhamLineNode;
 struct _BresenhamLineNode {
-    MapCoordinate location;
+    //MapCoordinate position;
+    int test;
     BresenhamLineNode* next;
 };
 
+// A Bresenham line trace
+typedef struct _BresenhamLine BresenhamLine;
+struct _BresenhamLine {
+    BresenhamLineNode* head;
+    BresenhamLineNode* tail;
+};
+
+
 /**
- *  Initializes a line tracing from starting location to stopping location built using Bresenham's Line Alogrithm
+ * Initialize a Bresenham line
  */
 BresenhamLine* initBresenhamLine(MapCoordinate startLoc, MapCoordinate endLoc);
 
 /**
- *  Frees dynamically allocated memory used for BresenhamLine
+ * Enqueues a new position in the Bresenham line
  */
-void deleteBresenhamLine(BresenhamLine** line);
+void enqueueBresenhamLine(BresenhamLine* line);
+
+/**
+ * Denqueues the next position from the Bresenham line
+ */
+//MapCoordinate denqueueBresenhamLine(BresenhamLine* line);
+
+/**
+ * Delete a Bresenham line
+ */
+void deleteBresenhamLine(BresenhamLine** lineRef);
+
+/**
+ * Initialize a Bresenham line node 
+ */
+BresenhamLineNode* initBresenhamLineNode(int test);
+
+/**
+ * Delete a Bresenham line node
+ */
+void deleteBresenhamLineNode(BresenhamLineNode** nodeRef);
 
 
 #endif // BRESENHAMLINE_H_

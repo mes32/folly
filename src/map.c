@@ -215,11 +215,9 @@ void updateVisibility(Map* map, MapCoordinate playerPosition, int lightRadius) {
  */
 void static traceLineOfSight(Map* map, MapCoordinate playerPos, MapCoordinate endPos) {
 
-    /*BresenhamLine** traceRef = NULL;
-    initBresenhamLine(traceRef, playerPos, endPos);
-    BresenhamLine* trace = *traceRef;
+    BresenhamLine* trace = initBresenhamLine(playerPos, endPos);
 
-    BresenhamLine* current = trace;
+    /*BresenhamLine* current = trace;
     int hitWall = 0;
 
     while (current != NULL) {
@@ -235,50 +233,7 @@ void static traceLineOfSight(Map* map, MapCoordinate playerPos, MapCoordinate en
         current = current->next;
     }*/
 
-    //deleteBresenhamLine(traceRef);
-
-    /*for (int i = xMinBox; i < xMaxBox; i++) {
-        int j = yMinBox;
-        int hitWall = 0;
-
-        int x0 = playerX;
-        int y0 = playerY;
-        int x1 = i;
-        int y1 = yMaxBox;
-
-        float deltaX = (float)x1 - (float)x0;
-        float deltaY = (float)y1 - (float)y0;
-        if (deltaX == 0)
-            continue;
-        float err = 0;
-        float deltaErr = abs(deltaY/deltaX);
-
-        int y = y0;
-        for (int x=x0; x < x1; x++) {
-            if (map->tiles[x][y].isWall) {
-                hitWall = 1;
-            }
-            if (hitWall) {
-                map->tiles[i][j].visible = 0;
-            }
-            err += deltaErr;
-            while (err >= 0.5) {
-                if (map->tiles[x][y].isWall) {
-                    hitWall = 1;
-                }
-                if (hitWall) {
-                    map->tiles[i][j].visible = 0;
-                }
-                if ((y1 - y0) < 0) {
-                    y -= 1;
-                } else if ((y1 - y0) > 0) {
-                    y += 1;
-                }
-                err -= 1.0;
-            }
-        }
-
-    }*/
+    deleteBresenhamLine(&trace);
 }
 
 /**
