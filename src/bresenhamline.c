@@ -34,18 +34,43 @@ BresenhamLine* initBresenhamLine(MapCoordinate startPos, MapCoordinate endPos) {
 
     double deltaX = x_N - x_0;
     double deltaY = y_N - y_0;
-    //double error = 0;
+    double error = 0;
     if (deltaX != 0) {
-        //double deltaError = abs(deltaY / deltaX)    // Assume deltax != 0 (line is not vertical),
-           // note that this division needs to be done in a way that preserves the fractional part
-        //int y := y0
-        //for x from x0 to x1
-            //plot(x,y)
-            //error := error + deltaError
-            //while error ≥ 0.5 then
-                //plot(x, y)
-                //y := y + sign(y1 - y0)
-                //error := error - 1.0
+        double deltaError = abs(deltaY / deltaX);
+        int y = y_0;
+        for (int x=x_0; x <= x_N; x++) {
+            MapCoordinate position = initMapCoordinate(x, y);
+            enqueueBresenhamLine(line, position);
+            error = error + deltaError;
+            /*while (error >= 0.5) {
+                MapCoordinate position = initMapCoordinate(x, y);
+                enqueueBresenhamLine(line, position);
+                if (deltaY > 0) {
+                    y += 1;
+                }
+                if (deltaY < 0) {
+                    y -= 1;
+                }
+                error -= 1.0;
+            }*/
+        }
+        for (int x=x_0; x >= x_N; x--) {
+            MapCoordinate position = initMapCoordinate(x, y);
+            enqueueBresenhamLine(line, position);
+            error = error + deltaError;
+            /*while (error >= 0.5) {
+                MapCoordinate position = initMapCoordinate(x, y);
+                enqueueBresenhamLine(line, position);
+                if (deltaY > 0) {
+                    y += 1;
+                }
+                if (deltaY < 0) {
+                    y -= 1;
+                }
+                error -= 1.0;
+            }*/
+        }
+
     } else {
         if (deltaY > 0) {
             for (int y=y_0; y <= y_N; y++) {
@@ -108,10 +133,6 @@ void deleteBresenhamLine(BresenhamLine** lineRef) {
 BresenhamLineNode* initBresenhamLineNode(MapCoordinate position) {
     BresenhamLineNode* node = malloc(sizeof(BresenhamLineNode));
     assert(node != NULL);
-
-    char buffer[30];
-    sprintf(buffer, "x: %d y: %d", position.x, position.y);
-    debugMessage(buffer);
 
     node->position = initMapCoordinate(position.x, position.y);
     node->test = 33;
