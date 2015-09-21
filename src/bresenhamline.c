@@ -7,6 +7,7 @@
 
 #include <assert.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "debugfolly.h"
 #include "bresenhamline.h"
@@ -18,6 +19,9 @@ BresenhamLine* initBresenhamLine(MapCoordinate startPos, MapCoordinate endPos) {
 
     BresenhamLine* line = malloc(sizeof(BresenhamLine));
     assert(line != NULL);
+
+    line->head = NULL;
+    line->tail = NULL;
 
     double x_0 = (double)startPos.x;
     double y_0 = (double)startPos.y;
@@ -45,11 +49,14 @@ BresenhamLine* initBresenhamLine(MapCoordinate startPos, MapCoordinate endPos) {
     } else {
         if (deltaY > 0) {
             for (int y=y_0; y <= y_N; y++) {
-                //MapCoordinate position = initMapCoordinate(x_0, y);
-                //enqueueBresenhamLine(line);
+                MapCoordinate position = initMapCoordinate(x_0, y);
+                enqueueBresenhamLine(line, position);
             }
         } else {
-
+            for (int y=y_0; y >= y_N; y--) {
+                MapCoordinate position = initMapCoordinate(x_0, y);
+                enqueueBresenhamLine(line, position);
+            }
         }
     }
     return line;
@@ -58,8 +65,8 @@ BresenhamLine* initBresenhamLine(MapCoordinate startPos, MapCoordinate endPos) {
 /**
  * Enqueues a new position in the Bresenham line
  */
-void enqueueBresenhamLine(BresenhamLine* line) {
-    BresenhamLineNode* newNode = initBresenhamLineNode(0);
+void enqueueBresenhamLine(BresenhamLine* line, MapCoordinate position) {
+    BresenhamLineNode* newNode = initBresenhamLineNode(position);
     if (line->tail == NULL) {
         line->head = newNode;
         line->tail = newNode;
@@ -72,13 +79,13 @@ void enqueueBresenhamLine(BresenhamLine* line) {
 /**
  * Denqueues the next position from the Bresenham line
  */
-/*MapCoordinate denqueueBresenhamLine(BresenhamLine* line) {
+MapCoordinate denqueueBresenhamLine(BresenhamLine* line) {
     BresenhamLineNode* oldHead = line->head;
-    MapCoordinate position = oldHead->position; 
+    MapCoordinate position = oldHead->position;
     line->head = line->head->next;
     deleteBresenhamLineNode(&oldHead);
     return position;
-}*/
+}
 
 /**
  * Delete a Bresenham line
@@ -98,12 +105,16 @@ void deleteBresenhamLine(BresenhamLine** lineRef) {
 /**
  * Initialize a Bresenham line node 
  */
-BresenhamLineNode* initBresenhamLineNode(int test) {
+BresenhamLineNode* initBresenhamLineNode(MapCoordinate position) {
     BresenhamLineNode* node = malloc(sizeof(BresenhamLineNode));
     assert(node != NULL);
 
-    //node->position = initMapCoordinate(position.x, position.y);
-    node->test = test;
+    char buffer[30];
+    sprintf(buffer, "x: %d y: %d", position.x, position.y);
+    debugMessage(buffer);
+
+    node->position = initMapCoordinate(position.x, position.y);
+    node->test = 33;
     node->next = NULL;
 
     return node;

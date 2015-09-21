@@ -217,21 +217,18 @@ void static traceLineOfSight(Map* map, MapCoordinate playerPos, MapCoordinate en
 
     BresenhamLine* trace = initBresenhamLine(playerPos, endPos);
 
-    /*BresenhamLine* current = trace;
+    BresenhamLineNode* current = trace->head;
     int hitWall = 0;
 
     while (current != NULL) {
-
-        //if (hitWall) {
-            setVisibility(map, current->location, 0);
-        //}
-
-        if (isLocationWall(map, current->location)) {
+        if (hitWall) {
+            setVisibility(map, current->position, 0);
+        }
+        if (isWall(map, current->position)) {
             hitWall = 1;
         }
-
         current = current->next;
-    }*/
+    }
 
     deleteBresenhamLine(&trace);
 }
@@ -243,6 +240,19 @@ int isTraversable(const Map* map, MapCoordinate location) {
     int x = location.x;
     int y = location.y;
     if (!(map->tiles[y][x].isWall) && map->tiles[y][x].enemy == NULL) {
+        return 1;
+    } else {
+        return 0;
+    }
+}
+
+/**
+ * Returns 1 if a given location on the map is a wall
+ */
+int isWall(const Map* map, MapCoordinate location) {
+    int x = location.x;
+    int y = location.y;
+    if (map->tiles[y][x].isWall) {
         return 1;
     } else {
         return 0;
@@ -264,7 +274,7 @@ void setEnemy(Map* map, Enemy* enemy, MapCoordinate location) {
 void setVisibility(Map* map, MapCoordinate location, int visibility) {
     int x = location.x;
     int y = location.y;
-    map->tiles[y][x].visible = 1;
+    map->tiles[y][x].visible = visibility;
 }
 
 /**

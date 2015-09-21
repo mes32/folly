@@ -14,7 +14,7 @@
 // A singly linked list node for a single location along a Bresenham line trace
 typedef struct _BresenhamLineNode BresenhamLineNode;
 struct _BresenhamLineNode {
-    //MapCoordinate position;
+    MapCoordinate position;
     int test;
     BresenhamLineNode* next;
 };
@@ -35,12 +35,12 @@ BresenhamLine* initBresenhamLine(MapCoordinate startLoc, MapCoordinate endLoc);
 /**
  * Enqueues a new position in the Bresenham line
  */
-void enqueueBresenhamLine(BresenhamLine* line);
+void enqueueBresenhamLine(BresenhamLine* line, MapCoordinate position);
 
 /**
  * Denqueues the next position from the Bresenham line
  */
-//MapCoordinate denqueueBresenhamLine(BresenhamLine* line);
+MapCoordinate denqueueBresenhamLine(BresenhamLine* line);
 
 /**
  * Delete a Bresenham line
@@ -50,7 +50,7 @@ void deleteBresenhamLine(BresenhamLine** lineRef);
 /**
  * Initialize a Bresenham line node 
  */
-BresenhamLineNode* initBresenhamLineNode(int test);
+BresenhamLineNode* initBresenhamLineNode(MapCoordinate position);
 
 /**
  * Delete a Bresenham line node

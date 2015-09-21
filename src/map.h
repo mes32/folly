@@ -49,6 +49,11 @@ void updateVisibility(Map* map, MapCoordinate playerPosition, int lightRadius);
 int isTraversable(const Map* map, MapCoordinate location);
 
 /**
+ * Returns 1 if a given location on the map is a wall
+ */
+int isWall(const Map* map, MapCoordinate location);
+
+/**
  * Sets the enemy at a given location
  */
 void setEnemy(Map* map, struct _Enemy* enemy, MapCoordinate location);
