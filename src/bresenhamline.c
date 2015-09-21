@@ -5,6 +5,7 @@
  *
  */
 
+#include <assert.h>
 #include <stdlib.h>
 
 #include "debugfolly.h"
@@ -13,16 +14,16 @@
 /**
  *  Initializes a line tracing from starting location to stopping location built using Bresenham's Line Alogrithm
  */
-void initBresenhamLine(BresenhamLine** lineRef, MapCoordinate startLoc, MapCoordinate endLoc) {
+BresenhamLine* initBresenhamLine(MapCoordinate startLoc, MapCoordinate endLoc) {
 
-    BresenhamLine* line = *lineRef;
+    BresenhamLine* line = malloc(sizeof(BresenhamLine));
+    assert(line != NULL);
 
     double x_0 = (double)startLoc.x;
     double y_0 = (double)startLoc.y;
     //double x_N = (double)endLoc.x;
     double y_N = (double)endLoc.y;
 
-    line = (BresenhamLine*)malloc(sizeof(BresenhamLine));
     line->location = initMapCoordinate(startLoc.x, startLoc.y);
     line->next = NULL;
     BresenhamLine* current = line;
@@ -49,6 +50,7 @@ void initBresenhamLine(BresenhamLine** lineRef, MapCoordinate startLoc, MapCoord
             current->next = NULL;
         }
     //}
+    return line;
 }
 
 /**

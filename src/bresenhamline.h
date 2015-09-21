@@ -10,19 +10,23 @@
 
 #include "mapcoordinate.h"
 
-/**
- *  A singly linked list element representing one location in a Bresenham line trace
- */
+// A singly linked list element representing one location in a Bresenham line trace
 typedef struct _BresenhamLine BresenhamLine;
 struct _BresenhamLine {
     MapCoordinate location;
     BresenhamLine* next;
 };
 
+typedef struct _BresenhamLineNode BresenhamLineNode;
+struct _BresenhamLineNode {
+    MapCoordinate location;
+    BresenhamLineNode* next;
+};
+
 /**
  *  Initializes a line tracing from starting location to stopping location built using Bresenham's Line Alogrithm
  */
-void initBresenhamLine(BresenhamLine** lineRef, MapCoordinate startLoc, MapCoordinate endLoc);
+BresenhamLine* initBresenhamLine(MapCoordinate startLoc, MapCoordinate endLoc);
 
 /**
  *  Frees dynamically allocated memory used for BresenhamLine
