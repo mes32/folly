@@ -19,7 +19,7 @@
 #include "enemies.h"
 
 
-void static traceLineOfSight(Map* map, MapCoordinate playerPos, MapCoordinate endPos);
+void static traceLineOfSight(Map* map, MapCoordinate playerPos, MapCoordinate endPos, int lightRadius);
 
 /**
  * Initializes the game map
@@ -144,65 +144,57 @@ void updateVisibility(Map* map, MapCoordinate playerPosition, int lightRadius) {
 
     if (xMinBox < 0) {
         xMinBox = 0;
-    } else if (xMinBox > map->xDim) {
-        xMinBox = map->xDim;
+    } else if (xMinBox > map->xDim - 1) {
+        xMinBox = map->xDim - 1;
     }
 
     if (xMaxBox < 0) {
         xMaxBox = 0;
-    } else if (xMaxBox > map->xDim) {
-        xMaxBox = map->xDim;
+    } else if (xMaxBox > map->xDim - 1) {
+        xMaxBox = map->xDim - 1;
     }
 
     if (yMinBox < 0) {
         yMinBox = 0;
-    } else if (yMinBox > map->yDim) {
-        yMinBox = map->yDim;
+    } else if (yMinBox > map->yDim - 1) {
+        yMinBox = map->yDim - 1;
     }
 
     if (yMaxBox < 0) {
         yMaxBox = 0;
-    } else if (yMaxBox > map->yDim) {
-        yMaxBox = map->yDim;
+    } else if (yMaxBox > map->yDim - 1) {
+        yMaxBox = map->yDim - 1;
     }
 
-    for (int i=0; i < map->yDim; i++) {
-        for (int j=0; j < map->xDim; j++) {
-            if (i < yMinBox || i > yMaxBox || j < xMinBox || j > xMaxBox) {
-                map->tiles[i][j].visible = 0;
-            } else {
-                float h = (float)(i - playerY);
-                float w = (float)(j - playerX);
-                float dist = sqrt(w*w + h*h);
-                if (dist < (float)lightRadius) {
-                    map->tiles[i][j].visible = 1;
-                    //map->tiles[i][j].explored = 1;
-                } else {
-                    map->tiles[i][j].visible = 0;
-                }
-            }
+    for (int y=0; y < map->yDim - 1; y++) {
+        for (int x=0; x < map->xDim - 1; x++) {
+            map->tiles[y][x].visible = 0;
         }
     }
 
-    for (int i = xMinBox + 1; i < xMaxBox; i++) {
-        MapCoordinate topEdge = initMapCoordinate(i, yMaxBox);
-        traceLineOfSight(map, playerPosition, topEdge);
+    int xMinBox2 = playerX-lightRadius;
+    int xMaxBox2 = playerX+lightRadius;
+    int yMinBox2 = playerY-lightRadius;
+    int yMaxBox2 = playerY+lightRadius;
 
-        MapCoordinate bottomEdge = initMapCoordinate(i, yMinBox);
-        traceLineOfSight(map, playerPosition, bottomEdge);
+    for (int i = xMinBox2; i <= xMaxBox2; i++) {
+        MapCoordinate bottomEdge = initMapCoordinate(i, yMaxBox2);
+        traceLineOfSight(map, playerPosition, bottomEdge, lightRadius);
+
+        MapCoordinate topEdge = initMapCoordinate(i, yMinBox2);
+        traceLineOfSight(map, playerPosition, topEdge, lightRadius);
     }
 
-    for (int j = yMinBox; j <= yMaxBox; j++) {
-        MapCoordinate rightEdge = initMapCoordinate(xMaxBox, j);
-        traceLineOfSight(map, playerPosition, rightEdge);
+    for (int j = yMinBox2; j <= yMaxBox2; j++) {
+        MapCoordinate rightEdge = initMapCoordinate(xMaxBox2, j);
+        traceLineOfSight(map, playerPosition, rightEdge, lightRadius);
 
-        MapCoordinate leftEdge = initMapCoordinate(xMinBox, j);
-        traceLineOfSight(map, playerPosition, leftEdge);
+        MapCoordinate leftEdge = initMapCoordinate(xMinBox2, j);
+        traceLineOfSight(map, playerPosition, leftEdge, lightRadius);
     }
 
-
-    for (int y = yMinBox; y < yMaxBox; y++) {
-        for (int x = xMinBox; x < xMaxBox; x++) {
+    for (int y = yMinBox; y <= yMaxBox; y++) {
+        for (int x = xMinBox; x <= xMaxBox; x++) {
             if (map->tiles[y][x].visible == 1) {
                 map->tiles[y][x].explored = 1;
             }
@@ -213,20 +205,29 @@ void updateVisibility(Map* map, MapCoordinate playerPosition, int lightRadius) {
 /**
  * Further refines the visibility status of tiles based on line-of-sight blocked by walls
  */
-void static traceLineOfSight(Map* map, MapCoordinate playerPos, MapCoordinate endPos) {
-
+void static traceLineOfSight(Map* map, MapCoordinate playerPos, MapCoordinate endPos, int lightRadius) {
     BresenhamLine* trace = initBresenhamLine(playerPos, endPos);
-
     BresenhamLineNode* current = trace->head;
-    int hitWall = 0;
 
     while (current != NULL) {
-        if (hitWall) {
-            setVisibility(map, current->position, 0);
+        int x = current->position.x;
+        int y = current->position.y;
+        if (x < 0 || x > map->xDim - 1 || y < 0 || y > map->yDim - 1) {
+            break;
         }
+
+        float h = (float)(y - playerPos.y);
+        float w = (float)(x - playerPos.x);
+        float dist = sqrt(w*w + h*h);
+        if (dist > (float)lightRadius) {
+            break;
+        }
+
+        setVisibility(map, current->position, 1);
         if (isWall(map, current->position)) {
-            hitWall = 1;
+            break;
         }
+
         current = current->next;
     }
 

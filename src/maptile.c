@@ -45,27 +45,20 @@ void displayMapTile(const WINDOW* window, const MapTile* tile, MapCoordinate pla
 
     MapCoordinate tilePosition = tile->position;
 
-    if (tile->explored) {
-        if (tile->visible) {
-            if (tile->isWall) {
-                printCharPC('#', tilePosition, window, playerPosition, WHITE_ON_BLACK);
-                return;
-            } else {
-                printCharPC('.', tilePosition, window, playerPosition, WHITE_ON_BLACK);
-                return;
-            }
+    if (tile->visible) {
+        if (tile->isWall) {
+            printCharPC('#', tilePosition, window, playerPosition, WHITE_ON_BLACK);
         } else {
-            if (tile->isWall) {
-                printCharPC('#', tilePosition, window, playerPosition, RED_ON_BLACK);
-                return;
-            } else {
-                printCharPC(' ', tilePosition, window, playerPosition, RED_ON_BLACK);
-                return;
-            }
+            printCharPC('.', tilePosition, window, playerPosition, WHITE_ON_BLACK);
+        }
+    } else if (tile->explored) {
+        if (tile->isWall) {
+            printCharPC('#', tilePosition, window, playerPosition, RED_ON_BLACK);
+        } else {
+            printCharPC(' ', tilePosition, window, playerPosition, RED_ON_BLACK);
         }
     } else {
         printCharPC(' ', tilePosition, window, playerPosition, WHITE_ON_BLACK);
-        return;
     }
 }
 

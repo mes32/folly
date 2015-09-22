@@ -19,7 +19,6 @@ BresenhamLine* initBresenhamLine(MapCoordinate startPos, MapCoordinate endPos) {
 
     BresenhamLine* line = malloc(sizeof(BresenhamLine));
     assert(line != NULL);
-
     line->head = NULL;
     line->tail = NULL;
 
@@ -28,23 +27,31 @@ BresenhamLine* initBresenhamLine(MapCoordinate startPos, MapCoordinate endPos) {
     double x_N = (double)endPos.x;
     double y_N = (double)endPos.y;
 
-    //line->location = initMapCoordinate(startLoc.x, startLoc.y);
-    //line->next = NULL;
-    //BresenhamLine* current = line;
-
     double deltaX = x_N - x_0;
     double deltaY = y_N - y_0;
-    double error = 0;
+
+    double error = 0.0;
+    MapCoordinate position;
     if (deltaX != 0) {
-        double deltaError = abs(deltaY / deltaX);
+        double deltaError = deltaY / deltaX;
+        if (deltaError < 0.0) {
+            deltaError *= -1.0;
+        }
+
         int y = y_0;
         for (int x=x_0; x <= x_N; x++) {
-            MapCoordinate position = initMapCoordinate(x, y);
+            position = initMapCoordinate(x, y);
             enqueueBresenhamLine(line, position);
             error = error + deltaError;
-            /*while (error >= 0.5) {
-                MapCoordinate position = initMapCoordinate(x, y);
+
+            while (error >= 0.5) {
+                position = initMapCoordinate(x, y);
                 enqueueBresenhamLine(line, position);
+
+                if (x == x_N && y == y_N) {
+                    return line;
+                }
+
                 if (deltaY > 0) {
                     y += 1;
                 }
@@ -52,15 +59,20 @@ BresenhamLine* initBresenhamLine(MapCoordinate startPos, MapCoordinate endPos) {
                     y -= 1;
                 }
                 error -= 1.0;
-            }*/
+            }
         }
         for (int x=x_0; x >= x_N; x--) {
-            MapCoordinate position = initMapCoordinate(x, y);
+            position = initMapCoordinate(x, y);
             enqueueBresenhamLine(line, position);
             error = error + deltaError;
-            /*while (error >= 0.5) {
-                MapCoordinate position = initMapCoordinate(x, y);
+            while (error >= 0.5) {
+                position = initMapCoordinate(x, y);
                 enqueueBresenhamLine(line, position);
+
+                if (x == x_N && y == y_N) {
+                    return line;
+                }
+
                 if (deltaY > 0) {
                     y += 1;
                 }
@@ -68,7 +80,7 @@ BresenhamLine* initBresenhamLine(MapCoordinate startPos, MapCoordinate endPos) {
                     y -= 1;
                 }
                 error -= 1.0;
-            }*/
+            }
         }
 
     } else {
@@ -135,7 +147,6 @@ BresenhamLineNode* initBresenhamLineNode(MapCoordinate position) {
     assert(node != NULL);
 
     node->position = initMapCoordinate(position.x, position.y);
-    node->test = 33;
     node->next = NULL;
 
     return node;

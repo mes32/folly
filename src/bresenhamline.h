@@ -15,7 +15,6 @@
 typedef struct _BresenhamLineNode BresenhamLineNode;
 struct _BresenhamLineNode {
     MapCoordinate position;
-    int test;
     BresenhamLineNode* next;
 };
 
