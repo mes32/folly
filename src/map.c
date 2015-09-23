@@ -166,8 +166,8 @@ void updateVisibility(Map* map, MapCoordinate playerPosition, int lightRadius) {
         yMaxBox = map->yDim - 1;
     }
 
-    for (int y=0; y < map->yDim - 1; y++) {
-        for (int x=0; x < map->xDim - 1; x++) {
+    for (int y=0; y < map->yDim; y++) {
+        for (int x=0; x < map->xDim; x++) {
             map->tiles[y][x].visible = 0;
         }
     }

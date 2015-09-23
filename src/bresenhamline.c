@@ -12,6 +12,11 @@
 #include "debugfolly.h"
 #include "bresenhamline.h"
 
+
+static double absoluteValue(double input);
+static int signFunction(double input);
+
+
 /**
  * Initialize a Bresenham line
  */
@@ -33,52 +38,33 @@ BresenhamLine* initBresenhamLine(MapCoordinate startPos, MapCoordinate endPos) {
     double error = 0.0;
     MapCoordinate position;
     if (deltaX != 0) {
-        double deltaError = deltaY / deltaX;
-        if (deltaError < 0.0) {
-            deltaError *= -1.0;
-        }
+        double deltaError = absoluteValue(deltaY / deltaX);
+        int signDeltaY = signFunction(deltaY);
 
         int y = y_0;
         for (int x=x_0; x <= x_N; x++) {
             position = initMapCoordinate(x, y);
             enqueueBresenhamLine(line, position);
-            error = error + deltaError;
 
-            while (error >= 0.5) {
+            error += deltaError;
+            while (error >= 0.5 && x != x_N && y != y_N) {
                 position = initMapCoordinate(x, y);
                 enqueueBresenhamLine(line, position);
 
-                if (x == x_N && y == y_N) {
-                    return line;
-                }
-
-                if (deltaY > 0) {
-                    y += 1;
-                }
-                if (deltaY < 0) {
-                    y -= 1;
-                }
+                y += signDeltaY;
                 error -= 1.0;
             }
         }
         for (int x=x_0; x >= x_N; x--) {
             position = initMapCoordinate(x, y);
             enqueueBresenhamLine(line, position);
-            error = error + deltaError;
-            while (error >= 0.5) {
+
+            error += deltaError;
+            while (error >= 0.5 && x != x_N && y != y_N) {
                 position = initMapCoordinate(x, y);
                 enqueueBresenhamLine(line, position);
 
-                if (x == x_N && y == y_N) {
-                    return line;
-                }
-
-                if (deltaY > 0) {
-                    y += 1;
-                }
-                if (deltaY < 0) {
-                    y -= 1;
-                }
+                y += signDeltaY;
                 error -= 1.0;
             }
         }
@@ -86,12 +72,12 @@ BresenhamLine* initBresenhamLine(MapCoordinate startPos, MapCoordinate endPos) {
     } else {
         if (deltaY > 0) {
             for (int y=y_0; y <= y_N; y++) {
-                MapCoordinate position = initMapCoordinate(x_0, y);
+                position = initMapCoordinate(x_0, y);
                 enqueueBresenhamLine(line, position);
             }
         } else {
             for (int y=y_0; y >= y_N; y--) {
-                MapCoordinate position = initMapCoordinate(x_0, y);
+                position = initMapCoordinate(x_0, y);
                 enqueueBresenhamLine(line, position);
             }
         }
@@ -158,4 +144,28 @@ BresenhamLineNode* initBresenhamLineNode(MapCoordinate position) {
 void deleteBresenhamLineNode(BresenhamLineNode** nodeRef) {
     free(*nodeRef);
     *nodeRef = NULL;
+}
+
+/**
+ * Returns the absolute value of the input retaining double precision
+ */
+static double absoluteValue(double input) {
+        if (input < 0.0) {
+            return -1.0 * input;
+        } else {
+            return input;
+        }
+}
+
+/**
+ * Returns 1 for positive input, -1 for negative, and 0 for input == 0.0
+ */
+static int signFunction(double input) {
+    if (input > 0.0) {
+        return 1;
+    } else if (input < 0.0) {
+        return -1;
+    } else {
+        return 0;
+    }
 }
