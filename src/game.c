@@ -92,9 +92,12 @@ void runGame() {
  *  Displays the game instructions (help screen)
  */
 static void displayHelpScreen() {
-    /*clear();
+    clear();
 	mvprintw(0, 0, "Use arrow keys to move around");
-	refresh();*/
+    usleep(DISPLAY_DELAY);
+	refresh();
+
+    int c = wgetch(window);
 }
 
 /**
