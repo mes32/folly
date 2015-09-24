@@ -10,6 +10,7 @@
 
 #include "debugfolly.h"
 #include "game.h"
+#include "helpscreen.h"
 #include "map.h"
 #include "ncwindow.h"
 #include "playercharacter.h"
@@ -46,7 +47,7 @@ static GameState gameState;
 
 
 // Static function prototypes
-static void displayHelpScreen();
+//static void displayHelpScreen();
 static void displayGameScreen();
 static void initGameState(unsigned int randomSeed);
 static void updateGameState(int input);
@@ -66,11 +67,10 @@ void initGame(WINDOW* ncursesWindow, unsigned int randomSeed) {
  */
 void runGame() {
 
-    displayHelpScreen();
+    //displayHelpScreen(window);
 
-    int c;
+    int c = 0;
 	while(1) {
-        c = wgetch(window);
 
         while (c == DEBUG_SCROLL_UP || c == DEBUG_SCROLL_DOWN) {
             if (c == DEBUG_SCROLL_UP) {
@@ -83,22 +83,27 @@ void runGame() {
             c = wgetch(window);
         }
 
+        /*if (c == '?' || c == 27) {
+            displayHelpScreen(window);
+        }*/
+
         updateGameState(c);
         displayGameScreen();
+        c = wgetch(window);
 	}
 }
 
 /**
  *  Displays the game instructions (help screen)
  */
-static void displayHelpScreen() {
+/*static void displayHelpScreen() {
     clear();
 	mvprintw(0, 0, "Use arrow keys to move around");
     usleep(DISPLAY_DELAY);
 	refresh();
 
     int c = wgetch(window);
-}
+}*/
 
 /**
  *  Displays the current game state (main game screen)
@@ -113,10 +118,7 @@ static void displayGameScreen() {
     displayEventWindow(window, gameState.storyEvents);
 
     wmove(window, 0, 0);
-
     usleep(DISPLAY_DELAY);
-
-    //wrefresh(window);
     refresh();
 }
 
@@ -184,7 +186,7 @@ static void updateGameState(int input) {
             movementEvent = initStoryEvent("You walk southeast.");
             break;
         default:
-            return;
+            //return;
             break;
     }
 

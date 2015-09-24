@@ -38,6 +38,13 @@ int main(int argc, char *argv[]) {
 
     // Initialize and run the game inside an ncurses window
 	WINDOW *window = startNCWindow();
+
+    clear();
+    mvprintw(0, 0, "Press Enter");
+    refresh();
+    usleep(1000000);
+    wgetch(window);
+
     initGame(window, randomSeed);
     runGame();
     endNCWindow();
@@ -51,7 +58,7 @@ int main(int argc, char *argv[]) {
  */
 void printTitleAndWait(char* version, unsigned int randomSeed) {
     printf("\n");
-    printf("Starting Folly v%s\n", version);
+    printf("Started Folly v%s\n", version);
     printf("\n");
     printf("       _____   _____    __       __     __  __   \n");
     printf("     /\\_____\\ ) ___ (  /\\_\\     /\\_\\  /\\  /\\  /\\ \n");
@@ -64,8 +71,7 @@ void printTitleAndWait(char* version, unsigned int randomSeed) {
     printf("\n");
     printf("RANDOM SEED: %u\n", randomSeed);
     printf("\n");
-    printf("Press enter to continue.\n");
 
-    getchar();
+    usleep(1000000);
 }
 
