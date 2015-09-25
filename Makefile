@@ -12,6 +12,7 @@ LDFLAGS=-lncurses
 
 OBJECT_FILES= \
     bin/debugfolly.o \
+    bin/titlescreen.o \
     bin/helpscreen.o \
     bin/game.o \
     bin/ncwindow.o \

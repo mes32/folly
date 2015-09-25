@@ -15,7 +15,7 @@
 
 
 /**
- *  Initializes ncurses-based display mode and returns a pointer to the current WINDOW
+ * Initializes ncurses-based display mode and returns a pointer to the current WINDOW
  */
 WINDOW* startNCWindow() {
 
@@ -39,7 +39,7 @@ WINDOW* startNCWindow() {
 }
 
 /**
- *  Closes ncurses-based display mode
+ * Closes ncurses-based display mode
  */
 void endNCWindow() {
 	clrtoeol();
@@ -48,7 +48,7 @@ void endNCWindow() {
 }
 
 /**
- *  Initializes color pairs for use with the ncurses display window
+ * Initializes color pairs for use with the ncurses display window
  */
 void initColors() {
 	start_color();
@@ -63,7 +63,7 @@ void initColors() {
 }
 
 /**
- *  Prints a character c at location (x, y) using a given ncurses color pair
+ * Prints a character c at location (x, y) using a given ncurses color pair
  */
 void printChar(char c, MapCoordinate position, textColorPair color) {
     char buffer[2];
@@ -76,7 +76,7 @@ void printChar(char c, MapCoordinate position, textColorPair color) {
 }
 
 /**
- *  Prints a bold character c at location (x, y) using a given ncurses color pair
+ * Prints a bold character c at location (x, y) using a given ncurses color pair
  */
 void printCharBold(char c, MapCoordinate position, textColorPair color) {
     attron(A_BOLD);
@@ -85,7 +85,7 @@ void printCharBold(char c, MapCoordinate position, textColorPair color) {
 }
 
 /**
- *  Prints a character c at relative location (x, y) where the player's position is centered on the window
+ * Prints a character c at relative location (x, y) where the player's position is centered on the window
  */
 void printCharPC(char c, MapCoordinate position, const WINDOW* window, MapCoordinate playerPosition, textColorPair color) {
     int x = position.x;
@@ -107,7 +107,7 @@ void printCharPC(char c, MapCoordinate position, const WINDOW* window, MapCoordi
 }
 
 /**
- *  Prints a bold character c at relative location (x, y) where the player's position is centered on the window
+ * Prints a bold character c at relative location (x, y) where the player's position is centered on the window
  */
 void printCharBoldPC(char c, MapCoordinate position, const WINDOW* window, MapCoordinate playerPosition, textColorPair color) {
     attron(A_BOLD);
@@ -116,7 +116,7 @@ void printCharBoldPC(char c, MapCoordinate position, const WINDOW* window, MapCo
 }
 
 /**
- *  Prints an integer c at location (x, y) using a given ncurses color pair
+ * Prints an integer c at location (x, y) using a given ncurses color pair
  */
 void printInt(int c, MapCoordinate position, textColorPair color) {
     c %= 10;

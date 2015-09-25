@@ -6,6 +6,7 @@
  */
 
 #include <ncurses.h>
+#include <pthread.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -16,6 +17,7 @@
 #include "ncwindow.h"
 
 
+static void* threadFunc();
 void printTitleAndWait(char* version, unsigned int randomSeed);
 
 
@@ -32,19 +34,20 @@ int main(int argc, char *argv[]) {
         randomSeed = (unsigned int)time(NULL);
     }
 
-    // Print the title screen
+    // Print the title screen and random seed used
     char* VERSION = "0.1";
     printTitleAndWait(VERSION, randomSeed);
 
-    // Initialize and run the game inside an ncurses window
+    // Start pthread
+    pthread_t pth;
+	pthread_create(&pth, NULL, threadFunc, NULL);
+
+    // Start ncurses window and wait for key press before killing pthread
 	WINDOW *window = startNCWindow();
-
-    clear();
-    mvprintw(0, 0, "Press Enter");
-    refresh();
-    usleep(1000000);
     wgetch(window);
+    pthread_cancel(pth);
 
+    // Initialize and run the game
     initGame(window, randomSeed);
     runGame();
     endNCWindow();
@@ -54,7 +57,6 @@ int main(int argc, char *argv[]) {
 
 /**
  *  Prints the version number and 'FOLLY' in ASCII-art
- *  Then it waits for keyboard input
  */
 void printTitleAndWait(char* version, unsigned int randomSeed) {
     printf("\n");
@@ -72,6 +74,16 @@ void printTitleAndWait(char* version, unsigned int randomSeed) {
     printf("RANDOM SEED: %u\n", randomSeed);
     printf("\n");
 
-    usleep(1000000);
+    usleep(200000);
+}
+
+static void* threadFunc() {
+	clear();
+    while (1) {
+        mvprintw(0, 0, "Press Enter");
+        refresh();
+        usleep(100000);
+    }
+    return NULL;
 }
 
