@@ -15,15 +15,16 @@
 #include "debugfolly.h"
 #include "game.h"
 #include "ncwindow.h"
+#include "titlescreen.h"
 
 
-static void* threadFunc();
+static void* threadFunc(void *window);
 void printTitleAndWait(char* version, unsigned int randomSeed);
 
 
 int main(int argc, char *argv[]) {
 
-    // Initialize debug messages once for the program
+    // Initialize debug messages once for the entire program
     initDebugStack();
 
     // Setup random seed
@@ -39,11 +40,11 @@ int main(int argc, char *argv[]) {
     printTitleAndWait(VERSION, randomSeed);
 
     // Start pthread
+	WINDOW *window = startNCWindow();
     pthread_t pth;
-	pthread_create(&pth, NULL, threadFunc, NULL);
+	pthread_create(&pth, NULL, threadFunc, window);
 
     // Start ncurses window and wait for key press before killing pthread
-	WINDOW *window = startNCWindow();
     wgetch(window);
     pthread_cancel(pth);
 
@@ -77,13 +78,8 @@ void printTitleAndWait(char* version, unsigned int randomSeed) {
     usleep(200000);
 }
 
-static void* threadFunc() {
-	clear();
-    while (1) {
-        mvprintw(0, 0, "Press Enter");
-        refresh();
-        usleep(100000);
-    }
+static void* threadFunc(void *window) {
+    displayTitleScreen(window);
     return NULL;
 }
 
