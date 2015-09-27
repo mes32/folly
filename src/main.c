@@ -46,6 +46,7 @@ int main(int argc, char *argv[]) {
 
     // Start ncurses window and wait for key press before killing pthread
     wgetch(window);
+    termTitleScreenThreads();
     pthread_cancel(pth);
 
     // Initialize and run the game

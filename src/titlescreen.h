@@ -11,6 +11,8 @@
 
 void displayTitleScreen(WINDOW *window);
 
+void termTitleScreenThreads();
+
 
 
 #endif // TITLESCREEN_H_
