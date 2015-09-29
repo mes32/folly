@@ -7,6 +7,7 @@
 
 #include <ncurses.h>
 #include <pthread.h>
+#include <semaphore.h>
 #include <stdlib.h>
 #include <unistd.h>
 
@@ -22,6 +23,8 @@ static int randNextCell(int cell);
 
 static pthread_t ellipsisThread;
 static pthread_t wanderThread;
+static pthread_mutex_t mutex;
+
 
 /**
  * Displays a title screen in an infinite loop. The intent is that this will be called from a 
@@ -29,24 +32,21 @@ static pthread_t wanderThread;
  */
 void displayTitleScreen(WINDOW *window) {
 
-	clear();
-
     initColors();
+    pthread_mutex_init(&mutex, NULL);
 
     int maxX = 0;
     int maxY = 0;
     getmaxyx(window, maxY, maxX);
 
 	clear();
-
     printFolly(maxX);
-
     	attron(COLOR_PAIR(WHITE_ON_BLACK));
     mvprintw(14, (maxX - 44)/2, "Press ENTER to continue...");
     	attroff(COLOR_PAIR(WHITE_ON_BLACK));
-
     move(0, 0);
     refresh();
+
     usleep(100000);
 
     unsigned int randomSeed = (unsigned int)time(NULL);
@@ -54,15 +54,17 @@ void displayTitleScreen(WINDOW *window) {
 
     int *arg = malloc(sizeof(*arg));
     *arg = maxX;
-	//pthread_create(&ellipsisThread, NULL, cycleEllipsis, arg);
-
+	pthread_create(&ellipsisThread, NULL, cycleEllipsis, arg);
 	pthread_create(&wanderThread, NULL, cycleWander, arg);
 
-    /*while (1) {
+    while (1) {
+        pthread_mutex_lock(&mutex);
         move(0, 0);
         refresh();
+        pthread_mutex_unlock(&mutex);
+
         usleep(10000);
-    }*/
+    }
 }
 
 void termTitleScreenThreads() {
@@ -1210,22 +1212,33 @@ static void* cycleEllipsis(void *maxPtr) {
     int maxX = *((int *) maxPtr);
 
     while (1) {
+        pthread_mutex_lock(&mutex);
         mvprintw(14, (maxX - 44)/2 + 23, "   ");
-        //move(0, 0);
-        //refresh();
-        usleep(400000);
+        move(0, 0);
+        pthread_mutex_unlock(&mutex);
+
+        usleep(800000);
+
+        pthread_mutex_lock(&mutex);
         mvprintw(14, (maxX - 44)/2 + 23, ".  ");
-        //move(0, 0);
-        //refresh();
-        usleep(300000);
-        mvprintw(14, (maxX - 44)/2 + 23, ".. ");
-        //move(0, 0);
-        //refresh();
-        usleep(200000);
-        mvprintw(14, (maxX - 44)/2 + 23, "...");
-        //move(0, 0);
-        //refresh();
+        move(0, 0);
+        pthread_mutex_unlock(&mutex);
+
         usleep(600000);
+
+        pthread_mutex_lock(&mutex);
+        mvprintw(14, (maxX - 44)/2 + 23, ".. ");
+        move(0, 0);
+        pthread_mutex_unlock(&mutex);
+
+        usleep(400000);
+
+        pthread_mutex_lock(&mutex);
+        mvprintw(14, (maxX - 44)/2 + 23, "...");
+        move(0, 0);
+        pthread_mutex_unlock(&mutex);
+
+        usleep(1200000);
     }
     return NULL;
 }
@@ -1238,20 +1251,24 @@ static void* cycleWander(void *maxPtr) {
     while (1) {
 
         index = randNextCell(index);
+
+        pthread_mutex_lock(&mutex);
         printFolly(maxX);
         printCell(index, maxX);
+        sleepFor = randUnif(0, 4);
         move(0, 0);
-        refresh();
+        pthread_mutex_unlock(&mutex);
 
-        sleepFor = randUnif(0, 3);
         if (sleepFor == 0) {
-            usleep(400000);
+            usleep(250000);
         } else if (sleepFor == 1) {
-            usleep(500000);
+            usleep(450000);
         } else if (sleepFor == 2) {
-            usleep(600000);
+            usleep(500000);
+        } else if (sleepFor == 3) {
+            usleep(550000);
         } else {
-            usleep(700000);
+            usleep(1250000);
         }
     }
 
