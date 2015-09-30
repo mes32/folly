@@ -414,6 +414,7 @@ static int randNextCell(int cell) {
 
     int r;
     switch (cell) {
+
         case 1:
             r = randUnif(0, 1);
             if (r == 0) {
@@ -423,13 +424,7 @@ static int randNextCell(int cell) {
             }
             break;
         case 2:
-            r = randUnif(0, 1);
-            if (r == 0) {
-                return 1;
-            } else if (r == 1) {
-                return 3;
-            }
-            break;
+            return randIntFromList(2, 1, 3);
         case 3:
             r = randUnif(0, 1);
             if (r == 0) {
@@ -1246,7 +1241,7 @@ static void* cycleEllipsis(void *maxPtr) {
 static void* cycleWander(void *maxPtr) {
     int maxX = *((int *) maxPtr);
 
-    int index = randUnif(1, 87);
+    int index = 2;//randUnif(1, 87);
     int sleepFor = 0;
     while (1) {
 

@@ -24,5 +24,10 @@ double normalizedRand();
  */
 int randUnif(int min, int max);
 
+/**
+ * Selects one int at random from an arbitrarily sized list of ints
+ */
+int randIntFromList(size_t numArgs, ...);
+
 
 #endif // RANDFOLLY_H_

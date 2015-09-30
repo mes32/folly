@@ -5,11 +5,14 @@
  *
  */
 
+#include <stdarg.h>
 #include <stdlib.h>
 
 #include "debugfolly.h"
 #include "randfolly.h"
 
+
+//static int randIntFromSet(int in1, ...);
 
 /**
  * Initializes randomization with the provided random seed
@@ -33,4 +36,22 @@ double normalizedRand() {
 int randUnif(int min, int max) {
     double range = (double)(max - min + 1);
     return (normalizedRand() * range) + min;
+}
+
+/**
+ * Selects one int at random from an arbitrarily sized list of ints
+ */
+int randIntFromList(size_t numArgs, ...) {
+    int targetIndex = randUnif(0, numArgs-1);
+
+    va_list ap;
+    va_start (ap, numArgs);
+
+    int arg;
+    for (int i=0; i <= targetIndex && i < numArgs; i++) {
+        arg = va_arg(ap, int);
+    }
+    va_end (ap);
+
+    return arg;
 }
