@@ -5,6 +5,7 @@
  *
  */
 
+#include <assert.h>
 #include <ncurses.h>
 #include <pthread.h>
 #include <semaphore.h>
@@ -87,7 +88,6 @@ static void printFolly(int maxX) {
 static void printCell(int cell, int maxX) {
 
     int x = (maxX - 44) / 2;
-
     attron(COLOR_PAIR(WHITE_ON_BLACK));
     switch (cell) {
         case 1:
@@ -404,8 +404,7 @@ static void printCell(int cell, int maxX) {
             mvprintw(6, x + 35, "\\  /");
             break;
         default:
-            break;
-
+            assert(0);
     }
     attroff(COLOR_PAIR(WHITE_ON_BLACK));
 }
@@ -416,789 +415,181 @@ static int randNextCell(int cell) {
     switch (cell) {
 
         case 1:
-            r = randUnif(0, 1);
-            if (r == 0) {
-                return 2;
-            } else {
-                return 16;
-            }
-            break;
+            return randIntFromList(2, 2, 16);
         case 2:
             return randIntFromList(2, 1, 3);
         case 3:
-            r = randUnif(0, 1);
-            if (r == 0) {
-                return 2;
-            } else if (r == 1) {
-                return 4;
-            }
-            break;
+            return randIntFromList(2, 2, 4);
         case 4:
-            r = randUnif(0, 1);
-            if (r == 0) {
-                return 3;
-            } else if (r == 1) {
-                return 5;
-            }
-            break;
+            return randIntFromList(2, 3, 5);
         case 5:
-            r = randUnif(0, 1);
-            if (r == 0) {
-                return 4;
-            } else if (r == 1) {
-                return 6;
-            }
-            break;
+            return randIntFromList(2, 4, 6);
         case 6:
-            r = randUnif(0, 1);
-            if (r == 0) {
-                return 5;
-            } else if (r == 1) {
-                return 7;
-            }
-            break;
+            return randIntFromList(2, 5, 7);
         case 7:
-            r = randUnif(0, 1);
-            if (r == 0) {
-                return 6;
-            } else if (r == 1) {
-                return 8;
-            }
-            break;
+            return randIntFromList(2, 6, 8);
         case 8:
-            r = randUnif(0, 1);
-            if (r == 0) {
-                return 7;
-            } else if (r == 1) {
-                return 9;
-            }
-            break;
+            return randIntFromList(2, 7, 9);
         case 9:
-            r = randUnif(0, 1);
-            if (r == 0) {
-                return 8;
-            } else if (r == 1) {
-                return 10;
-            }
-            break;
+            return randIntFromList(2, 8, 10);
         case 10:
-            r = randUnif(0, 1);
-            if (r == 0) {
-                return 9;
-            } else if (r == 1) {
-                return 31;
-            }
-            break;
+            return randIntFromList(2, 9, 31);
         case 11:
-            r = randUnif(0, 1);
-            if (r == 0) {
-                return 10;
-            } else if (r == 1) {
-                return 12;
-            }
-            break;
+            return randIntFromList(2, 10, 12);
         case 12:
-            r = randUnif(0, 1);
-            if (r == 0) {
-                return 11;
-            } else if (r == 1) {
-                return 13;
-            }
-            break;
+            return randIntFromList(2, 11, 13);
         case 13:
-            r = randUnif(0, 1);
-            if (r == 0) {
-                return 12;
-            } else if (r == 1) {
-                return 14;
-            }
-            break;
+            return randIntFromList(2, 12, 14);
         case 14:
-            r = randUnif(0, 1);
-            if (r == 0) {
-                return 13;
-            } else if (r == 1) {
-                return 15;
-            }
-            break;
+            return randIntFromList(2, 13, 15);
         case 15:
-            r = randUnif(0, 2);
-            if (r == 0) {
-                return 14;
-            } else if (r == 1) {
-                return 16;
-            } else if (r == 2) {
-                return 17;
-            }
-            break;
+            return randIntFromList(3, 14, 16, 17);
         case 16:
-            r = randUnif(0, 1);
-            if (r == 0) {
-                return 1;
-            } else if (r == 1) {
-                return 15;
-            }
-            break;
+            return randIntFromList(2, 1, 15);
         case 17:
-            r = randUnif(0, 1);
-            if (r == 0) {
-                return 15;
-            } else if (r == 1) {
-                return 18;
-            }
-            break;
+            return randIntFromList(2, 15, 18);
         case 18:
-            r = randUnif(0, 1);
-            if (r == 0) {
-                return 17;
-            } else if (r == 1) {
-                return 19;
-            }
-            break;
+            return randIntFromList(2, 17, 19);
         case 19:
-            r = randUnif(0, 3);
-            if (r == 0) {
-                return 18;
-            } else if (r == 1) {
-                return 20;
-            } else if (r == 2) {
-                return 32;
-            } else {
-                return 34;
-            }
-            break;
+            return randIntFromList(4, 18, 20, 32, 34);
         case 20:
-            r = randUnif(0, 2);
-            if (r == 0) {
-                return 19;
-            } else if (r == 1) {
-                return 21;
-            } else if (r == 2) {
-                return 34;
-            }
-            break;
+            return randIntFromList(3, 19, 21, 34);
         case 21:
-            r = randUnif(0, 2);
-            if (r == 0) {
-                return 20;
-            } else if (r == 1) {
-                return 22;
-            } else if (r == 2) {
-                return 35;
-            }
-            break;
+            return randIntFromList(3, 20, 22, 35);
         case 22:
-            r = randUnif(0, 2);
-            if (r == 0) {
-                return 21;
-            } else if (r == 1) {
-                return 23;
-            } else if (r == 2) {
-                return 35;
-            }
-            break;
+            return randIntFromList(3, 21, 23, 35);
         case 23:
-            r = randUnif(0, 2);
-            if (r == 0) {
-                return 22;
-            } else if (r == 1) {
-                return 24;
-            } else if (r == 2) {
-                return 35;
-            }
-            break;
+            return randIntFromList(3, 22, 24, 35);
         case 24:
-            r = randUnif(0, 3);
-            if (r == 0) {
-                return 23;
-            } else if (r == 1) {
-                return 25;
-            } else if (r == 2) {
-                return 36;
-            } else if (r == 3) {
-                return 44;
-            }
-            break;
+            return randIntFromList(4, 23, 25, 36, 44);
         case 25:
-            r = randUnif(0, 3);
-            if (r == 0) {
-                return 24;
-            } else if (r == 1) {
-                return 26;
-            } else if (r == 2) {
-                return 36;
-            } else if (r == 3) {
-                return 43;
-            }
-            break;
+            return randIntFromList(4, 24, 26, 36, 43);
         case 26:
-            r = randUnif(0, 3);
-            if (r == 0) {
-                return 25;
-            } else if (r == 1) {
-                return 27;
-            } else if (r == 2) {
-                return 37;
-            } else if (r == 3) {
-                return 42;
-            }
-            break;
+            return randIntFromList(4, 25, 27, 37, 42);
         case 27:
-            r = randUnif(0, 3);
-            if (r == 0) {
-                return 26;
-            } else if (r == 1) {
-                return 28;
-            } else if (r == 2) {
-                return 37;
-            } else if (r == 3) {
-                return 41;
-            }
-            break;
+            return randIntFromList(4, 26, 28, 37, 41);
         case 28:
-            r = randUnif(0, 2);
-            if (r == 0) {
-                return 27;
-            } else if (r == 1) {
-                return 29;
-            } else if (r == 2) {
-                return 38;
-            }
-            break;
+            return randIntFromList(3, 27, 29, 38);
         case 29:
-            r = randUnif(0, 2);
-            if (r == 0) {
-                return 28;
-            } else if (r == 1) {
-                return 30;
-            } else if (r == 2) {
-                return 38;
-            }
-            break;
+            return randIntFromList(3, 28, 30, 38);
         case 30:
-            r = randUnif(0, 2);
-            if (r == 0) {
-                return 29;
-            } else if (r == 1) {
-                return 31;
-            } else if (r == 2) {
-                return 38;
-            }
-            break;
+            return randIntFromList(3, 29, 31, 38);
         case 31:
-            r = randUnif(0, 3);
-            if (r == 0) {
-                return 30;
-            } else if (r == 1) {
-                return 32;
-            } else if (r == 2) {
-                return 33;
-            } else if (r == 3) {
-                return 10;
-            }
-            break;
+            return randIntFromList(4, 10, 30, 32, 33);
         case 32:
-            r = randUnif(0, 2);
-            if (r == 0) {
-                return 31;
-            } else if (r == 1) {
-                return 33;
-            } else if (r == 2) {
-                return 19;
-            }
-            break;
+            return randIntFromList(3, 19, 31, 33);
         case 33:
-            r = randUnif(0, 3);
-            if (r == 0) {
-                return 31;
-            } else if (r == 1) {
-                return 32;
-            } else if (r == 2) {
-                return 34;
-            } else if (r == 3) {
-                return 38;
-            }
-            break;
+            return randIntFromList(4, 31, 32, 34, 38);
         case 34:
-            r = randUnif(0, 3);
-            if (r == 0) {
-                return 19;
-            } else if (r == 1) {
-                return 20;
-            } else if (r == 2) {
-                return 33;
-            } else if (r == 3) {
-                return 35;
-            }
-            break;
+            return randIntFromList(4, 19, 20, 33, 35);
         case 35:
-            r = randUnif(0, 4);
-            if (r == 0) {
-                return 34;
-            } else if (r == 1) {
-                return 36;
-            } else if (r == 2) {
-                return 21;
-            } else if (r == 3) {
-                return 22;
-            } else if (r == 4) {
-                return 23;
-            }
-            break;
+            return randIntFromList(5, 21, 22, 23, 34, 36);
         case 36:
-            r = randUnif(0, 3);
-            if (r == 0) {
-                return 35;
-            } else if (r == 1) {
-                return 37;
-            } else if (r == 2) {
-                return 24;
-            } else if (r == 3) {
-                return 25;
-            }
-            break;
+            return randIntFromList(4, 24, 25, 35, 37);
         case 37:
-            r = randUnif(0, 3);
-            if (r == 0) {
-                return 36;
-            } else if (r == 1) {
-                return 38;
-            } else if (r == 2) {
-                return 26;
-            } else if (r == 3) {
-                return 27;
-            }
-            break;
+            return randIntFromList(4, 26, 27, 36, 38);
         case 38:
-            r = randUnif(0, 4);
-            if (r == 0) {
-                return 37;
-            } else if (r == 1) {
-                return 33;
-            } else if (r == 2) {
-                return 28;
-            } else if (r == 3) {
-                return 29;
-            } else if (r == 4) {
-                return 30;
-            }
-            break;
+            return randIntFromList(5, 28, 29, 30, 33, 37);
         case 39:
-            r = randUnif(0, 1);
-            if (r == 0) {
-                return 40;
-            } else if (r == 1) {
-                return 54;
-            }
-            break;
+            return randIntFromList(2, 40, 54);
         case 40:
-            r = randUnif(0, 1);
-            if (r == 0) {
-                return 39;
-            } else if (r == 1) {
-                return 41;
-            }
-            break;
+            return randIntFromList(2, 39, 41);
         case 41:
-            r = randUnif(0, 2);
-            if (r == 0) {
-                return 40;
-            } else if (r == 1) {
-                return 42;
-            } else if (r == 2) {
-                return 27;
-            }
-            break;
+            return randIntFromList(3, 27, 40, 42);
         case 42:
-            r = randUnif(0, 2);
-            if (r == 0) {
-                return 41;
-            } else if (r == 1) {
-                return 43;
-            } else if (r == 2) {
-                return 26;
-            }
-            break;
+            return randIntFromList(3, 26, 41, 43);
         case 43:
-            r = randUnif(0, 2);
-            if (r == 0) {
-                return 42;
-            } else if (r == 1) {
-                return 44;
-            } else if (r == 2) {
-                return 25;
-            }
-            break;
+            return randIntFromList(3, 25, 42, 44);
         case 44:
-            r = randUnif(0, 2);
-            if (r == 0) {
-                return 43;
-            } else if (r == 1) {
-                return 45;
-            } else if (r == 2) {
-                return 24;
-            }
-            break;
+            return randIntFromList(3, 24, 43, 45);
         case 45:
-            r = randUnif(0, 1);
-            if (r == 0) {
-                return 44;
-            } else if (r == 1) {
-                return 46;
-            }
-            break;
+            return randIntFromList(2, 44, 46);
         case 46:
-            r = randUnif(0, 1);
-            if (r == 0) {
-                return 45;
-            } else if (r == 1) {
-                return 47;
-            }
-            break;
+            return randIntFromList(2, 45, 47);
         case 47:
-            r = randUnif(0, 1);
-            if (r == 0) {
-                return 46;
-            } else if (r == 1) {
-                return 48;
-            }
-            break;
+            return randIntFromList(2, 46, 48);
         case 48:
-            r = randUnif(0, 1);
-            if (r == 0) {
-                return 47;
-            } else if (r == 1) {
-                return 49;
-            }
-            break;
+            return randIntFromList(2, 47, 49);
         case 49:
-            r = randUnif(0, 2);
-            if (r == 0) {
-                return 48;
-            } else if (r == 1) {
-                return 50;
-            } else if (r == 2) {
-                return 60;
-            }
-            break;
+            return randIntFromList(3, 48, 50, 60);
         case 50:
-            r = randUnif(0, 1);
-            if (r == 0) {
-                return 49;
-            } else if (r == 1) {
-                return 51;
-            }
-            break;
+            return randIntFromList(2, 49, 51);
         case 51:
-            r = randUnif(0, 1);
-            if (r == 0) {
-                return 50;
-            } else if (r == 1) {
-                return 52;
-            }
-            break;
+            return randIntFromList(2, 50, 52);
         case 52:
-            r = randUnif(0, 1);
-            if (r == 0) {
-                return 51;
-            } else if (r == 1) {
-                return 53;
-            }
-            break;
+            return randIntFromList(2, 51, 53);
         case 53:
-            r = randUnif(0, 1);
-            if (r == 0) {
-                return 52;
-            } else if (r == 1) {
-                return 54;
-            }
-            break;
+            return randIntFromList(2, 52, 54);
         case 54:
-            r = randUnif(0, 1);
-            if (r == 0) {
-                return 53;
-            } else if (r == 1) {
-                return 39;
-            }
-            break;
+            return randIntFromList(2, 39, 53);
         case 55:
-            r = randUnif(0, 1);
-            if (r == 0) {
-                return 56;
-            } else if (r == 1) {
-                return 70;
-            }
-            break;
+            return randIntFromList(2, 56, 70);
         case 56:
-            r = randUnif(0, 1);
-            if (r == 0) {
-                return 55;
-            } else if (r == 1) {
-                return 57;
-            }
-            break;
+            return randIntFromList(2, 55, 57);
         case 57:
-            r = randUnif(0, 1);
-            if (r == 0) {
-                return 56;
-            } else if (r == 1) {
-                return 58;
-            }
-            break;
+            return randIntFromList(2, 56, 58);
         case 58:
-            r = randUnif(0, 1);
-            if (r == 0) {
-                return 57;
-            } else if (r == 1) {
-                return 59;
-            }
-            break;
+            return randIntFromList(2, 57, 59);
         case 59:
-            r = randUnif(0, 1);
-            if (r == 0) {
-                return 58;
-            } else if (r == 1) {
-                return 60;
-            }
-            break;
+            return randIntFromList(2, 58, 60);
         case 60:
-            r = randUnif(0, 2);
-            if (r == 0) {
-                return 59;
-            } else if (r == 1) {
-                return 61;
-            } else if (r == 2) {
-                return 49;
-            }
-            break;
+            return randIntFromList(3, 49, 59, 61);
         case 61:
-            r = randUnif(0, 1);
-            if (r == 0) {
-                return 60;
-            } else if (r == 1) {
-                return 62;
-            }
-            break;
+            return randIntFromList(2, 60, 62);
         case 62:
-            r = randUnif(0, 1);
-            if (r == 0) {
-                return 61;
-            } else if (r == 1) {
-                return 63;
-            }
-            break;
+            return randIntFromList(2, 61, 63);
         case 63:
-            r = randUnif(0, 1);
-            if (r == 0) {
-                return 62;
-            } else if (r == 1) {
-                return 64;
-            }
-            break;
+            return randIntFromList(2, 62, 64);
         case 64:
-            r = randUnif(0, 2);
-            if (r == 0) {
-                return 63;
-            } else if (r == 1) {
-                return 65;
-            } else if (r == 2) {
-                return 76;
-            }
-            break;
+            return randIntFromList(3, 63, 65, 76);
         case 65:
-            r = randUnif(0, 2);
-            if (r == 0) {
-                return 64;
-            } else if (r == 1) {
-                return 66;
-            } else if (r == 2) {
-                return 75;
-            }
-            break;
+            return randIntFromList(3, 64, 66, 75);
         case 66:
-            r = randUnif(0, 1);
-            if (r == 0) {
-                return 65;
-            } else if (r == 1) {
-                return 67;
-            }
-            break;
+            return randIntFromList(2, 65, 67);
         case 67:
-            r = randUnif(0, 1);
-            if (r == 0) {
-                return 66;
-            } else if (r == 1) {
-                return 68;
-            }
-            break;
+            return randIntFromList(2, 66, 68);
         case 68:
-            r = randUnif(0, 1);
-            if (r == 0) {
-                return 67;
-            } else if (r == 1) {
-                return 69;
-            }
-            break;
+            return randIntFromList(2, 67, 69);
         case 69:
-            r = randUnif(0, 1);
-            if (r == 0) {
-                return 68;
-            } else if (r == 1) {
-                return 70;
-            }
-            break;
+            return randIntFromList(2, 68, 70);
         case 70:
-            r = randUnif(0, 1);
-            if (r == 0) {
-                return 69;
-            } else if (r == 1) {
-                return 55;
-            }
-            break;
+            return randIntFromList(2, 69, 55);
         case 71:
-            r = randUnif(0, 1);
-            if (r == 0) {
-                return 87;
-            } else if (r == 1) {
-                return 72;
-            }
-            break;
+            return randIntFromList(2, 72, 87);
         case 72:
-            r = randUnif(0, 1);
-            if (r == 0) {
-                return 71;
-            } else if (r == 1) {
-                return 73;
-            }
-            break;
+            return randIntFromList(2, 71, 73);
         case 73:
-            r = randUnif(0, 1);
-            if (r == 0) {
-                return 72;
-            } else if (r == 1) {
-                return 74;
-            }
-            break;
+            return randIntFromList(2, 72, 74);
         case 74:
-            r = randUnif(0, 1);
-            if (r == 0) {
-                return 73;
-            } else if (r == 1) {
-                return 79;
-            }
-            break;
+            return randIntFromList(2, 73, 79);
         case 75:
-            r = randUnif(0, 1);
-            if (r == 0) {
-                return 65;
-            } else if (r == 1) {
-                return 76;
-            }
-            break;
+            return randIntFromList(2, 65, 76);
         case 76:
-            r = randUnif(0, 2);
-            if (r == 0) {
-                return 75;
-            } else if (r == 1) {
-                return 77;
-            } else if (r == 2) {
-                return 64;
-            }
-            break;
+            return randIntFromList(3, 64, 75, 77);
         case 77:
-            r = randUnif(0, 1);
-            if (r == 0) {
-                return 76;
-            } else if (r == 1) {
-                return 78;
-            }
-            break;
+            return randIntFromList(2, 76, 78);
         case 78:
-            r = randUnif(0, 1);
-            if (r == 0) {
-                return 77;
-            } else if (r == 1) {
-                return 79;
-            }
-            break;
+            return randIntFromList(2, 77, 79);
         case 79:
-            r = randUnif(0, 2);
-            if (r == 0) {
-                return 74;
-            } else if (r == 1) {
-                return 78;
-            } else if (r == 2) {
-                return 80;
-            }
-            break;
+            return randIntFromList(3, 74, 78, 80);
         case 80:
-            r = randUnif(0, 1);
-            if (r == 0) {
-                return 79;
-            } else if (r == 1) {
-                return 81;
-            }
-            break;
+            return randIntFromList(2, 79, 81);
         case 81:
-            r = randUnif(0, 1);
-            if (r == 0) {
-                return 80;
-            } else if (r == 1) {
-                return 82;
-            }
-            break;
+            return randIntFromList(2, 80, 82);
         case 82:
-            r = randUnif(0, 1);
-            if (r == 0) {
-                return 81;
-            } else if (r == 1) {
-                return 83;
-            }
-            break;
+            return randIntFromList(2, 81, 83);
         case 83:
-            r = randUnif(0, 1);
-            if (r == 0) {
-                return 82;
-            } else if (r == 1) {
-                return 84;
-            }
-            break;
+            return randIntFromList(2, 82, 84);
         case 84:
-            r = randUnif(0, 1);
-            if (r == 0) {
-                return 83;
-            } else if (r == 1) {
-                return 85;
-            }
-            break;
+            return randIntFromList(2, 83, 85);
         case 85:
-            r = randUnif(0, 1);
-            if (r == 0) {
-                return 84;
-            } else if (r == 1) {
-                return 86;
-            }
-            break;
+            return randIntFromList(2, 84, 86);
         case 86:
-            r = randUnif(0, 1);
-            if (r == 0) {
-                return 85;
-            } else if (r == 1) {
-                return 87;
-            }
-            break;
+            return randIntFromList(2, 85, 87);
         case 87:
-            r = randUnif(0, 1);
-            if (r == 0) {
-                return 86;
-            } else if (r == 1) {
-                return 71;
-            }
-            break;
+            return randIntFromList(2, 86, 71);
         default:
-            return 1;
-            break;
-
+            assert(0);
     }
     return 1;
 }
@@ -1241,7 +632,7 @@ static void* cycleEllipsis(void *maxPtr) {
 static void* cycleWander(void *maxPtr) {
     int maxX = *((int *) maxPtr);
 
-    int index = 2;//randUnif(1, 87);
+    int index = randUnif(1, 87);
     int sleepFor = 0;
     while (1) {
 
